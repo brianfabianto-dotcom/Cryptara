@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Koin - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #111111;
+            --text-primary: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --accent-orange: #FF5E00;
+            --accent-orange-light: #FF8A00;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --shadow-glow: 0 0 15px var(--accent-orange);
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255,94,0,0.05) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 80%, rgba(255,138,0,0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -2;
+            animation: moveGradient 20s ease infinite alternate;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
+        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.3rem; }
+
+        .gradient-title {
+            font-family: var(--font-display);
+            background: linear-gradient(135deg, #fff, var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-img {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: var(--accent-orange);
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--accent-orange);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-btn {
+            margin-left: 1rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: var(--accent-orange);
+            color: black;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        .coin-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .coin-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,94,0,0.2);
+            border: 2px solid var(--accent-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-orange);
+            overflow: hidden;
+        }
+
+        .coin-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .coin-title h1 {
+            margin-bottom: 0.3rem;
+        }
+
+        .coin-symbol {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .coin-rank {
+            background: var(--accent-orange);
+            color: black;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .coin-price-large {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 1rem 0;
+        }
+
+        .coin-price-change {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-color: var(--accent-orange);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .supply-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .market-table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+
+        .market-table th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .market-table td {
+            padding: 0.8rem 0.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .market-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .market-table td:nth-child(2),
+        .market-table td:nth-child(3),
+        .market-table td:nth-child(4) {
+            text-align: right;
+        }
+
+        .market-name {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+
+        .market-name:hover {
+            text-decoration: underline;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+            transform: translateX(-2px);
+        }
+
+        .chart-container {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+        }
+
+        #tradingview_chart {
+            height: 500px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid, .social-grid {
+                grid-template-columns: 1fr;
+            }
+            .supply-grid {
+                grid-template-columns: 1fr;
+            }
+            .coin-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        footer {
+            background: var(--bg-primary);
+            padding: 2rem 5% 1rem;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-img {
+            height: 30px;
+            width: auto;
+        }
+
+        .footer-logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .footer-logo-text span {
+            color: var(--accent-orange);
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container { grid-template-columns: 1fr; gap: 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: block; color: var(--text-primary); font-size: 1.5rem; }
+        }
+
+        .loading {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section style="padding: 3rem 5%; max-width: 1200px; margin: 0 auto;">
+        <a href="market.html" class="back-button" id="back-button" data-i18n="common.backToPulse">← Kembali ke Pulse</a>
+        
+        <div id="loading" class="loading" style="display: block;" data-i18n="common.loading">Memuat data koin...</div>
+        
+        <div id="coin-content" style="display: none;">
+            <div class="coin-header">
+                <div class="coin-icon" id="coin-icon"></div>
+                <div class="coin-title">
+                    <h1 id="coin-name" class="gradient-title" style="font-size: 2.5rem; text-align: left; margin-bottom: 0;">Bitcoin</h1>
+                    <div class="coin-symbol" id="coin-symbol">BTC</div>
+                </div>
+                <div class="coin-rank" id="coin-rank">Rank #1</div>
+            </div>
+            
+            <div class="coin-price-large" id="coin-price">$0</div>
+            <div class="coin-price-change" id="coin-change"></div>
+            
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left;" data-i18n="coin.marketStats">Statistik Pasar</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.marketCap">Market Cap</div>
+                    <div class="stat-value" id="market-cap">$0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.volume24h">Volume 24 Jam</div>
+                    <div class="stat-value" id="volume-24h">$0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.volumeNative">Volume (Native)</div>
+                    <div class="stat-value" id="volume-native">0</div>
+                </div>
+            </div>
+            
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left;" data-i18n="coin.supply">Supply</h2>
+            <div class="supply-grid">
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.circulatingSupply">Circulating Supply</div>
+                    <div class="stat-value" id="circ-supply">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.totalSupply">Total Supply</div>
+                    <div class="stat-value" id="total-supply">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.maxSupply">Max Supply</div>
+                    <div class="stat-value" id="max-supply">0</div>
+                </div>
+            </div>
+            
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left;" data-i18n="coin.socialMedia">Social Media</h2>
+            <div class="social-grid">
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.redditSubs">Reddit Subscribers</div>
+                    <div class="stat-value" id="reddit-subs">Memuat...</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label" data-i18n="common.twitterFollowers">Twitter Followers</div>
+                    <div class="stat-value" id="twitter-followers">Memuat...</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--glass-bg); border-radius: 20px;">
+                <h3 class="gradient-title" style="font-size: 1.5rem; text-align: left;" data-i18n="coin.priceInBTC">₿ Harga dalam BTC</h3>
+                <div style="font-size: 1.2rem; color: var(--accent-orange);" id="price-btc">0 BTC</div>
+            </div>
+            
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left;" data-i18n="coin.topMarkets">Top Markets</h2>
+            <div class="market-container glass-card" style="padding: 1.5rem;">
+                <div id="markets-list">
+                    <div class="loading" data-i18n="common.loading">Memuat data market...</div>
+                </div>
+            </div>
+            
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left;" data-i18n="coin.technicalAnalysis">Analisis Teknikal</h2>
+            <div class="chart-container">
+                <div id="tradingview_chart"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== FUNGSI FORMAT ANGKA ====================
+        function formatNumberID(num) {
+            if (num === null || num === undefined) return "0";
+            if (typeof num === 'string') num = parseFloat(num.replace(/\./g, ''));
+            if (isNaN(num)) return "0";
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + " T";
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + " M";
+            if (num >= 1e6) {
+                const unit = (typeof currentLang !== 'undefined' && currentLang === 'en') ? " M" : " Jt";
+                return (num / 1e6).toFixed(2) + unit;
+            }
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function formatCurrencyUSD(num) {
+            if (num === null || num === undefined) return "$0";
+            return "$" + formatNumberID(num);
+        }
+
+        function formatNumber(num) {
+            if (num === null || num === undefined) return "0";
+            if (typeof num === 'string') num = parseFloat(num);
+            return num.toLocaleString('id-ID');
+        }
+
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // ==================== LOAD LOGO (MULTI-SOURCE) ====================
+        const logoCache = {};
+
+        async function loadCoinLogo(coin, containerId) {
+            const iconElement = document.getElementById(containerId);
+            if (!iconElement) return;
+
+            const symbol = coin.symbol.toLowerCase();
+
+            if (logoCache[symbol]) {
+                const img = new Image();
+                img.src = logoCache[symbol];
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                iconElement.innerHTML = '';
+                iconElement.appendChild(img);
+                iconElement.style.background = 'transparent';
+                return;
+            }
+
+            const coinGeckoMap = {
+                'usdt': 'tether',
+                'usdc': 'usd-coin',
+                'busd': 'binance-usd',
+                'dai': 'dai',
+                'frax': 'frax',
+                'lusd': 'liquity-usd',
+                'pyusd': 'paypal-usd',
+                'fdusd': 'first-digital-usd',
+                'usds': 'usds',
+                'usde': 'ethena',
+                'rlusd': 'rlusd',
+                'usd0': 'usd0',
+                'btc': 'bitcoin',
+                'eth': 'ethereum',
+                'bnb': 'binancecoin',
+                'sol': 'solana',
+                'xrp': 'ripple',
+                'ada': 'cardano',
+                'doge': 'dogecoin',
+                'trx': 'tron',
+                'matic': 'matic-network',
+                'link': 'chainlink',
+                'ltc': 'litecoin'
+            };
+
+            const coinId = coinGeckoMap[symbol];
+            if (!coinId) {
+                fallbackToJsDelivr();
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                const logoUrl = data.image?.small || data.image?.thumb;
+                if (logoUrl) {
+                    logoCache[symbol] = logoUrl;
+                    const img = new Image();
+                    img.onload = () => {
+                        iconElement.innerHTML = '';
+                        iconElement.appendChild(img);
+                        iconElement.style.background = 'transparent';
+                    };
+                    img.onerror = () => {
+                        fallbackToJsDelivr();
+                    };
+                    img.src = logoUrl;
+                    img.alt = coin.name;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'contain';
+                } else {
+                    fallbackToJsDelivr();
+                }
+            } catch (err) {
+                console.warn('CoinGecko error:', err);
+                fallbackToJsDelivr();
+            }
+
+            function fallbackToJsDelivr() {
+                const fileNameMap = {
+                    'usdt': 'tether',
+                    'usdc': 'usd-coin',
+                    'busd': 'binance-usd',
+                    'dai': 'dai',
+                    'frax': 'frax',
+                    'lusd': 'liquity-usd',
+                    'pyusd': 'paypal-usd',
+                    'fdusd': 'first-digital-usd',
+                    'usds': 'usds',
+                    'usde': 'ethena',
+                    'rlusd': 'rlusd',
+                    'usd0': 'usd0',
+                    'btc': 'bitcoin',
+                    'eth': 'ethereum',
+                    'bnb': 'binance-coin',
+                    'sol': 'solana',
+                    'xrp': 'xrp',
+                    'ada': 'cardano',
+                    'doge': 'dogecoin',
+                    'trx': 'tron',
+                    'matic': 'matic',
+                    'link': 'chainlink',
+                    'ltc': 'litecoin'
+                };
+                const fileName = fileNameMap[symbol] || symbol;
+                const url = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.0/32@2x/icon/${fileName}.png`;
+
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                const timeout = setTimeout(() => {
+                    fallbackToCryptoicons();
+                }, 3000);
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    iconElement.innerHTML = '';
+                    iconElement.appendChild(img);
+                    iconElement.style.background = 'transparent';
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    fallbackToCryptoicons();
+                };
+                img.src = url;
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+            }
+
+            function fallbackToCryptoicons() {
+                const url = `https://cryptoicons.org/api/icon/${symbol}/80`;
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                const timeout = setTimeout(() => {
+                    showInitial();
+                }, 3000);
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    iconElement.innerHTML = '';
+                    iconElement.appendChild(img);
+                    iconElement.style.background = 'transparent';
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    showInitial();
+                };
+                img.src = url;
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+            }
+
+            function showInitial() {
+                iconElement.innerHTML = coin.symbol.charAt(0).toUpperCase();
+                iconElement.style.display = 'flex';
+                iconElement.style.alignItems = 'center';
+                iconElement.style.justifyContent = 'center';
+                iconElement.style.fontSize = '2rem';
+                iconElement.style.fontWeight = 'bold';
+                iconElement.style.background = 'linear-gradient(135deg, rgba(255,94,0,0.2), rgba(255,94,0,0.05))';
+                iconElement.style.color = '#ff8a00';
+                iconElement.style.borderRadius = '50%';
+            }
+        }
+
+        // ==================== AMBIL ID DARI URL ====================
+        function getCoinIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || urlParams.get('symbol');
+        }
+
+        // ==================== FETCH DENGAN TIMEOUT ====================
+        async function fetchWithTimeout(url, timeout = 8000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                throw error;
+            }
+        }
+
+        // ==================== FETCH DETAIL KOIN ====================
+        async function fetchCoinDetails(coinId) {
+            try {
+                let response = await fetchWithTimeout(`https://api.coinlore.net/api/ticker/?id=${coinId}`);
+                let data = await response.json();
+                if (!data || data.length === 0) {
+                    response = await fetchWithTimeout(`https://api.coinlore.net/api/ticker/?symbol=${coinId.toUpperCase()}`);
+                    data = await response.json();
+                }
+                if (data && data.length > 0) {
+                    const coin = data[0];
+                    displayCoinDetails(coin);
+                    fetchSocialStats(coin.id);
+                    fetchMarkets(coin.id);
+                    loadTradingViewChart(coin.symbol);
+                } else {
+                    showError('Koin tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Gagal memuat detail koin:', error);
+                showFallbackData(coinId);
+            }
+        }
+
+        function showFallbackData(coinId) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('coin-content').style.display = 'block';
+
+            const dummyCoin = {
+                name: coinId.toUpperCase(),
+                symbol: coinId.toUpperCase(),
+                rank: 'N/A',
+                price_usd: '0',
+                percent_change_24h: '0',
+                percent_change_1h: '0',
+                percent_change_7d: '0',
+                market_cap_usd: '0',
+                volume24: '0',
+                volume24_native: '0',
+                csupply: '0',
+                tsupply: null,
+                msupply: null,
+                price_btc: '0'
+            };
+            displayCoinDetails(dummyCoin);
+            document.getElementById('reddit-subs').textContent = 'N/A';
+            document.getElementById('twitter-followers').textContent = 'N/A';
+            document.getElementById('markets-list').innerHTML = '<div class="loading">Data market tidak tersedia</div>';
+        }
+
+        async function fetchSocialStats(coinId) {
+            try {
+                const response = await fetchWithTimeout(`https://api.coinlore.net/api/coin/social_stats/?id=${coinId}`);
+                const data = await response.json();
+                if (data) {
+                    document.getElementById('reddit-subs').textContent = data.reddit?.subscribers 
+                        ? formatNumber(data.reddit.subscribers) : 'N/A';
+                    document.getElementById('twitter-followers').textContent = data.twitter?.followers_count 
+                        ? formatNumber(data.twitter.followers_count) : 'N/A';
+                }
+            } catch (error) {
+                console.error('Gagal memuat social stats:', error);
+                document.getElementById('reddit-subs').textContent = 'N/A';
+                document.getElementById('twitter-followers').textContent = 'N/A';
+            }
+        }
+
+        async function fetchMarkets(coinId) {
+            try {
+                const response = await fetchWithTimeout(`https://api.coinlore.net/api/coin/markets/?id=${coinId}`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    displayMarkets(data.slice(0, 10));
+                } else {
+                    document.getElementById('markets-list').innerHTML = '<div class="loading">Tidak ada data market</div>';
+                }
+            } catch (error) {
+                console.error('Gagal memuat markets:', error);
+                document.getElementById('markets-list').innerHTML = '<div class="loading">Gagal memuat data market</div>';
+            }
+        }
+
+        function displayMarkets(markets) {
+            let html = `
+                <table class="market-table">
+                    <thead> <th data-i18n="common.exchange">Exchange</th> <th data-i18n="common.pair">Pair</th> <th data-i18n="common.priceUSD">Price (USD)</th> <th data-i18n="common.volume">24h Volume</th> </thead>
+                    <tbody>
+            `;
+            markets.forEach(market => {
+                html += `
+                    <tr>
+                        <td><a href="https://${market.name}.com" target="_blank" class="market-name">${market.name}</a></td>
+                        <td>${market.base}/${market.quote}</td>
+                        <td>${formatCurrencyUSD(market.price_usd)}</td>
+                        <td>${formatCurrencyUSD(market.volume_usd)}</td>
+                    </tr>
+                `;
+            });
+            html += '</tbody></table>';
+            document.getElementById('markets-list').innerHTML = html;
+        }
+
+        function loadTradingViewChart(symbol) {
+            const container = document.getElementById('tradingview_chart');
+            if (!container) return;
+
+            const script = document.createElement('script');
+            script.src = 'https://s3.tradingview.com/tv.js';
+            script.async = true;
+            script.onload = function() {
+                try {
+                    new TradingView.widget({
+                        "container_id": "tradingview_chart",
+                        "symbol": `BINANCE:${symbol}USDT`,
+                        "interval": "D",
+                        "timezone": "Asia/Jakarta",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "id",
+                        "toolbar_bg": "#0A0A0A",
+                        "enable_publishing": false,
+                        "hide_top_toolbar": false,
+                        "save_image": true,
+                        "backgroundColor": "#0A0A0A",
+                        "gridColor": "#2A2A2A",
+                        "studies": ["RSI@tv-basicstudies", "MACD@tv-basicstudies", "MASimple@tv-basicstudies"],
+                        "show_popup_button": true,
+                        "popup_width": "1000",
+                        "popup_height": "650",
+                        "height": 500,
+                        "width": "100%",
+                        "autosize": true
+                    });
+                } catch (e) {
+                    container.innerHTML = '<div class="loading">Grafik tidak tersedia</div>';
+                }
+            };
+            script.onerror = function() {
+                container.innerHTML = '<div class="loading">Grafik tidak tersedia</div>';
+            };
+            document.head.appendChild(script);
+        }
+
+        function displayCoinDetails(coin) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('coin-content').style.display = 'block';
+            document.title = `${coin.name} (${coin.symbol}) - cryptara.id`;
+
+            loadCoinLogo(coin, 'coin-icon');
+
+            document.getElementById('coin-name').textContent = coin.name;
+            document.getElementById('coin-symbol').textContent = coin.symbol;
+            document.getElementById('coin-rank').textContent = coin.rank ? `Rank #${coin.rank}` : 'Rank N/A';
+
+            const price = parseFloat(coin.price_usd) || 0;
+            const change = parseFloat(coin.percent_change_24h) || 0;
+            const changeClass = change >= 0 ? 'market-change' : 'market-change negative';
+            const changeSign = change >= 0 ? '▲' : '▼';
+
+            document.getElementById('coin-price').textContent = formatCurrencyUSD(price);
+            document.getElementById('coin-change').innerHTML = `
+                <span class="${changeClass}">${changeSign} ${Math.abs(change).toFixed(2)}% (24 jam)</span>
+                <span style="margin-left: 1rem; color: var(--text-secondary);">1h: ${coin.percent_change_1h || '0'}% | 7d: ${coin.percent_change_7d || '0'}%</span>
+            `;
+
+            document.getElementById('market-cap').textContent = formatCurrencyUSD(coin.market_cap_usd);
+            document.getElementById('volume-24h').textContent = formatCurrencyUSD(coin.volume24);
+            document.getElementById('volume-native').textContent = formatNumber(coin.volume24_native) + ' ' + coin.symbol;
+            document.getElementById('circ-supply').textContent = formatNumber(coin.csupply) + ' ' + coin.symbol;
+            document.getElementById('total-supply').textContent = coin.tsupply ? formatNumber(coin.tsupply) + ' ' + coin.symbol : '∞';
+            document.getElementById('max-supply').textContent = coin.msupply ? formatNumber(coin.msupply) + ' ' + coin.symbol : '∞';
+
+            const priceBtc = parseFloat(coin.price_btc) || 0;
+            document.getElementById('price-btc').textContent = priceBtc.toFixed(8) + ' BTC';
+        }
+
+        function showError(message) {
+            document.getElementById('loading').innerHTML = message;
+        }
+
+        // ==================== UPDATE BACK BUTTON HREF ====================
+        function updateBackButtonHref() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const from = urlParams.get('from');
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                if (from === 'launchpad') {
+                    backButton.href = 'launchpad.html';
+                } else {
+                    backButton.href = 'market.html';
+                }
+            }
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+
+            // Setel href tombol kembali sesuai parameter from
+            updateBackButtonHref();
+
+            // Inisialisasi bahasa (translations.js sudah auto, tapi kita panggil lagi untuk memastikan)
+            if (typeof setLanguage !== 'undefined' && typeof currentLang !== 'undefined') {
+                setLanguage(currentLang);
+            }
+
+            const coinId = getCoinIdFromUrl();
+            if (!coinId) {
+                showError('ID koin tidak ditemukan. Kembali ke <a href="market.html" style="color: var(--accent-orange);">Market</a>');
+                return;
+            }
+            fetchCoinDetails(coinId);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ===== ACADEMY LAYOUT (EXPLORER STYLE) ===== */
+        .academy-wrapper {
+            display: flex;
+            min-height: calc(100vh - 140px);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 1rem 0;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-header {
+            padding: 0 1rem 0.8rem 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--accent-orange);
+        }
+
+        .category-item {
+            margin-bottom: 0.2rem;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .category-title:hover {
+            background: rgba(255,94,0,0.1);
+            border-left-color: var(--accent-orange);
+        }
+
+        .category-title i {
+            color: var(--accent-orange);
+            margin-right: 0.5rem;
+        }
+
+        .category-title .toggle-icon {
+            transition: transform 0.2s;
+        }
+
+        .category-title.open .toggle-icon {
+            transform: rotate(90deg);
+        }
+
+        .topic-list {
+            display: none;
+            list-style: none;
+            padding-left: 2rem;
+            margin: 0;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .topic-list.show {
+            display: block;
+        }
+
+        .topic-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            margin: 0.2rem 0.5rem;
+        }
+
+        .topic-item:hover {
+            background: rgba(255,94,0,0.1);
+            color: var(--text-primary);
+        }
+
+        .topic-item.active {
+            background: rgba(255,94,0,0.2);
+            color: var(--accent-orange);
+            border-left: 2px solid var(--accent-orange);
+        }
+
+        .content-panel {
+            flex: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 1.8rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+        }
+
+        .content-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .content-header h2 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent-orange);
+        }
+
+        .content-body {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .content-body h3 {
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-orange);
+        }
+
+        .content-body ul, .content-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.3rem;
+        }
+
+        .content-body p {
+            margin-bottom: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .academy-wrapper {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+                max-height: 300px;
+                margin-bottom: 1rem;
+            }
+            .content-panel {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <div class="academy-wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-graduation-cap"></i> <span data-i18n="academy.sidebarTitle">Materi Belajar</span></h3>
+            </div>
+            <div id="sidebar-categories"></div>
+        </div>
+
+        <div class="content-panel">
+            <div class="content-header">
+                <h2 id="content-title" data-i18n="academy.welcomeTitle">Selamat Datang di Academy</h2>
+            </div>
+            <div id="content-body" class="content-body">
+                <div class="empty-state">
+                    <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                    <p data-i18n="academy.welcomeMessage">Pilih topik dari menu sebelah kiri untuk mulai belajar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // ==================== LOAD DATA DARI JSON (BILINGUAL) ====================
+        let categories = [];
+
+        async function loadContent() {
+            // Ambil bahasa dari global variable currentLang (dari translations.js)
+            const lang = (typeof currentLang !== 'undefined' && currentLang === 'en') ? 'en' : 'id';
+            const filename = `academy-content-${lang}.json`;
+            console.log('Memuat konten:', filename); // untuk debugging
+            
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                categories = data.categories;
+                renderSidebar();
+            } catch (error) {
+                console.error('Gagal memuat konten:', error);
+                document.getElementById('sidebar-categories').innerHTML = '<div class="empty-state">Gagal memuat materi. Coba refresh.</div>';
+            }
+        }
+
+        function renderSidebar() {
+            const container = document.getElementById('sidebar-categories');
+            container.innerHTML = '';
+
+            categories.forEach((cat, idx) => {
+                const catDiv = document.createElement('div');
+                catDiv.className = 'category-item';
+                const catHeader = document.createElement('div');
+                catHeader.className = 'category-title';
+                catHeader.innerHTML = `
+                    <span><i class="fas ${cat.icon}"></i> ${cat.name}</span>
+                    <i class="fas fa-chevron-right toggle-icon"></i>
+                `;
+                const topicList = document.createElement('ul');
+                topicList.className = 'topic-list';
+                cat.topics.forEach((topic, tIdx) => {
+                    const li = document.createElement('li');
+                    li.className = 'topic-item';
+                    li.textContent = topic.title;
+                    li.setAttribute('data-category', idx);
+                    li.setAttribute('data-topic', tIdx);
+                    li.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.querySelectorAll('.topic-item').forEach(t => t.classList.remove('active'));
+                        li.classList.add('active');
+                        displayContent(topic.title, topic.content);
+                    });
+                    topicList.appendChild(li);
+                });
+
+                catHeader.addEventListener('click', () => {
+                    const isOpen = topicList.classList.contains('show');
+                    document.querySelectorAll('.topic-list').forEach(list => list.classList.remove('show'));
+                    document.querySelectorAll('.category-title').forEach(title => title.classList.remove('open'));
+                    if (!isOpen) {
+                        topicList.classList.add('show');
+                        catHeader.classList.add('open');
+                    }
+                });
+
+                catDiv.appendChild(catHeader);
+                catDiv.appendChild(topicList);
+                container.appendChild(catDiv);
+            });
+        }
+
+        function displayContent(title, content) {
+            document.getElementById('content-title').textContent = title;
+            document.getElementById('content-body').innerHTML = content;
+        }
+
+        // Fungsi untuk me-refresh konten saat bahasa berubah
+        function refreshAcademyContent() {
+            loadContent();
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            loadContent();
+
+            // Inisialisasi bahasa dari translations.js
+            if (typeof setLanguage !== 'undefined' && typeof currentLang !== 'undefined') {
+                setLanguage(currentLang);
+            }
+
+            // Dapatkan tombol bahasa dan tambahkan event listener untuk refresh konten
+            const langBtn = document.getElementById('langToggle');
+            if (langBtn) {
+                langBtn.addEventListener('click', function() {
+                    // Setelah bahasa berubah, refresh konten academy
+                    setTimeout(refreshAcademyContent, 100); // sedikit delay untuk memastikan setLanguage selesai
+                });
+            }
+
+            // Jika masih ada event languageChanged, tetap dengarkan juga
+            window.addEventListener('languageChanged', function() {
+                refreshAcademyContent();
+            });
+        });
+    </script>
+</body>
+</html>

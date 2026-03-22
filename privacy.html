@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebijakan Privasi - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        .privacy-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            text-align: left;
+        }
+        .privacy-content p, .privacy-content li {
+            color: var(--text-primary);
+        }
+        .privacy-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section style="max-width: 900px; margin: 3rem auto; padding: 0 5%;">
+        <h1 class="gradient-title" data-i18n="privacy.title">Komitmen Privasi & Perlindungan Data Pengguna</h1>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;" data-i18n="privacy.subtitle">
+            Integritas Anda adalah Prioritas Utama Kami.
+        </p>
+
+        <div class="glass-card privacy-content" style="padding: 2.5rem; line-height: 1.8;">
+            <p style="margin-bottom: 1.5rem;" data-i18n="privacy.intro" data-i18n-html="true">
+                Di <strong>cryptara.id</strong>, kami memahami bahwa privasi adalah fondasi dari kepercayaan dalam ekosistem aset digital. Sejalan dengan perkembangan regulasi perlindungan data pribadi di Indonesia tahun 2026, kami berkomitmen untuk menjaga kerahasiaan setiap interaksi Anda di platform kami dengan standar transparansi yang tinggi.
+            </p>
+
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left; margin: 2rem 0 1rem;" data-i18n="privacy.section1.title">1. Pengumpulan Data yang Minimalis & Terukur</h2>
+            <p style="margin-bottom: 1rem;" data-i18n="privacy.section1.desc" data-i18n-html="true">
+                Kami menganut prinsip <em>Data Minimization</em>. <strong>cryptara.id</strong> tidak mengumpulkan data pribadi Anda secara otomatis saat Anda menjelajahi informasi di situs kami. Data pribadi hanya akan kami terima apabila Anda memberikannya secara sukarela melalui:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li data-i18n="privacy.section1.list1" data-i18n-html="true"><strong>Formulir Kontak:</strong> Untuk kebutuhan korespondensi atau pertanyaan teknis.</li>
+                <li data-i18n="privacy.section1.list2" data-i18n-html="true"><strong>Langganan Newsletter:</strong> Untuk pengiriman pembaruan pasar, edukasi P2P terbaru, dan panduan regulasi OJK yang Anda minta.</li>
+                <li data-i18n="privacy.section1.list3" data-i18n-html="true"><strong>Pendaftaran Anggota (Jika Ada):</strong> Untuk personalisasi pengalaman edukasi Anda di platform kami.</li>
+            </ul>
+
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left; margin: 2rem 0 1rem;" data-i18n="privacy.section2.title">2. Penggunaan Data yang Bertanggung Jawab</h2>
+            <p style="margin-bottom: 1.5rem;" data-i18n="privacy.section2.desc" data-i18n-html="true">
+                Setiap informasi yang Anda percayakan kepada kami hanya akan digunakan untuk tujuan yang sangat spesifik, yaitu:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li data-i18n="privacy.section2.list1">Memberikan respon yang akurat atas pertanyaan atau kendala yang Anda sampaikan.</li>
+                <li data-i18n="privacy.section2.list2">Mengirimkan konten edukasi, analisis pasar USDT, dan pembaruan sistem yang relevan dengan minat Anda.</li>
+                <li data-i18n="privacy.section2.list3">Meningkatkan kualitas materi edukasi agar tetap sesuai dengan kebutuhan komunitas kripto di Indonesia.</li>
+            </ul>
+
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left; margin: 2rem 0 1rem;" data-i18n="privacy.section3.title">3. Protokol Keamanan & Kerahasiaan</h2>
+            <p style="margin-bottom: 1.5rem;" data-i18n="privacy.section3.desc" data-i18n-html="true">
+                Kami menjunjung tinggi prinsip "Kedaulatan Data". <strong>cryptara.id</strong> secara tegas:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li data-i18n="privacy.section3.list1" data-i18n-html="true"><strong>TIDAK AKAN</strong> menjual, menyewakan, membarter, atau membocorkan data pribadi Anda kepada pihak ketiga untuk kepentingan komersial atau periklanan.</li>
+                <li data-i18n="privacy.section3.list2">Hanya akan membuka akses data jika diwajibkan oleh hukum yang berlaku atau atas instruksi resmi dari otoritas penegak hukum yang berwenang.</li>
+            </ul>
+
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left; margin: 2rem 0 1rem;" data-i18n="privacy.section4.title">4. Pengalaman Pengguna & Kebijakan Cookie</h2>
+            <p style="margin-bottom: 1.5rem;" data-i18n="privacy.section4.desc" data-i18n-html="true">
+                Untuk memberikan navigasi yang lebih lancar dan responsif, <strong>cryptara.id</strong> menggunakan teknologi <em>cookie</em>. Ini memungkinkan kami untuk memahami preferensi umum pengunjung tanpa mengidentifikasi identitas individu Anda. Dengan terus menggunakan platform ini, Anda memberikan persetujuan bagi kami untuk meningkatkan pengalaman penjelajahan Anda melalui teknologi tersebut.
+            </p>
+
+            <h2 class="gradient-title" style="font-size: 1.8rem; text-align: left; margin: 2rem 0 1rem;" data-i18n="privacy.section5.title">5. Hak Anda atas Informasi</h2>
+            <p style="margin-bottom: 1.5rem;" data-i18n="privacy.section5.desc" data-i18n-html="true">
+                Sebagai platform yang menghargai hak digital, kami memberikan kebebasan penuh bagi Anda untuk:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li data-i18n="privacy.section5.list1">Meninjau kembali data yang pernah Anda berikan kepada kami.</li>
+                <li data-i18n="privacy.section5.list2">Meminta penghapusan data pribadi Anda dari daftar langganan (<em>unsubscribe</em>) kapan saja tanpa syarat.</li>
+            </ul>
+
+            <p style="color: var(--accent-orange); font-weight: 500; text-align: center; margin-top: 2rem;" data-i18n="privacy.consent" data-i18n-html="true">
+                Dengan menggunakan cryptara.id, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh kebijakan privasi ini.
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+            // translations.js sudah auto-initialize, tidak perlu tambahan apa pun
+        });
+    </script>
+</body>
+</html>

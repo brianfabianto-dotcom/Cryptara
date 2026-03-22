@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi Kami - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .contact-card {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        .email-box {
+            background: rgba(255,94,0,0.1);
+            border: 1px solid var(--accent-orange);
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .email-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .copy-btn:hover {
+            background: var(--accent-orange);
+            color: black;
+        }
+        .contact-note {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer-note {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .footer-note a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section style="min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="glass-card contact-card" style="padding: 2.5rem;">
+            <div style="font-size: 4rem; color: var(--accent-orange); margin-bottom: 1rem;">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h1 class="gradient-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;" data-i18n="contact.title">Hubungi Kami</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="contact.subtitle">
+                Kirim pesan, pertanyaan, atau laporan melalui email. Tim kami akan merespon dalam 1x24 jam.
+            </p>
+
+            <div class="email-box">
+                <span class="email-text">hello@cryptara.id</span>
+                <button id="copyEmailBtn" class="copy-btn">
+                    <i class="far fa-copy"></i> <span data-i18n="contact.copyBtn">Salin</span>
+                </button>
+            </div>
+
+            <p class="contact-note" data-i18n="contact.note">
+                Kami menghargai setiap masukan dari Anda. Setiap email akan dibaca dan ditindaklanjuti.
+            </p>
+
+            <div class="footer-note">
+                <p data-i18n="contact.footerNote" data-i18n-html="true">
+                    Untuk pertanyaan seputar exchange, silakan lihat <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a> atau kunjungi <a href="learn.html" data-i18n="nav.academy">Academy</a> untuk panduan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // ==================== TOMBOL SALIN EMAIL ====================
+        function copyEmail() {
+            const email = 'hello@cryptara.id';
+            navigator.clipboard.writeText(email).then(() => {
+                alert(t('contact.copySuccess'));
+            }).catch(() => {
+                prompt(t('contact.copyManual'), email);
+            });
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+
+            // Tombol salin email
+            const copyBtn = document.getElementById('copyEmailBtn');
+            if (copyBtn) copyBtn.addEventListener('click', copyEmail);
+
+            // translations.js sudah auto-initialize, tidak perlu tambahan apa pun
+        });
+    </script>
+</body>
+</html>

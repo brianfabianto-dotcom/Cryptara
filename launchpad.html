@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launchpad - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== semua gaya tetap sama, tidak diubah ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #111111;
+            --text-primary: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --accent-orange: #FF5E00;
+            --accent-orange-light: #FF8A00;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --shadow-glow: 0 0 15px var(--accent-orange);
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255,94,0,0.05) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 80%, rgba(255,138,0,0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -2;
+            animation: moveGradient 20s ease infinite alternate;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
+        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.3rem; }
+
+        .gradient-title {
+            font-family: var(--font-display);
+            background: linear-gradient(135deg, #fff, var(--accent-orange-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-img {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: var(--accent-orange);
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--accent-orange);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-btn {
+            margin-left: 1rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: var(--accent-orange);
+            color: black;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        .heatmap-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+
+        .dimension-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .legend-color.green { 
+            background: linear-gradient(145deg, #2e7d32, #4caf50);
+            box-shadow: 0 0 12px #4caf50;
+        }
+        .legend-color.yellow { 
+            background: linear-gradient(145deg, #f9a825, #ffd600);
+            box-shadow: 0 0 12px #ffd600;
+        }
+        .legend-color.red { 
+            background: linear-gradient(145deg, #c62828, #f44336);
+            box-shadow: 0 0 12px #f44336;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .heatmap-card {
+            background: rgba(20,20,20,0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,94,0,0.2);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .heatmap-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 20px 40px rgba(255,94,0,0.3);
+        }
+
+        .heatmap-card[data-color="green"] { border-left: 4px solid #4caf50; }
+        .heatmap-card[data-color="yellow"] { border-left: 4px solid #ffd600; }
+        .heatmap-card[data-color="red"] { border-left: 4px solid #f44336; }
+
+        .coin-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,94,0,0.2);
+            color: var(--accent-orange);
+            font-weight: bold;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .coin-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-symbol {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            text-shadow: 0 2px 5px rgba(255,94,0,0.3);
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: break-word;
+        }
+
+        .card-cap {
+            font-size: 0.8rem;
+            color: var(--accent-orange);
+            font-weight: 600;
+            background: rgba(255,94,0,0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .card-name {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .card-name span {
+            color: var(--accent-orange);
+            font-size: 0.7rem;
+            background: rgba(255,94,0,0.1);
+            padding: 0.1rem 0.3rem;
+            border-radius: 12px;
+        }
+
+        .card-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .price-change {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+        }
+        .price-change.positive { color: #4caf50; }
+        .price-change.negative { color: #f44336; }
+
+        .dimension-bars {
+            display: flex;
+            gap: 0.2rem;
+            margin: 0.5rem 0 0.3rem;
+        }
+
+        .dimension-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .dimension-bar-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .dimension-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.55rem;
+            color: #777;
+            margin-top: 0.1rem;
+        }
+
+        .dimension-label span {
+            cursor: help;
+            border-bottom: 1px dotted var(--accent-orange);
+        }
+
+        .card-score {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: right;
+            margin-top: 0.3rem;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            background: #111;
+            border: 1px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            z-index: 100;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+        }
+
+        .heatmap-card:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+        }
+        .tooltip-label { color: var(--text-secondary); }
+        .tooltip-value { font-weight: 600; }
+        .tooltip-green { color: #4caf50; }
+        .tooltip-yellow { color: #ffd600; }
+        .tooltip-red { color: #f44336; }
+
+        footer {
+            background: var(--bg-primary);
+            padding: 2rem 5% 1rem;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-img {
+            height: 30px;
+            width: auto;
+        }
+
+        .footer-logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .footer-logo-text span {
+            color: var(--accent-orange);
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container { grid-template-columns: 1fr; gap: 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: block; color: var(--text-primary); font-size: 1.5rem; }
+        }
+
+        .loading {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1000px) { .heatmap-grid { grid-template-columns: repeat(3,1fr); } }
+        @media (max-width: 700px) { .heatmap-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 400px) { .heatmap-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="heatmap-container">
+        <h1 class="gradient-title" data-i18n="launchpad.title">Stablecoin Launchpad</h1>
+        <p class="heatmap-subtitle" style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="launchpad.subtitle">
+            Analisis mendalam 4 dimensi kunci: Cadangan, Stabilitas, Konsentrasi, Aktivitas.
+        </p>
+
+        <div class="dimension-legend">
+            <div><span style="color:#4caf50; font-weight:bold;">R</span> <span data-i18n="launchpad.dimensions.reserves">Cadangan</span></div>
+            <div><span style="color:#2196f3; font-weight:bold;">S</span> <span data-i18n="launchpad.dimensions.stability">Stabilitas</span></div>
+            <div><span style="color:#ff9800; font-weight:bold;">C</span> <span data-i18n="launchpad.dimensions.concentration">Konsentrasi</span></div>
+            <div><span style="color:#f44336; font-weight:bold;">A</span> <span data-i18n="launchpad.dimensions.activity">Aktivitas</span></div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><span class="legend-color green"></span> <span data-i18n="launchpad.legend.healthy">Sehat (skor > 75)</span></div>
+            <div class="legend-item"><span class="legend-color yellow"></span> <span data-i18n="launchpad.legend.medium">Sedang (50–75)</span></div>
+            <div class="legend-item"><span class="legend-color red"></span> <span data-i18n="launchpad.legend.risky">Berisiko (< 50)</span></div>
+        </div>
+
+        <div class="heatmap-grid" id="heatmap-grid"></div>
+        <p style="text-align: center; color: var(--text-secondary); font-size:0.9rem;" data-i18n="launchpad.clickHint">Klik pada stablecoin untuk melihat detail.</p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // Cache untuk logo
+        const logoCache = {};
+
+        async function loadCoinLogo(coin, containerId) {
+            const iconElement = document.getElementById(containerId);
+            if (!iconElement) return;
+
+            const symbol = coin.symbol.toLowerCase();
+
+            if (logoCache[symbol]) {
+                const img = new Image();
+                img.src = logoCache[symbol];
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                iconElement.innerHTML = '';
+                iconElement.appendChild(img);
+                iconElement.style.background = 'transparent';
+                return;
+            }
+
+            const coinGeckoMap = {
+                'usdt': 'tether',
+                'usdc': 'usd-coin',
+                'busd': 'binance-usd',
+                'dai': 'dai',
+                'frax': 'frax',
+                'lusd': 'liquity-usd',
+                'pyusd': 'paypal-usd',
+                'fdusd': 'first-digital-usd',
+                'usds': 'usds',
+                'usde': 'ethena',
+                'rlusd': 'rlusd',
+                'usd0': 'usd0'
+            };
+
+            const coinId = coinGeckoMap[symbol];
+            if (!coinId) {
+                fallbackToJsDelivr();
+                return;
+            }
+
+            try {
+                if (!window.batchPromise) {
+                    window.batchPromise = (async () => {
+                        const ids = Object.values(coinGeckoMap).filter(id => id).join(',');
+                        const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&per_page=100&page=1&sparkline=false`);
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        const data = await response.json();
+                        const map = {};
+                        data.forEach(coin => {
+                            if (coin.symbol && coin.image) {
+                                map[coin.symbol] = coin.image;
+                            }
+                        });
+                        return map;
+                    })();
+                }
+
+                const logoMap = await window.batchPromise;
+                const logoUrl = logoMap[symbol];
+
+                if (logoUrl) {
+                    logoCache[symbol] = logoUrl;
+                    const img = new Image();
+                    img.onload = () => {
+                        iconElement.innerHTML = '';
+                        iconElement.appendChild(img);
+                        iconElement.style.background = 'transparent';
+                    };
+                    img.onerror = () => {
+                        fallbackToJsDelivr();
+                    };
+                    img.src = logoUrl;
+                    img.alt = coin.name;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'contain';
+                } else {
+                    fallbackToJsDelivr();
+                }
+            } catch (err) {
+                console.warn('CoinGecko error:', err);
+                fallbackToJsDelivr();
+            }
+
+            function fallbackToJsDelivr() {
+                const fileNameMap = {
+                    'usdt': 'tether',
+                    'usdc': 'usd-coin',
+                    'busd': 'binance-usd',
+                    'dai': 'dai',
+                    'frax': 'frax',
+                    'lusd': 'liquity-usd',
+                    'pyusd': 'paypal-usd',
+                    'fdusd': 'first-digital-usd',
+                    'usds': 'usds',
+                    'usde': 'ethena',
+                    'rlusd': 'rlusd',
+                    'usd0': 'usd0'
+                };
+                const fileName = fileNameMap[symbol] || symbol;
+                const url = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.0/32@2x/icon/${fileName}.png`;
+
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                const timeout = setTimeout(() => {
+                    fallbackToCryptoicons();
+                }, 3000);
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    iconElement.innerHTML = '';
+                    iconElement.appendChild(img);
+                    iconElement.style.background = 'transparent';
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    fallbackToCryptoicons();
+                };
+                img.src = url;
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+            }
+
+            function fallbackToCryptoicons() {
+                const url = `https://cryptoicons.org/api/icon/${symbol}/80`;
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                const timeout = setTimeout(() => {
+                    showInitial();
+                }, 3000);
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    iconElement.innerHTML = '';
+                    iconElement.appendChild(img);
+                    iconElement.style.background = 'transparent';
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    showInitial();
+                };
+                img.src = url;
+                img.alt = coin.name;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+            }
+
+            function showInitial() {
+                iconElement.innerHTML = coin.symbol.charAt(0).toUpperCase();
+                iconElement.style.display = 'flex';
+                iconElement.style.alignItems = 'center';
+                iconElement.style.justifyContent = 'center';
+                iconElement.style.fontSize = '1rem';
+                iconElement.style.fontWeight = 'bold';
+                iconElement.style.background = 'linear-gradient(135deg, rgba(255,94,0,0.2), rgba(255,94,0,0.05))';
+                iconElement.style.color = '#ff8a00';
+                iconElement.style.borderRadius = '50%';
+            }
+        }
+
+        // ==================== DATA STABLECOIN ====================
+        const stablecoins = [
+            { name: 'Tether', symbol: 'USDT', category: 'Fiat-backed', marketCap: 112000000000, price: 1.00, change24h: 0.01, scores: { reserves: 75, peg: 90, concentration: 85, activity: 95 } },
+            { name: 'USD Coin', symbol: 'USDC', category: 'Fiat-backed', marketCap: 35000000000, price: 1.00, change24h: -0.02, scores: { reserves: 95, peg: 95, concentration: 90, activity: 90 } },
+            { name: 'Binance USD', symbol: 'BUSD', category: 'Fiat-backed', marketCap: 2000000000, price: 1.00, change24h: 0.03, scores: { reserves: 90, peg: 90, concentration: 70, activity: 60 } },
+            { name: 'PayPal USD', symbol: 'PYUSD', category: 'Fiat-backed', marketCap: 800000000, price: 1.00, change24h: 0.05, scores: { reserves: 90, peg: 90, concentration: 20, activity: 40 } },
+            { name: 'First Digital', symbol: 'FDUSD', category: 'Fiat-backed', marketCap: 3000000000, price: 1.00, change24h: -0.01, scores: { reserves: 70, peg: 85, concentration: 40, activity: 50 } },
+            { name: 'Dai', symbol: 'DAI', category: 'Crypto-backed', marketCap: 5000000000, price: 1.00, change24h: 0.02, scores: { reserves: 80, peg: 85, concentration: 65, activity: 85 } },
+            { name: 'LUSD', symbol: 'LUSD', category: 'Crypto-backed', marketCap: 200000000, price: 1.00, change24h: -0.04, scores: { reserves: 95, peg: 95, concentration: 55, activity: 40 } },
+            { name: 'Frax', symbol: 'FRAX', category: 'Crypto-backed', marketCap: 650000000, price: 1.00, change24h: 0.07, scores: { reserves: 70, peg: 80, concentration: 60, activity: 50 } },
+            { name: 'USDS', symbol: 'USDS', category: 'Algorithmic', marketCap: 400000000, price: 0.99, change24h: -0.15, scores: { reserves: 40, peg: 50, concentration: 10, activity: 30 } },
+            { name: 'RLUSD', symbol: 'RLUSD', category: 'Algorithmic', marketCap: 100000000, price: 0.98, change24h: -0.22, scores: { reserves: 30, peg: 40, concentration: 10, activity: 20 } },
+            { name: 'USD0', symbol: 'USD0', category: 'Algorithmic', marketCap: 50000000, price: 0.95, change24h: -0.35, scores: { reserves: 15, peg: 20, concentration: 5, activity: 15 } },
+            { name: 'Ethena', symbol: 'USDe', category: 'Algorithmic', marketCap: 2500000000, price: 1.01, change24h: 0.12, scores: { reserves: 50, peg: 60, concentration: 30, activity: 70 } },
+        ];
+
+        // ==================== AMBIL DAFTAR ID DARI COINLORE ====================
+        let coinIdMap = {};
+
+        async function fetchCoinIdMap() {
+            try {
+                const response = await fetch('https://api.coinlore.net/api/tickers/?start=0&limit=500');
+                const data = await response.json();
+                if (data && data.data) {
+                    data.data.forEach(coin => {
+                        coinIdMap[coin.symbol.toUpperCase()] = coin.id;
+                    });
+                }
+            } catch (error) {
+                console.error('Gagal mengambil daftar koin:', error);
+            }
+        }
+
+        function aggregateScore(scores) {
+            return (scores.reserves + scores.peg + scores.concentration + scores.activity) / 4;
+        }
+
+        function formatMarketCap(mc) {
+            if (mc >= 1e9) return '$' + (mc / 1e9).toFixed(2) + 'B';
+            if (mc >= 1e6) return '$' + (mc / 1e6).toFixed(2) + 'M';
+            return '$' + mc;
+        }
+
+        function getColorClass(score) {
+            if (score >= 75) return 'green';
+            if (score >= 50) return 'yellow';
+            return 'red';
+        }
+
+        async function renderCards() {
+            const grid = document.getElementById('heatmap-grid');
+            grid.innerHTML = '';
+
+            for (const coin of stablecoins) {
+                const total = aggregateScore(coin.scores);
+                const colorClass = getColorClass(total);
+                const mcFormatted = formatMarketCap(coin.marketCap);
+                const changeClass = coin.change24h >= 0 ? 'positive' : 'negative';
+                const changeSign = coin.change24h >= 0 ? '▲' : '▼';
+
+                // Use translated dimension labels for tooltip
+                const reservesLabel = t('launchpad.dimensions.reserves');
+                const stabilityLabel = t('launchpad.dimensions.stability');
+                const concentrationLabel = t('launchpad.dimensions.concentration');
+                const activityLabel = t('launchpad.dimensions.activity');
+
+                const tooltip = `
+                    <div class="tooltip">
+                        <div class="tooltip-row"><span class="tooltip-label">${reservesLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.reserves)}">${coin.scores.reserves}</span></div>
+                        <div class="tooltip-row"><span class="tooltip-label">${stabilityLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.peg)}">${coin.scores.peg}</span></div>
+                        <div class="tooltip-row"><span class="tooltip-label">${concentrationLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.concentration)}">${coin.scores.concentration}</span></div>
+                        <div class="tooltip-row"><span class="tooltip-label">${activityLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.activity)}">${coin.scores.activity}</span></div>
+                        <div style="margin-top:0.3rem; border-top:1px solid #333; padding-top:0.3rem;">Skor total: ${total.toFixed(1)}</div>
+                    </div>
+                `;
+
+                const card = document.createElement('div');
+                card.className = 'heatmap-card';
+                card.setAttribute('data-color', colorClass);
+                card.innerHTML = `
+                    ${tooltip}
+                    <div class="card-header">
+                        <div class="coin-logo" id="logo-${coin.symbol}"></div>
+                        <span class="card-symbol">${coin.symbol}</span>
+                        <span class="card-cap">${mcFormatted}</span>
+                    </div>
+                    <div class="card-name">
+                        ${coin.name}
+                        <span>${coin.category}</span>
+                    </div>
+                    <div class="card-price">
+                        $${coin.price.toFixed(2)}
+                        <span class="price-change ${changeClass}">${changeSign} ${Math.abs(coin.change24h).toFixed(2)}%</span>
+                    </div>
+                    <div class="dimension-bars">
+                        <div class="dimension-bar" title="${reservesLabel}"><div class="dimension-bar-fill" style="width:${coin.scores.reserves}%; background:#4caf50;"></div></div>
+                        <div class="dimension-bar" title="${stabilityLabel}"><div class="dimension-bar-fill" style="width:${coin.scores.peg}%; background:#2196f3;"></div></div>
+                        <div class="dimension-bar" title="${concentrationLabel}"><div class="dimension-bar-fill" style="width:${coin.scores.concentration}%; background:#ff9800;"></div></div>
+                        <div class="dimension-bar" title="${activityLabel}"><div class="dimension-bar-fill" style="width:${coin.scores.activity}%; background:#f44336;"></div></div>
+                    </div>
+                    <div class="dimension-label">
+                        <span title="${reservesLabel}">R</span>
+                        <span title="${stabilityLabel}">S</span>
+                        <span title="${concentrationLabel}">C</span>
+                        <span title="${activityLabel}">A</span>
+                    </div>
+                    <div class="card-score" style="color: ${colorClass==='green'?'#4caf50':colorClass==='yellow'?'#ffd600':'#f44336'}">
+                        ${total.toFixed(0)}
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const id = coinIdMap[coin.symbol];
+                    if (id) {
+                        window.location.href = `coin.html?id=${id}&from=launchpad`;
+                    } else {
+                        window.location.href = `coin.html?symbol=${coin.symbol}&from=launchpad`;
+                    }
+                });
+
+                grid.appendChild(card);
+                await loadCoinLogo(coin, `logo-${coin.symbol}`);
+            }
+        }
+
+        // Refresh card content when language changes
+        async function refreshCards() {
+            await renderCards();  // re-render with new translations
+        }
+
+        // ==================== INIT ====================
+        (async function init() {
+            initParticles();
+            await fetchCoinIdMap();
+            await renderCards();
+
+            // translations.js sudah menangani inisialisasi bahasa dan event listener tombol.
+            // Kita hanya perlu mendengarkan event languageChanged untuk refresh kartu.
+            window.addEventListener('languageChanged', function() {
+                refreshCards();
+            });
+        })();
+    </script>
+</body>
+</html>

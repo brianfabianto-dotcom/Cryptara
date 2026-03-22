@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolkit - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ===== TOOLKIT SPECIFIC STYLES ===== */
+        .toolkit-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .toolkit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .toolkit-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        .toolkit-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+        .card-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.75rem;
+        }
+        .card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+        .input-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            /* Hapus spinner pada input number */
+            -moz-appearance: textfield;
+        }
+        .input-group input::-webkit-outer-spin-button,
+        .input-group input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Styling untuk opsi dropdown agar teks terlihat jelas */
+        .input-group select option {
+            background: #1a1a1a;
+            color: var(--text-primary);
+            padding: 0.5rem;
+        }
+        .btn-calc {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            padding: 0.7rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .btn-calc:hover {
+            background: var(--accent-orange);
+            color: black;
+        }
+        .result-box {
+            background: rgba(255,94,0,0.1);
+            border: 1px solid var(--accent-orange);
+            border-radius: 16px;
+            padding: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-orange);
+        }
+        .note {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        .currency-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .currency-option {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .currency-option.active {
+            background: var(--accent-orange);
+            color: black;
+        }
+        .network-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .network-list li {
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .network-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(255,94,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent-orange);
+        }
+        .network-link {
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+        .tip-list {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .tip-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <div class="toolkit-container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 class="gradient-title" data-i18n="toolkit.title">Toolkit Kripto</h1>
+            <p style="color: var(--text-secondary);" data-i18n="toolkit.subtitle">Kalkulator cerdas, konverter, dan panduan jaringan untuk membantu transaksi Anda.</p>
+        </div>
+
+        <div class="toolkit-grid">
+            <!-- 1. Kalkulator Harga -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.priceCalculator">Kalkulator Harga</h3></div>
+                <div class="card-description" data-i18n="toolkit.priceDesc">Hitung nilai USDT ke mata uang pilihan berdasarkan harga exchange.</div>
+                <div class="input-group"><label data-i18n="toolkit.amountUSDT">Jumlah (USDT)</label><input type="number" id="calc-amount" value="1" min="0" step="0.01"></div>
+                <div class="currency-toggle" id="calc-currency-toggle">
+                    <div class="currency-option active" data-currency="IDR">IDR</div>
+                    <div class="currency-option" data-currency="USD">USD</div>
+                </div>
+                <div class="input-group"><label data-i18n="toolkit.chooseExchange">Pilih Exchange</label><select id="calc-exchange"><option value="indodax">Indodax</option><option value="tokocrypto">Tokocrypto</option><option value="pintu">Pintu</option><option value="binance">Binance</option><option value="kraken">Kraken</option><option value="coinbase">Coinbase</option></select></div>
+                <div class="result-box" id="calc-result">Memuat...</div>
+                <div class="note" data-i18n="toolkit.note">*Harga estimasi berdasarkan multiplier sederhana.</div>
+            </div>
+
+            <!-- 2. Konverter -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.converter">Konverter Kripto</h3></div>
+                <div class="card-description" data-i18n="toolkit.converterDesc">Konversi kripto populer ke Rupiah (IDR) atau Dolar AS (USD).</div>
+                <div class="input-group"><label data-i18n="toolkit.from">Dari (Kripto)</label><select id="convert-from"></select></div>
+                <div class="input-group"><label data-i18n="toolkit.to">Ke (Fiat)</label><select id="convert-to"><option value="IDR">IDR</option><option value="USD">USD</option></select></div>
+                <div class="input-group"><label data-i18n="toolkit.amount">Jumlah</label><input type="number" id="convert-amount" value="1" min="0" step="0.01"></div>
+                <button class="btn-calc" id="convert-btn" data-i18n="toolkit.convert">Konversi</button>
+                <div class="result-box" id="convert-result">0</div>
+            </div>
+
+            <!-- 3. Cek Jaringan -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.networkChecker">Cek Jaringan</h3></div>
+                <div class="card-description" data-i18n="toolkit.networkDesc">Pilih jaringan untuk melihat status transaksi melalui blockchain explorer.</div>
+                <ul class="network-list">
+                    <li><div class="network-icon">Ξ</div><div>Ethereum (ERC-20)</div><a href="https://etherscan.io/" target="_blank" class="network-link">Cek</a></li>
+                    <li><div class="network-icon">⚡</div><div>BSC (BEP-20)</div><a href="https://bscscan.com/" target="_blank" class="network-link">Cek</a></li>
+                    <li><div class="network-icon">T</div><div>Tron (TRC-20)</div><a href="https://tronscan.org/" target="_blank" class="network-link">Cek</a></li>
+                    <li><div class="network-icon">◎</div><div>Solana (SPL)</div><a href="https://solscan.io/" target="_blank" class="network-link">Cek</a></li>
+                </ul>
+            </div>
+
+            <!-- 4. Staking -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.staking">Kalkulator Staking</h3></div>
+                <div class="card-description" data-i18n="toolkit.stakingDesc">Estimasi keuntungan staking dengan APY dan durasi tertentu.</div>
+                <div class="input-group"><label data-i18n="toolkit.selectCoin">Pilih Koin</label><select id="stake-coin"></select></div>
+                <div class="input-group"><label data-i18n="toolkit.stakingAmount">Jumlah Staking</label><input type="number" id="stake-amount" value="1000" min="0" step="10"></div>
+                <div class="input-group"><label data-i18n="toolkit.apy">APY (%)</label><input type="number" id="stake-apy" value="5" min="0" step="0.1"></div>
+                <div class="input-group"><label data-i18n="toolkit.duration">Durasi (hari)</label><input type="number" id="stake-duration" value="30" min="1" step="1"></div>
+                <button class="btn-calc" id="stake-calc-btn" data-i18n="toolkit.calculate">Hitung</button>
+                <div class="result-box" id="stake-result">0</div>
+                <div class="note" data-i18n="toolkit.note">*Estimasi tanpa compounding.</div>
+            </div>
+
+            <!-- 5. Grid Bot -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.gridBot">Kalkulator Grid Bot</h3></div>
+                <div class="card-description" data-i18n="toolkit.gridDesc">Estimasi profit grid trading pada range harga tertentu.</div>
+                <div class="input-group"><label data-i18n="toolkit.selectCoin">Pilih Koin</label><select id="grid-coin"></select></div>
+                <div class="input-group"><label data-i18n="toolkit.lowPrice">Harga Bawah (USDT)</label><input type="number" id="grid-price-low" step="0.01"></div>
+                <div class="input-group"><label data-i18n="toolkit.highPrice">Harga Atas (USDT)</label><input type="number" id="grid-price-high" step="0.01"></div>
+                <div class="input-group"><label data-i18n="toolkit.investment">Investasi (USDT)</label><input type="number" id="grid-invest" value="1000" min="0" step="10"></div>
+                <div class="input-group"><label data-i18n="toolkit.gridCount">Jumlah Grid</label><input type="number" id="grid-count" value="10" min="2" max="100" step="1"></div>
+                <button class="btn-calc" id="grid-calc-btn" data-i18n="toolkit.calculate">Hitung</button>
+                <div class="result-box" id="grid-result">0 USDT</div>
+                <div class="note" data-i18n="toolkit.note">*Estimasi profit per siklus ideal.</div>
+            </div>
+
+            <!-- 6. Tips Keamanan -->
+            <div class="toolkit-card">
+                <div class="card-header"><h3 data-i18n="toolkit.securityTips">Tips Keamanan</h3></div>
+                <div class="card-description" data-i18n="toolkit.securityDesc">Panduan singkat menjaga aset kripto Anda.</div>
+                <ul class="tip-list">
+                    <li data-i18n="toolkit.tip1">✔ Gunakan hardware wallet untuk penyimpanan jangka panjang.</li>
+                    <li data-i18n="toolkit.tip2">✔ Jangan pernah bagikan seed phrase / private key.</li>
+                    <li data-i18n="toolkit.tip3">✔ Aktifkan 2FA (Google Authenticator) di semua exchange.</li>
+                    <li data-i18n="toolkit.tip4">✔ Hati-hati dengan tautan phishing – selalu periksa URL.</li>
+                    <li data-i18n="toolkit.tip5">✔ Mulai dengan investasi kecil saat pertama kali.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // ==================== GLOBAL ====================
+        let kursIdr = 15800;
+        let allCoins = [];
+        let prices = { USDT: 1, BTC: 65000, ETH: 3500, BNB: 580, SOL: 180 };
+
+        async function getKurs() {
+            try {
+                const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await res.json();
+                kursIdr = data.rates.IDR || 15800;
+            } catch(e) { console.warn(e); }
+            return kursIdr;
+        }
+
+        async function fetchCoinList() {
+            try {
+                const res = await fetch('https://api.coinlore.net/api/tickers/?start=0&limit=200');
+                const data = await res.json();
+                if (data && data.data) {
+                    allCoins = data.data.map(c => ({ symbol: c.symbol, name: c.name, price_usd: parseFloat(c.price_usd) || 0, id: c.id }));
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function populateCoinDropdowns() {
+            const convertSelect = document.getElementById('convert-from');
+            const stakeSelect = document.getElementById('stake-coin');
+            const gridSelect = document.getElementById('grid-coin');
+            let options = '';
+            allCoins.forEach(coin => {
+                options += `<option value="${coin.symbol}" data-price="${coin.price_usd}">${coin.name} (${coin.symbol})</option>`;
+            });
+            convertSelect.innerHTML = options;
+            stakeSelect.innerHTML = options;
+            gridSelect.innerHTML = options;
+            const btc = allCoins.find(c => c.symbol === 'BTC');
+            if (btc) {
+                convertSelect.value = 'BTC';
+                stakeSelect.value = 'BTC';
+                gridSelect.value = 'BTC';
+                document.getElementById('grid-price-low').value = (btc.price_usd * 0.85).toFixed(2);
+                document.getElementById('grid-price-high').value = (btc.price_usd * 1.15).toFixed(2);
+            }
+        }
+
+        function getCoinPrice(symbol) {
+            const coin = allCoins.find(c => c.symbol === symbol);
+            return coin ? coin.price_usd : 0;
+        }
+
+        // Kalkulator Harga
+        let calcCurrency = 'IDR';
+        document.querySelectorAll('#calc-currency-toggle .currency-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelectorAll('#calc-currency-toggle .currency-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                calcCurrency = this.getAttribute('data-currency');
+                updateCalculator();
+            });
+        });
+        async function updateCalculator() {
+            const amount = parseFloat(document.getElementById('calc-amount').value) || 0;
+            const exchange = document.getElementById('calc-exchange').value;
+            let rate = 1;
+            if (calcCurrency === 'IDR') rate = await getKurs();
+            let multiplier = 1;
+            if (exchange === 'tokocrypto') multiplier = 0.998;
+            else if (exchange === 'pintu') multiplier = 1.001;
+            else if (exchange === 'binance') multiplier = 0.997;
+            else if (exchange === 'kraken') multiplier = 0.995;
+            else if (exchange === 'coinbase') multiplier = 1.005;
+            const result = amount * rate * multiplier;
+            document.getElementById('calc-result').textContent = `${calcCurrency === 'IDR' ? 'Rp' : '$'} ${Math.round(result).toLocaleString('id-ID')}`;
+        }
+
+        // Konverter
+        async function convertCurrency() {
+            const fromSymbol = document.getElementById('convert-from').value;
+            const to = document.getElementById('convert-to').value;
+            const amount = parseFloat(document.getElementById('convert-amount').value) || 0;
+            if (!fromSymbol) { document.getElementById('convert-result').textContent = 'Pilih koin'; return; }
+            const priceUSD = getCoinPrice(fromSymbol);
+            const inUSD = amount * priceUSD;
+            let result = to === 'IDR' ? inUSD * kursIdr : inUSD;
+            document.getElementById('convert-result').textContent = `${amount} ${fromSymbol} = ${result.toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${to}`;
+        }
+
+        // Staking
+        function calculateStaking() {
+            const coinSymbol = document.getElementById('stake-coin').value;
+            if (!coinSymbol) { document.getElementById('stake-result').textContent = 'Pilih koin'; return; }
+            const amount = parseFloat(document.getElementById('stake-amount').value) || 0;
+            const apy = parseFloat(document.getElementById('stake-apy').value) || 0;
+            const days = parseFloat(document.getElementById('stake-duration').value) || 0;
+            const profit = amount * (apy / 100) * (days / 365);
+            const total = amount + profit;
+            document.getElementById('stake-result').textContent = `${total.toFixed(4)} ${coinSymbol} (profit: ${profit.toFixed(4)})`;
+        }
+
+        // Grid
+        function calculateGrid() {
+            const coinSymbol = document.getElementById('grid-coin').value;
+            if (!coinSymbol) { document.getElementById('grid-result').textContent = 'Pilih koin'; return; }
+            const low = parseFloat(document.getElementById('grid-price-low').value) || 0;
+            const high = parseFloat(document.getElementById('grid-price-high').value) || 0;
+            const invest = parseFloat(document.getElementById('grid-invest').value) || 0;
+            const grids = parseInt(document.getElementById('grid-count').value) || 1;
+            if (low >= high) { document.getElementById('grid-result').textContent = 'Harga atas harus > bawah'; return; }
+            const avgPrice = (low + high) / 2;
+            const gridStep = (high - low) / (grids - 1);
+            const profitPerGrid = (gridStep / avgPrice) * (invest / grids);
+            const totalProfit = profitPerGrid * (grids - 1) * 2;
+            document.getElementById('grid-result').textContent = `${totalProfit.toFixed(2)} USDT (per siklus)`;
+        }
+
+        function updateGridPriceRange() {
+            const coinSymbol = document.getElementById('grid-coin').value;
+            const price = getCoinPrice(coinSymbol);
+            if (price > 0) {
+                document.getElementById('grid-price-low').value = (price * 0.85).toFixed(2);
+                document.getElementById('grid-price-high').value = (price * 1.15).toFixed(2);
+            }
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', async function() {
+            initParticles();
+            await getKurs();
+            await fetchCoinList();
+            populateCoinDropdowns();
+
+            document.getElementById('calc-amount').addEventListener('input', updateCalculator);
+            document.getElementById('calc-exchange').addEventListener('change', updateCalculator);
+            await updateCalculator();
+
+            document.getElementById('convert-btn').addEventListener('click', convertCurrency);
+            await convertCurrency();
+
+            document.getElementById('stake-calc-btn').addEventListener('click', calculateStaking);
+            calculateStaking();
+
+            document.getElementById('grid-calc-btn').addEventListener('click', calculateGrid);
+            document.getElementById('grid-coin').addEventListener('change', updateGridPriceRange);
+            calculateGrid();
+
+            // Refresh saat bahasa berubah
+            window.addEventListener('languageChanged', function() {
+                updateCalculator();
+                convertCurrency();
+                calculateStaking();
+                calculateGrid();
+            });
+        });
+    </script>
+</body>
+</html>

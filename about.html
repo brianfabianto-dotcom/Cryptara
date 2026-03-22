@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== PAGE SPECIFIC STYLES ===== */
+        .about-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .about-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .about-hero .subheadline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .mission-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .mission-card h2 {
+            font-size: 2rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-orange);
+            padding-left: 1rem;
+        }
+
+        .mission-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pillar-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            transition: 0.3s;
+        }
+
+        .pillar-item:hover {
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+        }
+
+        .pillar-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .pillar-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .closing-statement {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .closing-statement p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+        }
+
+        .closing-statement .highlight {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        @media (max-width: 800px) {
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <section class="about-container">
+        <div class="about-hero">
+            <h1 class="gradient-title" data-i18n="about.title">Gerbang Transparansi Kripto Indonesia</h1>
+            <p class="subheadline" data-i18n="about.subtitle">Menavigasi Masa Depan Aset Digital dengan Presisi dan Keamanan.</p>
+        </div>
+
+        <div class="mission-card">
+            <h2 data-i18n="about.mission.title">Misi Kami: Transparansi Tanpa Kompromi</h2>
+            <p data-i18n="about.mission.desc1" data-i18n-html="true">Di tengah transformasi besar peta keuangan digital Indonesia tahun 2026, <strong class="highlight">cryptara.id</strong> hadir sebagai mercusuar informasi yang menjembatani ambisi investasi masyarakat dengan ekosistem aset kripto yang sehat. Kami adalah platform direktori exchange terpadu dan pusat edukasi P2P yang didedikasikan sepenuhnya untuk menciptakan standar baru dalam bertransaksi USDT.</p>
+            <p data-i18n="about.mission.desc2" data-i18n-html="true">Kami percaya bahwa aset kripto, terutama USDT sebagai pilar likuiditas global, harus dapat diakses oleh setiap individu dengan rasa aman yang absolut. <strong>cryptara.id</strong> lahir dari kebutuhan mendesak akan sumber informasi yang jujur di tengah pesatnya adopsi teknologi blockchain. Kami mengurasi platform P2P terbaik—baik bursa lokal yang telah berizin resmi OJK maupun platform global terkemuka—untuk memastikan setiap pilihan yang Anda ambil berpijak pada data, bukan spekulasi.</p>
+        </div>
+
+        <h2 class="gradient-title" style="margin-bottom: 2rem;" data-i18n="about.pillars.title">Pilar Utama cryptara.id</h2>
+        <div class="pillars-grid">
+            <div class="pillar-item">
+                <div class="pillar-icon">📋</div>
+                <h3 data-i18n="about.pillars.item1.title">Kurasi Exchange Terpercaya</h3>
+                <p data-i18n="about.pillars.item1.desc">Kami menyajikan direktori mendalam mengenai platform yang mematuhi regulasi ketat tahun 2026, membantu Anda membedakan mana entitas yang memiliki legalitas penuh dan mana yang berisiko.</p>
+            </div>
+            <div class="pillar-item">
+                <div class="pillar-icon">📚</div>
+                <h3 data-i18n="about.pillars.item2.title">Pusat Edukasi P2P Strategis</h3>
+                <p data-i18n="about.pillars.item2.desc">Dari pengenalan dasar bagi pemula hingga strategi arbitrase dan manajemen risiko bagi trader mahir, materi kami disusun secara taktis dan mudah dipahami.</p>
+            </div>
+            <div class="pillar-item">
+                <div class="pillar-icon">📊</div>
+                <h3 data-i18n="about.pillars.item3.title">Data Real-Time & Navigasi Pajak</h3>
+                <p data-i18n="about.pillars.item3.desc">Di era regulasi baru ini, kami menghadirkan transparansi harga serta panduan kepatuhan pajak bagi pengguna P2P, sehingga aktivitas finansial Anda tetap selaras dengan hukum yang berlaku di Indonesia.</p>
+            </div>
+        </div>
+
+        <div class="closing-statement">
+            <p data-i18n="about.closing.tagline">Membangun Kepercayaan di Era Baru</p>
+            <p data-i18n="about.closing.desc1" data-i18n-html="true">Didirikan pada tahun 2026, cryptara.id bukan sekadar pusat data. Kami adalah komunitas yang dibangun atas dasar integritas. Kami memahami bahwa di dunia digital, informasi adalah perisai sekaligus senjata. Oleh karena itu, komitmen kami sederhana: <span class="highlight">Membekali Anda dengan pengetahuan yang kredibel</span> agar setiap keputusan "Beli" atau "Jual" dilakukan dengan kecerdasan finansial yang matang.</p>
+            <p style="margin-top: 2rem;" data-i18n="about.closing.desc2" data-i18n-html="true">Mari jelajahi ekosistem USDT dengan lebih pintar, lebih aman, dan lebih menguntungkan. Selamat datang di masa depan transaksi kripto Indonesia. Selamat datang di <span class="highlight">cryptara.id</span>.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+            // translations.js sudah auto-initialize, tidak perlu tambahan apa pun
+        });
+    </script>
+</body>
+</html>

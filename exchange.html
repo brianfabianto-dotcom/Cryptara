@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeHub - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ===== EXCHANGE PAGE STYLES ===== */
+        .exchange-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+        .grid-container {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        /* Desktop: 5 kolom (agar 10 exchange jadi 2 baris rapi) */
+        @media (min-width: 1001px) {
+            .grid-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        /* Tablet: 3 kolom */
+        @media (max-width: 1000px) and (min-width: 701px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        /* Mobile: 1 kolom */
+        @media (max-width: 700px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-align: center;
+        }
+        .card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+        .card-logo-img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            padding: 8px;
+            align-self: center;
+        }
+        .card-logo-fallback {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 1rem auto;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+        .card-badge {
+            display: inline-block;
+            background: rgba(255,94,0,0.2);
+            color: var(--accent-orange);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+            align-self: center;
+        }
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            flex: 1;
+        }
+        .card-link {
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            align-self: center;
+        }
+        .card-link:hover {
+            text-decoration: underline;
+        }
+        h2.gradient-title {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+        }
+        @media (max-width: 768px) {
+            .exchange-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <div class="exchange-container">
+        <h1 class="gradient-title" data-i18n="exchange.title">TradeHub</h1>
+        <p style="text-align: center; max-width: 800px; margin: 1rem auto 3rem; color: var(--text-secondary);" data-i18n="exchange.subtitle">
+            Platform lokal (resmi OJK) dan global dengan fitur P2P. Klik logo atau nama untuk mengunjungi situs resmi.
+        </p>
+
+        <!-- Exchange Lokal Indonesia -->
+        <h2 class="gradient-title" style="font-size: 2rem;" data-i18n="exchange.localTitle">🇮🇩 Exchange Lokal (Resmi OJK)</h2>
+        <div class="grid-container">
+            <!-- Indodax -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=indodax.com&sz=64" alt="Indodax" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">ID</div>
+                <h3>Indodax</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.indodaxDesc">9,7 jt pengguna • Volume Rp201 T</p>
+                <a href="https://indodax.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Tokocrypto -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=64" alt="Tokocrypto" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">TK</div>
+                <h3>Tokocrypto</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.tokocryptoDesc">Didukung Binance • Likuiditas tinggi</p>
+                <a href="https://tokocrypto.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Pintu -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=pintu.co.id&sz=64" alt="Pintu" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">PT</div>
+                <h3>Pintu</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.pintuDesc">10 jt+ unduhan • Ramah pemula</p>
+                <a href="https://pintu.co.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Reku -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=reku.id&sz=64" alt="Reku" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">RK</div>
+                <h3>Reku</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.rekuDesc">Biaya termurah • UI modern</p>
+                <a href="https://reku.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Pluang -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=pluang.com&sz=64" alt="Pluang" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">PL</div>
+                <h3>Pluang</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.pluangDesc">12 jt+ pengguna • 600+ aset</p>
+                <a href="https://pluang.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Triv -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=triv.id&sz=64" alt="Triv" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">TV</div>
+                <h3>Triv</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.trivDesc">Regulated sejak 2015 • ISO27001</p>
+                <a href="https://triv.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Ajaib Kripto -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=ajaib.co.id&sz=64" alt="Ajaib Kripto" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">AJ</div>
+                <h3>Ajaib Kripto</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.ajaibDesc">Integrasi Ajaib • Proses instan</p>
+                <a href="https://ajaib.co.id/kripto" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Upbit Indonesia -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=upbit.com&sz=64" alt="Upbit Indonesia" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">UP</div>
+                <h3>Upbit Indonesia</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.upbitDesc">Standar global • Likuiditas tinggi</p>
+                <a href="https://upbit.com/id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Luno -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=luno.com&sz=64" alt="Luno" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">LN</div>
+                <h3>Luno</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.lunoDesc">Platform global • Simpel & aman</p>
+                <a href="https://luno.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Nanovest -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=nanovest.com&sz=64" alt="Nanovest" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">NV</div>
+                <h3>Nanovest</h3>
+                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
+                <p data-i18n="exchange.nanovestDesc">Investasi mikro • Multi-aset</p>
+                <a href="https://nanovest.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+        </div>
+
+        <!-- Exchange Global -->
+        <h2 class="gradient-title" style="font-size: 2rem;" data-i18n="exchange.globalTitle">Exchange Global (Fitur P2P)</h2>
+        <div class="grid-container">
+            <!-- Binance -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=binance.com&sz=64" alt="Binance" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">BN</div>
+                <h3>Binance</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.binanceDesc">Exchange terbesar • 800+ koin</p>
+                <a href="https://binance.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Bybit -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=bybit.com&sz=64" alt="Bybit" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">BB</div>
+                <h3>Bybit</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.bybitDesc">Derivatif terbaik • Likuiditas tinggi</p>
+                <a href="https://bybit.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- OKX -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=okx.com&sz=64" alt="OKX" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">OK</div>
+                <h3>OKX</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.okxDesc">Fitur derivatif • 300+ koin</p>
+                <a href="https://okx.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Bitget -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=bitget.com&sz=64" alt="Bitget" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">BG</div>
+                <h3>Bitget</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.bitgetDesc">1.300+ koin • Biaya 0,01%</p>
+                <a href="https://bitget.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- KuCoin -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=kucoin.com&sz=64" alt="KuCoin" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">KC</div>
+                <h3>KuCoin</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.kucoinDesc">Fokus altcoin • Banyak pilihan</p>
+                <a href="https://kucoin.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Coinbase -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=coinbase.com&sz=64" alt="Coinbase" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">CB</div>
+                <h3>Coinbase</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.coinbaseDesc">Perusahaan publik AS • Keamanan tinggi</p>
+                <a href="https://coinbase.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Kraken -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=kraken.com&sz=64" alt="Kraken" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">KR</div>
+                <h3>Kraken</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.krakenDesc">Exchange tertua • Reputasi kuat</p>
+                <a href="https://kraken.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- Gate.io -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=gate.io&sz=64" alt="Gate.io" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">GI</div>
+                <h3>Gate.io</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.gateioDesc">1.700+ koin • Likuiditas besar</p>
+                <a href="https://gate.io" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- MEXC -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=mexc.com&sz=64" alt="MEXC" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">MX</div>
+                <h3>MEXC</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.mexcDesc">1.500+ koin • Biaya rendah</p>
+                <a href="https://mexc.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+            <!-- BingX -->
+            <div class="card">
+                <img src="https://www.google.com/s2/favicons?domain=bingx.com&sz=64" alt="BingX" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display: none;">BX</div>
+                <h3>BingX</h3>
+                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
+                <p data-i18n="exchange.bingxDesc">Social trading • 500+ koin</p>
+                <a href="https://bingx.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                initParticlesArray();
+            }
+
+            function initParticlesArray() {
+                particles = [];
+                for (let i = 0; i < 60; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 2 + 0.5,
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#FF5E00';
+                ctx.shadowColor = '#FF5E00';
+                ctx.shadowBlur = 6;
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+
+            // Inisialisasi VanillaTilt untuk efek card
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll('.card'), {
+                    max: 5,
+                    speed: 300,
+                    glare: false,
+                    gyroscope: true,
+                });
+            }
+
+            // translations.js sudah auto-initialize, tidak perlu tambahan apa pun
+        });
+    </script>
+</body>
+</html>
