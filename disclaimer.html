@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .disclaimer-content h2 {
             font-size: 1.8rem;
@@ -24,6 +25,115 @@
         }
         .disclaimer-content li {
             margin-bottom: 0.5rem;
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.5);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .warning-banner-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            color: #ffa500;
+        }
+        .warning-banner-text strong {
+            color: #ffa500;
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+        .warning-banner-text span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Key Points Box */
+        .key-points-box {
+            background: rgba(255, 94, 0, 0.06);
+            border: 1px solid rgba(255, 94, 0, 0.25);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .key-points-box h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+        .key-points-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .key-points-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .key-points-list li:last-child {
+            border-bottom: none;
+        }
+        .key-points-list li span.kp-icon {
+            color: var(--accent-orange);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Section headings with accent line */
+        .disclaimer-section {
+            border-left: 3px solid var(--accent-orange);
+            padding-left: 1.2rem;
+            margin-left: -1.2rem;
+            margin-bottom: 2rem;
+        }
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            margin: 0 0 1rem;
+            text-align: left;
+        }
+        .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            color: black;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Last Updated */
+        .last-updated-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,94,0,0.1);
+            border: 1px solid rgba(255,94,0,0.3);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
     </style>
 </head>
@@ -48,10 +158,35 @@
 
     <section style="max-width: 900px; margin: 3rem auto; padding: 0 5%;">
         <h1 class="gradient-title" data-i18n="disclaimer.title">Catatan Kepatuhan & Batasan Tanggung Jawab</h1>
+        <div style="text-align:center; margin-bottom: 1.5rem;">
+            <span class="last-updated-badge"><i class="fas fa-calendar-alt"></i> Terakhir diperbarui: Maret 2026</span>
+        </div>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <div class="warning-banner-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="warning-banner-text">
+                <strong>⚠️ Penting — Baca Sebelum Melanjutkan</strong>
+                <span>cryptara.id adalah platform informasi dan edukasi, <strong>bukan lembaga keuangan</strong>. Kami tidak menerima dana, melakukan perdagangan, atau memberikan saran investasi. Seluruh keputusan investasi sepenuhnya menjadi tanggung jawab pribadi Anda.</span>
+            </div>
+        </div>
+
+        <!-- Key Points TL;DR -->
+        <div class="key-points-box">
+            <h3>📋 Ringkasan Poin Utama (TL;DR)</h3>
+            <ul class="key-points-list">
+                <li><span class="kp-icon">🚫</span> Kami TIDAK mengelola dana, portofolio, atau melakukan transaksi aset kripto.</li>
+                <li><span class="kp-icon">⚡</span> Investasi kripto memiliki risiko tinggi — selalu lakukan riset mandiri (DYOR).</li>
+                <li><span class="kp-icon">📊</span> Data yang kami sajikan bersifat informatif; bisa ada keterlambatan atau kesalahan teknis.</li>
+                <li><span class="kp-icon">🔗</span> Tautan ke platform eksternal bukan endorsement — risikonya di luar kendali kami.</li>
+                <li><span class="kp-icon">⚖️</span> Kami selaraskan konten dengan regulasi OJK dan hukum perpajakan Indonesia.</li>
+            </ul>
+        </div>
 
         <div class="glass-card disclaimer-content" style="padding: 2.5rem; line-height: 1.8;">
             <!-- Section 1 -->
-            <h2 data-i18n="disclaimer.section1.title">1. Sifat Layanan Informasi</h2>
+            <div class="disclaimer-section">
+                <h2 class="section-heading"><span class="section-num">1</span> <span data-i18n="disclaimer.section1.title">Sifat Layanan Informasi</span></h2>
             <p data-i18n="disclaimer.section1.desc1" data-i18n-html="true">
                 Seluruh konten, data, dan materi edukasi yang disajikan dalam platform <strong>cryptara.id</strong> disediakan murni untuk tujuan informatif dan edukasi publik. Kami adalah platform direktori dan pusat pengetahuan, bukan lembaga keuangan. <strong>cryptara.id</strong> menegaskan bahwa kami:
             </p>
@@ -60,9 +195,11 @@
                 <li data-i18n="disclaimer.section1.list2" data-i18n-html="true"><strong>TIDAK</strong> menerima titipan dana, deposit, maupun mengelola portofolio aset kripto pengguna.</li>
                 <li data-i18n="disclaimer.section1.list3" data-i18n-html="true"><strong>TIDAK</strong> memfasilitasi transaksi jual-beli aset kripto secara langsung di dalam ekosistem platform kami.</li>
             </ul>
+            </div>
 
             <!-- Section 2 -->
-            <h2 data-i18n="disclaimer.section2.title">2. Risiko Investasi & Fluktuasi Pasar</h2>
+            <div class="disclaimer-section">
+                <h2 class="section-heading"><span class="section-num">2</span> <span data-i18n="disclaimer.section2.title">Risiko Investasi & Fluktuasi Pasar</span></h2>
             <p data-i18n="disclaimer.section2.desc1" data-i18n-html="true">
                 Dunia aset digital, khususnya USDT dan aset kripto lainnya, memiliki tingkat volatilitas yang sangat tinggi. Perubahan harga dapat terjadi dalam hitungan detik akibat dinamika pasar global dan perubahan regulasi. Anda memahami sepenuhnya bahwa:
             </p>
@@ -71,15 +208,19 @@
                 <li data-i18n="disclaimer.section2.list2" data-i18n-html="true">Kinerja aset di masa lalu bukan merupakan jaminan atau indikator pasti untuk keuntungan di masa depan.</li>
                 <li data-i18n="disclaimer.section2.list3" data-i18n-html="true"><strong>cryptara.id</strong> tidak bertanggung jawab atas segala bentuk kerugian finansial, kehilangan keuntungan, atau dampak ekonomi lainnya yang timbul, baik secara langsung maupun tidak langsung, dari penggunaan informasi yang tersedia di situs ini.</li>
             </ul>
+            </div>
 
             <!-- Section 3 -->
-            <h2 data-i18n="disclaimer.section3.title">3. Akurasi & Pembaruan Data</h2>
+            <div class="disclaimer-section">
+                <h2 class="section-heading"><span class="section-num">3</span> <span data-i18n="disclaimer.section3.title">Akurasi & Pembaruan Data</span></h2>
             <p data-i18n="disclaimer.section3.desc1" data-i18n-html="true">
                 Di tahun 2026, di mana regulasi OJK dan data pasar terus bertransformasi, kami berkomitmen untuk menyajikan informasi yang paling akurat dan terkini. Namun, kami tidak menjamin secara mutlak bahwa seluruh data, kutipan harga, atau analisis yang tersaji selalu bebas dari kesalahan atau keterlambatan teknis. Kami menyarankan pengguna untuk selalu melakukan verifikasi mandiri (<em>Do Your Own Research</em>) sebelum mengambil tindakan finansial apa pun.
             </p>
+            </div>
 
             <!-- Section 4 -->
-            <h2 data-i18n="disclaimer.section4.title">4. Tautan Pihak Ketiga & Afiliasi</h2>
+            <div class="disclaimer-section">
+                <h2 class="section-heading"><span class="section-num">4</span> <span data-i18n="disclaimer.section4.title">Tautan Pihak Ketiga & Afiliasi</span></h2>
             <p data-i18n="disclaimer.section4.desc1" data-i18n-html="true">
                 Untuk kemudahan navigasi Anda, <strong>cryptara.id</strong> mungkin mencantumkan tautan menuju situs bursa (<em>exchange</em>) atau platform pihak ketiga. Harap diperhatikan bahwa:
             </p>
@@ -87,12 +228,15 @@
                 <li data-i18n="disclaimer.section4.list1" data-i18n-html="true">Kami tidak memiliki kendali atas kebijakan privasi, syarat dan ketentuan, maupun operasional situs pihak ketiga tersebut.</li>
                 <li data-i18n="disclaimer.section4.list2" data-i18n-html="true">Klik pada tautan luar merupakan keputusan sadar pengguna, dan risiko yang terjadi di platform eksternal berada di luar lingkup tanggung jawab <strong>cryptara.id</strong>.</li>
             </ul>
+            </div>
 
             <!-- Section 5 -->
-            <h2 data-i18n="disclaimer.section5.title">5. Kepatuhan Regulasi</h2>
+            <div class="disclaimer-section">
+                <h2 class="section-heading"><span class="section-num">5</span> <span data-i18n="disclaimer.section5.title">Kepatuhan Regulasi</span></h2>
             <p data-i18n="disclaimer.section5.desc1" data-i18n-html="true">
                 <strong>cryptara.id</strong> senantiasa berupaya menyelaraskan konten edukasi kami dengan kebijakan terbaru dari Otoritas Jasa Keuangan (OJK) dan regulasi perpajakan yang berlaku di Indonesia. Kami mendorong setiap pengguna untuk tetap mematuhi hukum negara dalam setiap aktivitas perdagangan aset kripto mereka.
             </p>
+            </div>
         </div>
     </section>
 

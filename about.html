@@ -118,9 +118,125 @@
             font-weight: 600;
         }
 
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-glow);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: block;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Animated gradient border on mission card */
+        .mission-card {
+            position: relative;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 33px;
+            background: linear-gradient(135deg, var(--accent-orange), transparent 50%, var(--accent-orange));
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Last Updated */
+        .last-updated {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .cta-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .cta-btn-primary {
+            background: var(--accent-orange);
+            color: black;
+        }
+        .cta-btn-primary:hover {
+            background: var(--accent-orange-light, #ff7a33);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,94,0,0.4);
+        }
+        .cta-btn-secondary {
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+        }
+        .cta-btn-secondary:hover {
+            background: rgba(255,94,0,0.1);
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 800px) {
             .pillars-grid {
                 grid-template-columns: 1fr;
+            }
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -146,6 +262,7 @@
 
     <section class="about-container">
         <div class="about-hero">
+            <p class="last-updated">Terakhir diperbarui: Maret 2026</p>
             <h1 class="gradient-title" data-i18n="about.title">Gerbang Transparansi Kripto Indonesia</h1>
             <p class="subheadline" data-i18n="about.subtitle">Menavigasi Masa Depan Aset Digital dengan Presisi dan Keamanan.</p>
         </div>
@@ -179,6 +296,40 @@
             <p data-i18n="about.closing.tagline">Membangun Kepercayaan di Era Baru</p>
             <p data-i18n="about.closing.desc1" data-i18n-html="true">Didirikan pada tahun 2026, cryptara.id bukan sekadar pusat data. Kami adalah komunitas yang dibangun atas dasar integritas. Kami memahami bahwa di dunia digital, informasi adalah perisai sekaligus senjata. Oleh karena itu, komitmen kami sederhana: <span class="highlight">Membekali Anda dengan pengetahuan yang kredibel</span> agar setiap keputusan "Beli" atau "Jual" dilakukan dengan kecerdasan finansial yang matang.</p>
             <p style="margin-top: 2rem;" data-i18n="about.closing.desc2" data-i18n-html="true">Mari jelajahi ekosistem USDT dengan lebih pintar, lebih aman, dan lebih menguntungkan. Selamat datang di masa depan transaksi kripto Indonesia. Selamat datang di <span class="highlight">cryptara.id</span>.</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number">10+</span>
+                <div class="stat-label">Exchange Terkurasi</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">5+</span>
+                <div class="stat-label">Panduan P2P</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">500+</span>
+                <div class="stat-label">Koin Terpantau</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2026</span>
+                <div class="stat-label">Didirikan</div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3 class="gradient-title">Mulai Jelajahi Sekarang</h3>
+            <p>Temukan exchange terbaik, pelajari strategi P2P, dan pantau pasar kripto real-time.</p>
+            <div class="cta-buttons">
+                <a href="exchange.html" class="cta-btn cta-btn-primary">
+                    🏦 Lihat TradeHub
+                </a>
+                <a href="learn.html" class="cta-btn cta-btn-secondary">
+                    📚 Buka Academy
+                </a>
+            </div>
         </div>
     </section>
 

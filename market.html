@@ -190,6 +190,57 @@
             text-align: center;
             color: var(--text-secondary);
         }
+
+        /* Coin Logo styles */
+        .coin-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+        .coin-logo-lg {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            padding: 4px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .coin-logo-fallback {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), #ff7a33);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+        .coin-logo-fallback-lg {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), #ff7a33);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .coin-card-logo-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
         @media (max-width: 768px) {
             .search-sort-bar {
                 flex-direction: column;
@@ -413,6 +464,17 @@
         }
 
         // ==================== FETCH GLOBAL DATA ====================
+        // Helper: generate coin logo HTML
+        function coinLogoHTML(symbol, size) {
+            const sym = symbol ? symbol.toLowerCase() : '';
+            const fallbackText = symbol ? symbol.substring(0, 2).toUpperCase() : '??';
+            if (size === 'lg') {
+                return `<img class="coin-logo-lg" src="https://assets.coincap.io/assets/icons/${sym}@2x.png" alt="${symbol}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="coin-logo-fallback-lg" style="display:none">${fallbackText}</div>`;
+            } else {
+                return `<img class="coin-logo" src="https://assets.coincap.io/assets/icons/${sym}@2x.png" alt="${symbol}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" /><span class="coin-logo-fallback" style="display:none">${fallbackText}</span>`;
+            }
+        }
+
         async function fetchGlobalData() {
             try {
                 const response = await fetch('https://api.coinlore.net/api/global/');
@@ -462,7 +524,7 @@
                 const changeSign = change >= 0 ? '▲' : '▼';
                 html += `
                     <div class="market-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
-                        <div><strong>${coin.name}</strong> (${coin.symbol})</div>
+                        <div style="display:flex;align-items:center;gap:0.6rem;">${coinLogoHTML(coin.symbol, 'sm')} <strong>${coin.name}</strong> (${coin.symbol})</div>
                         <div>
                             ${formatCurrencyUSD(price)}
                             <span class="market-change ${changeClass}" style="margin-left:10px;">${changeSign} ${Math.abs(change).toFixed(2)}%</span>
@@ -492,7 +554,7 @@
                     <h3>${typeof t !== 'undefined' ? t('market.topGainers') : 'Top Gainers'}</h3>
                     ${gainers.map(coin => `
                         <div class="snapshot-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
-                            <span class="name">${coin.name} (${coin.symbol})</span>
+                            <span class="name" style="display:flex;align-items:center;gap:0.5rem;">${coinLogoHTML(coin.symbol, 'sm')} ${coin.name} (${coin.symbol})</span>
                             <span class="change positive">▲ ${Math.abs(parseFloat(coin.percent_change_24h)).toFixed(2)}%</span>
                         </div>
                     `).join('')}
@@ -501,7 +563,7 @@
                     <h3>${typeof t !== 'undefined' ? t('market.topLosers') : 'Top Losers'}</h3>
                     ${losers.map(coin => `
                         <div class="snapshot-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
-                            <span class="name">${coin.name} (${coin.symbol})</span>
+                            <span class="name" style="display:flex;align-items:center;gap:0.5rem;">${coinLogoHTML(coin.symbol, 'sm')} ${coin.name} (${coin.symbol})</span>
                             <span class="change negative">▼ ${Math.abs(parseFloat(coin.percent_change_24h)).toFixed(2)}%</span>
                         </div>
                     `).join('')}
@@ -610,6 +672,7 @@
                         <div class="market-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
                             <div style="display:flex; align-items:center; gap:0.8rem;">
                                 <span style="color:var(--text-secondary); min-width:30px;">#${coin.rank}</span>
+                                ${coinLogoHTML(coin.symbol, 'sm')}
                                 <span><strong>${coin.name}</strong> <span style="color:var(--text-secondary); font-size:0.8rem;">${coin.symbol}</span></span>
                             </div>
                             <div style="display:flex; align-items:center; gap:1rem;">
@@ -636,6 +699,7 @@
                                 <span class="coin-card-rank">#${coin.rank}</span>
                                 <button class="coin-card-watch" data-id="${coin.id}" style="background:none; border:none; color:gold; cursor:pointer;">${star}</button>
                             </div>
+                            <div class="coin-card-logo-wrap">${coinLogoHTML(coin.symbol, 'lg')}</div>
                             <div class="coin-card-name">${coin.name}</div>
                             <div class="coin-card-symbol">${coin.symbol}</div>
                             <div class="coin-card-price">${formatCurrencyUSD(price)}</div>
