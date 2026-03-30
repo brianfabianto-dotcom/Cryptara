@@ -307,6 +307,7 @@ const translations = {
             disclaimer: "Disclaimer",
             privacy: "Privacy Policy",
             contact: "Contact Us",
+            faq: "FAQ",
             tagline: "Directory of trusted exchanges & P2P guides for Indonesian investors.",
             copyright: "All rights reserved. Information is educational, not responsible for investment decisions."
         }
@@ -618,6 +619,7 @@ const translations = {
             disclaimer: "Disclaimer",
             privacy: "Kebijakan Privasi",
             contact: "Hubungi Kami",
+            faq: "FAQ",
             tagline: "Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.",
             copyright: "Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi."
         }

@@ -271,11 +271,42 @@ footer {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0.5rem 0;
+        z-index: 999;
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .nav-links a {
+        padding: 0.8rem 5%;
+        width: 100%;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-links a:last-child {
+        border-bottom: none;
     }
     .hamburger {
         display: block;
         color: var(--text-primary);
         font-size: 1.5rem;
+        cursor: pointer;
+        user-select: none;
+        background: none;
+        border: none;
+        padding: 0.3rem;
+    }
+    .navbar {
+        position: sticky;
     }
     .footer-container {
         grid-template-columns: 1fr;

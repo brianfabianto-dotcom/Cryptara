@@ -20,121 +20,6 @@ function formatNumber(num) {
     return num.toLocaleString('id-ID');
 }
 
-// ==================== TRANSLATION (untuk halaman yang membutuhkan) ====================
-const translations = {
-    en: {
-        nav: {
-            launchpad: "Launchpad",
-            tradehub: "TradeHub",
-            academy: "Academy",
-            pulse: "Pulse",
-            toolkit: "Toolkit",
-        },
-        hero: {
-            title: "Find a Safe and Easy Place to Trade",
-            subtitle: "Directory of local & global exchanges, real-time data, and P2P guides.",
-            cta1: "Find Exchange",
-            cta2: "Explore Now",
-        },
-        stats: {
-            exchange: "REGISTERED EXCHANGES",
-            investor: "CRYPTO INVESTORS",
-            transaction: "2025 TRANSACTIONS (IDR)",
-            security: "SECURITY LEVEL",
-        },
-        popular: {
-            title: "Top Exchanges 2026",
-        },
-        sentiment: {
-            news: "Latest Crypto News",
-        },
-        footer: {
-            info: "Info",
-        },
-        launchpad: {
-            title: "🚀 Stablecoin Launchpad",
-            subtitle: "In-depth analysis of 4 key dimensions: Reserves, Stability, Concentration, Activity.",
-            clickHint: "Click on a stablecoin for details.",
-        },
-        dimensions: {
-            reserves: "Reserves",
-            stability: "Stability",
-            concentration: "Concentration",
-            activity: "Activity",
-        },
-        legend: {
-            healthy: "Healthy (score > 75)",
-            medium: "Medium (50–75)",
-            risky: "Risky (< 50)",
-        },
-    },
-    id: {
-        nav: {
-            launchpad: "Launchpad",
-            tradehub: "TradeHub",
-            academy: "Academy",
-            pulse: "Pulse",
-            toolkit: "Toolkit",
-        },
-        hero: {
-            title: "Temukan Tempat Jual Beli Yang Aman dan Mudah",
-            subtitle: "Direktori exchange lokal & global, data real-time, dan panduan P2P.",
-            cta1: "Cari Exchange",
-            cta2: "Jelajahi Sekarang",
-        },
-        stats: {
-            exchange: "EXCHANGE TERDAFTAR",
-            investor: "INVESTOR KRIPTO",
-            transaction: "TRANSAKSI 2025 (RP)",
-            security: "TINGKAT KEAMANAN",
-        },
-        popular: {
-            title: "Exchange Terpopuler 2026",
-        },
-        sentiment: {
-            news: "Berita Kripto Terbaru",
-        },
-        footer: {
-            info: "Info",
-        },
-        launchpad: {
-            title: "🚀 Stablecoin Launchpad",
-            subtitle: "Analisis mendalam 4 dimensi kunci: Cadangan, Stabilitas, Konsentrasi, Aktivitas.",
-            clickHint: "Klik pada stablecoin untuk melihat detail.",
-        },
-        dimensions: {
-            reserves: "Cadangan",
-            stability: "Stabilitas",
-            concentration: "Konsentrasi",
-            activity: "Aktivitas",
-        },
-        legend: {
-            healthy: "Sehat (skor > 75)",
-            medium: "Sedang (50–75)",
-            risky: "Berisiko (< 50)",
-        },
-    },
-};
-
-let currentLang = localStorage.getItem('cryptaraLang') || 'id';
-
-function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('cryptaraLang', lang);
-
-    document.querySelectorAll('[data-i18n]').forEach((el) => {
-        const keys = el.getAttribute('data-i18n').split('.');
-        let text = translations[lang];
-        for (let key of keys) {
-            if (text) text = text[key];
-        }
-        if (text) el.innerHTML = text;
-    });
-
-    const langBtn = document.getElementById('langToggle');
-    if (langBtn) langBtn.textContent = lang === 'id' ? 'EN' : 'ID';
-}
-
 // ==================== LIVE TICKER (HARGA USDT) ====================
 async function fetchTickerData() {
     const tickerWrap = document.getElementById('ticker-wrap');
@@ -517,6 +402,34 @@ document.addEventListener('DOMContentLoaded', function () {
         langBtn.addEventListener('click', function () {
             const newLang = currentLang === 'id' ? 'en' : 'id';
             setLanguage(newLang);
+        });
+    }
+});
+
+// ==================== HAMBURGER MENU ====================
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            hamburger.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+                navLinks.classList.remove('active');
+                hamburger.textContent = '☰';
+            }
+        });
+
+        navLinks.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                navLinks.classList.remove('active');
+                hamburger.textContent = '☰';
+            });
         });
     }
 });
