@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="translations.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAQ Cryptara - Pertanyaan yang sering diajukan seputar crypto exchange, P2P trading, keamanan transaksi, dan cara memulai investasi crypto di Indonesia.">
+    <title>FAQ - cryptara.id</title>
+    <link rel="icon" type="image/png" href="images/cryptara-logo-square.png">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .faq-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-hero h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faq-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: var(--accent-orange);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            gap: 1rem;
+            user-select: none;
+        }
+
+        .faq-question h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .faq-icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 300;
+            transition: transform 0.3s ease, background 0.3s ease;
+            line-height: 1;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: var(--accent-orange);
+            color: black;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 400px;
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .faq-answer a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 1rem 1.25rem;
+            }
+            .faq-answer {
+                padding: 0 1.25rem;
+            }
+            .faq-item.active .faq-answer {
+                padding: 0 1.25rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/cryptara-logo-square.png" alt="Cryptara" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="logo-text">crypt<span>ara</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="launchpad.html" data-i18n="nav.launchpad">Launchpad</a>
+            <a href="exchange.html" data-i18n="nav.tradehub">TradeHub</a>
+            <a href="learn.html" data-i18n="nav.academy">Academy</a>
+            <a href="market.html" data-i18n="nav.pulse">Pulse</a>
+            <a href="toolkit.html" data-i18n="nav.toolkit">Toolkit</a>
+        </div>
+        <button class="lang-btn" id="langToggle">EN</button>
+        <div class="hamburger">☰</div>
+    </nav>
+
+    <main class="faq-container">
+        <div class="faq-hero">
+            <h1>FAQ</h1>
+            <p>Pertanyaan yang sering diajukan seputar Cryptara, crypto exchange, P2P trading, dan keamanan transaksi.</p>
+        </div>
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apa itu Cryptara?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Cryptara adalah platform direktori crypto terpercaya untuk investor Indonesia. Kami menyediakan informasi lengkap tentang exchange lokal & global, data market real-time, panduan P2P USDT, serta tools berguna untuk membantu Anda bertransaksi dengan lebih aman dan cerdas. Cryptara <strong>bukan</strong> sebuah exchange — kami adalah sumber informasi dan panduan independen.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Bagaimana cara memilih exchange crypto yang tepat?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Ada beberapa faktor penting yang perlu dipertimbangkan: (1) <strong>Regulasi & Legalitas</strong> — pastikan exchange terdaftar dan diawasi oleh OJK/Bappebti untuk exchange lokal. (2) <strong>Keamanan</strong> — cek fitur keamanan seperti 2FA, cold storage, dan rekam jejak keamanannya. (3) <strong>Likuiditas & Volume Trading</strong> — exchange dengan volume tinggi menawarkan spread lebih kecil. (4) <strong>Biaya Transaksi</strong> — bandingkan fee trading, deposit, dan withdrawal. Kunjungi halaman <a href="exchange.html">TradeHub</a> kami untuk perbandingan lengkap exchange.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apa itu P2P Trading?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>P2P (Peer-to-Peer) Trading adalah metode jual beli crypto langsung antara dua pengguna tanpa perantara exchange tradisional. Dalam P2P, Anda bisa membeli USDT langsung dari penjual lain menggunakan transfer bank, dompet digital, atau metode pembayaran lokal lainnya. Keuntungannya adalah fleksibilitas metode pembayaran dan potensi harga lebih kompetitif. Platform seperti Binance P2P, OKX P2P, dan Tokocrypto P2P menyediakan layanan ini dengan sistem escrow untuk keamanan transaksi.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apakah transaksi crypto di Indonesia aman?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Transaksi crypto bisa aman jika Anda mengikuti langkah-langkah keamanan yang tepat: (1) Gunakan hanya exchange yang terdaftar di Bappebti/OJK. (2) Aktifkan Two-Factor Authentication (2FA) di semua akun. (3) Jangan pernah membagikan seed phrase atau private key kepada siapapun. (4) Waspada terhadap penipuan (scam) — exchange legitimate tidak pernah meminta password atau seed phrase Anda. (5) Gunakan hardware wallet untuk menyimpan aset dalam jumlah besar. Pelajari lebih lanjut di halaman <a href="learn.html">Academy</a> kami.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apakah Cryptara adalah sebuah exchange?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Tidak. Cryptara <strong>bukan</strong> exchange crypto. Kami adalah platform informasi dan direktori independen yang membantu investor Indonesia menemukan exchange terpercaya, memahami cara kerja P2P trading, dan mengakses data market real-time. Kami tidak menyimpan dana pengguna, tidak memfasilitasi transaksi, dan tidak memiliki afiliasi finansial dengan exchange manapun yang kami tampilkan.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Bagaimana cara memulai investasi crypto untuk pemula?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Untuk memulai investasi crypto sebagai pemula: (1) <strong>Edukasi diri</strong> — pelajari dasar-dasar blockchain, Bitcoin, dan aset digital di halaman <a href="learn.html">Academy</a> kami. (2) <strong>Pilih exchange terpercaya</strong> — daftar di exchange yang terdaftar Bappebti seperti Indodax atau Tokocrypto. (3) <strong>Mulai dengan modal kecil</strong> — jangan investasikan lebih dari yang siap Anda rugi. (4) <strong>Diversifikasi</strong> — jangan taruh semua dana di satu aset. (5) <strong>Gunakan Dollar Cost Averaging (DCA)</strong> — beli secara rutin dalam jumlah tetap untuk mengurangi risiko volatilitas.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apa itu Stablecoin dan mengapa penting?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Stablecoin adalah jenis cryptocurrency yang nilainya dipatok (pegged) pada aset stabil seperti USD. Contoh populer: USDT (Tether), USDC (USD Coin), dan DAI. Stablecoin penting karena: (1) Melindungi dari volatilitas harga crypto yang tinggi. (2) Memudahkan transaksi P2P dengan nilai yang dapat diprediksi. (3) Digunakan sebagai "parkir dana" saat pasar sedang turun. (4) Memungkinkan pengiriman uang lintas batas dengan biaya lebih rendah. Lihat analisis mendalam stablecoin di halaman <a href="launchpad.html">Launchpad</a> kami.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h3>Apakah data harga di Cryptara real-time?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Ya, data harga yang ditampilkan di Cryptara diperbarui secara real-time dari berbagai sumber API terpercaya termasuk CoinLore dan ExchangeRate-API. Ticker USDT/IDR di halaman utama diperbarui setiap 30 detik, sementara data market diperbarui setiap menit. Namun perlu diingat bahwa harga aktual di exchange mungkin sedikit berbeda karena spread dan waktu pemrosesan. Untuk data market yang lebih lengkap, kunjungi halaman <a href="market.html">Pulse</a> kami.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <img src="images/cryptara-logo-square.png" alt="Cryptara" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="footer-logo-text">crypt<span>ara</span></span>
+                </a>
+                <p class="footer-tagline" data-i18n="footer.tagline">Direktori exchange & panduan P2P tepercaya untuk investor Indonesia.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.info">Informasi</h4>
+                <ul>
+                    <li><a href="about.html" data-i18n="footer.about">Tentang Kami</a></li>
+                    <li><a href="disclaimer.html" data-i18n="footer.disclaimer">Disclaimer</a></li>
+                    <li><a href="privacy.html" data-i18n="footer.privacy">Kebijakan Privasi</a></li>
+                    <li><a href="hubungikami.html" data-i18n="footer.contact">Hubungi Kami</a></li>
+                    <li><a href="faq.html" data-i18n="footer.faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.contact">Kontak</h4>
+                <ul>
+                    <li>Email: <a href="mailto:hello@cryptara.id">hello@cryptara.id</a></li>
+                    <li>Telegram: <a href="https://t.me/cryptara">@cryptara</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">© 2026 cryptara.id. Seluruh hak cipta. Informasi bersifat edukatif, tidak bertanggung jawab atas keputusan investasi.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFaq(questionEl) {
+            const item = questionEl.closest('.faq-item');
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.faq-item.active').forEach(function (el) {
+                el.classList.remove('active');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
