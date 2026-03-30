@@ -107,7 +107,26 @@ const translations = {
                 healthy: "Healthy (score > 75)",
                 medium: "Medium (50–75)",
                 risky: "Risky (< 50)"
-            }
+            },
+            stats: {
+                totalMcap: "Total Market Cap",
+                totalCoins: "Stablecoins Tracked",
+                avgScore: "Average Score",
+                healthy: "Healthy Score (>75)"
+            },
+            searchPlaceholder: "Search stablecoin...",
+            filter: {
+                all: "All"
+            },
+            sort: {
+                scoreDesc: "Highest Score",
+                scoreAsc: "Lowest Score",
+                mcapDesc: "Market Cap ↓",
+                mcapAsc: "Market Cap ↑",
+                nameAsc: "Name A-Z"
+            },
+            noResults: "No stablecoins found.",
+            totalScore: "Total Score"
         },
         toolkit: {
             title: "Crypto Toolkit",
@@ -425,7 +444,26 @@ const translations = {
                 healthy: "Sehat (skor > 75)",
                 medium: "Sedang (50–75)",
                 risky: "Berisiko (< 50)"
-            }
+            },
+            stats: {
+                totalMcap: "Total Market Cap",
+                totalCoins: "Stablecoin Terlacak",
+                avgScore: "Rata-rata Skor",
+                healthy: "Skor Sehat (>75)"
+            },
+            searchPlaceholder: "Cari stablecoin...",
+            filter: {
+                all: "Semua"
+            },
+            sort: {
+                scoreDesc: "Skor Tertinggi",
+                scoreAsc: "Skor Terendah",
+                mcapDesc: "Market Cap ↓",
+                mcapAsc: "Market Cap ↑",
+                nameAsc: "Nama A-Z"
+            },
+            noResults: "Tidak ada stablecoin ditemukan.",
+            totalScore: "Skor total"
         },
         toolkit: {
             title: "Toolkit Kripto",
@@ -659,6 +697,18 @@ function setLanguage(lang) {
             } else {
                 el.textContent = text;
             }
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const keys = el.getAttribute('data-i18n-placeholder').split('.');
+        let text = translations[lang];
+        for (let key of keys) {
+            if (text) text = text[key];
+            else break;
+        }
+        if (text !== undefined && text !== null) {
+            el.placeholder = text;
         }
     });
 

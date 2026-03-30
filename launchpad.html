@@ -544,6 +544,171 @@
         @media (max-width: 1000px) { .heatmap-grid { grid-template-columns: repeat(3,1fr); } }
         @media (max-width: 700px) { .heatmap-grid { grid-template-columns: repeat(2,1fr); } }
         @media (max-width: 400px) { .heatmap-grid { grid-template-columns: 1fr; } }
+
+        /* ===== Stats Banner ===== */
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 94, 0, 0.05);
+            border: 1px solid rgba(255, 94, 0, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .stat-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            text-shadow: 0 0 20px rgba(255, 94, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 700px) { .stats-banner { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 400px) { .stats-banner { grid-template-columns: 1fr; } }
+
+        /* ===== Controls Bar ===== */
+        .controls-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 220px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 10px rgba(255, 94, 0, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-orange);
+            color: #000;
+            border-color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        .sort-select select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .sort-select select:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        .sort-select select option {
+            background: #111;
+            color: var(--text-primary);
+        }
+
+        /* ===== Circular Progress Ring ===== */
+        .card-score-ring {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            align-self: flex-end;
+            margin-top: auto;
+        }
+
+        .score-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 3;
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.8s ease;
+        }
+
+        .ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -571,6 +736,46 @@
             Analisis mendalam 4 dimensi kunci: Cadangan, Stabilitas, Konsentrasi, Aktivitas.
         </p>
 
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-value" id="totalMarketCap">$0</span>
+                <span class="stat-label" data-i18n="launchpad.stats.totalMcap">Total Market Cap</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="totalStablecoins">0</span>
+                <span class="stat-label" data-i18n="launchpad.stats.totalCoins">Stablecoin Terlacak</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="avgScore">0</span>
+                <span class="stat-label" data-i18n="launchpad.stats.avgScore">Rata-rata Skor</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="healthyCount">0</span>
+                <span class="stat-label" data-i18n="launchpad.stats.healthy">Skor Sehat (&gt;75)</span>
+            </div>
+        </div>
+
+        <div class="controls-bar">
+            <div class="search-box">
+                <input type="text" id="searchInput" data-i18n-placeholder="launchpad.searchPlaceholder" placeholder="Cari stablecoin...">
+            </div>
+            <div class="filter-buttons" id="filterButtons">
+                <button class="filter-btn active" data-filter="all" data-i18n="launchpad.filter.all">Semua</button>
+                <button class="filter-btn" data-filter="Fiat-backed">Fiat-backed</button>
+                <button class="filter-btn" data-filter="Crypto-backed">Crypto-backed</button>
+                <button class="filter-btn" data-filter="Algorithmic">Algorithmic</button>
+            </div>
+            <div class="sort-select">
+                <select id="sortSelect">
+                    <option value="score-desc" data-i18n="launchpad.sort.scoreDesc">Skor Tertinggi</option>
+                    <option value="score-asc" data-i18n="launchpad.sort.scoreAsc">Skor Terendah</option>
+                    <option value="mcap-desc" data-i18n="launchpad.sort.mcapDesc">Market Cap ↓</option>
+                    <option value="mcap-asc" data-i18n="launchpad.sort.mcapAsc">Market Cap ↑</option>
+                    <option value="name-asc" data-i18n="launchpad.sort.nameAsc">Nama A-Z</option>
+                </select>
+            </div>
+        </div>
+
         <div class="dimension-legend">
             <div><span style="color:#4caf50; font-weight:bold;">R</span> <span data-i18n="launchpad.dimensions.reserves">Cadangan</span></div>
             <div><span style="color:#2196f3; font-weight:bold;">S</span> <span data-i18n="launchpad.dimensions.stability">Stabilitas</span></div>
@@ -585,6 +790,9 @@
         </div>
 
         <div class="heatmap-grid" id="heatmap-grid"></div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <p data-i18n="launchpad.noResults">Tidak ada stablecoin ditemukan.</p>
+        </div>
         <p style="text-align: center; color: var(--text-secondary); font-size:0.9rem;" data-i18n="launchpad.clickHint">Klik pada stablecoin untuk melihat detail.</p>
     </section>
 
@@ -890,13 +1098,21 @@
             return 'red';
         }
 
-        async function renderCards() {
+        async function renderCards(coins) {
             const grid = document.getElementById('heatmap-grid');
+            const emptyState = document.getElementById('emptyState');
             grid.innerHTML = '';
 
-            for (const coin of stablecoins) {
+            if (!coins || coins.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            for (const coin of coins) {
                 const total = aggregateScore(coin.scores);
                 const colorClass = getColorClass(total);
+                const scoreColor = colorClass === 'green' ? '#4caf50' : colorClass === 'yellow' ? '#ffd600' : '#f44336';
                 const mcFormatted = formatMarketCap(coin.marketCap);
                 const changeClass = coin.change24h >= 0 ? 'positive' : 'negative';
                 const changeSign = coin.change24h >= 0 ? '▲' : '▼';
@@ -906,6 +1122,7 @@
                 const stabilityLabel = t('launchpad.dimensions.stability');
                 const concentrationLabel = t('launchpad.dimensions.concentration');
                 const activityLabel = t('launchpad.dimensions.activity');
+                const totalScoreLabel = t('launchpad.totalScore');
 
                 const tooltip = `
                     <div class="tooltip">
@@ -913,7 +1130,7 @@
                         <div class="tooltip-row"><span class="tooltip-label">${stabilityLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.peg)}">${coin.scores.peg}</span></div>
                         <div class="tooltip-row"><span class="tooltip-label">${concentrationLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.concentration)}">${coin.scores.concentration}</span></div>
                         <div class="tooltip-row"><span class="tooltip-label">${activityLabel}:</span> <span class="tooltip-value ${getColorClass(coin.scores.activity)}">${coin.scores.activity}</span></div>
-                        <div style="margin-top:0.3rem; border-top:1px solid #333; padding-top:0.3rem;">Skor total: ${total.toFixed(1)}</div>
+                        <div style="margin-top:0.3rem; border-top:1px solid #333; padding-top:0.3rem;">${totalScoreLabel}: ${total.toFixed(1)}</div>
                     </div>
                 `;
 
@@ -947,8 +1164,12 @@
                         <span title="${concentrationLabel}">C</span>
                         <span title="${activityLabel}">A</span>
                     </div>
-                    <div class="card-score" style="color: ${colorClass==='green'?'#4caf50':colorClass==='yellow'?'#ffd600':'#f44336'}">
-                        ${total.toFixed(0)}
+                    <div class="card-score-ring">
+                        <svg viewBox="0 0 36 36" class="score-ring">
+                            <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="ring-fill" stroke="${scoreColor}" stroke-dasharray="${total.toFixed(1)}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <span class="ring-text" style="color: ${scoreColor}">${total.toFixed(0)}</span>
                     </div>
                 `;
 
@@ -967,22 +1188,104 @@
             }
         }
 
+        function updateStats() {
+            const totalMcap = stablecoins.reduce((sum, c) => sum + c.marketCap, 0);
+            const avgScoreVal = stablecoins.length > 0
+                ? stablecoins.reduce((sum, c) => sum + aggregateScore(c.scores), 0) / stablecoins.length
+                : 0;
+            const healthyCountVal = stablecoins.filter(c => aggregateScore(c.scores) >= 75).length;
+
+            document.getElementById('totalMarketCap').textContent = formatMarketCap(totalMcap);
+            document.getElementById('totalStablecoins').textContent = stablecoins.length;
+            document.getElementById('avgScore').textContent = avgScoreVal.toFixed(1);
+            document.getElementById('healthyCount').textContent = healthyCountVal;
+        }
+
+        let currentFilter = 'all';
+        let currentSort = 'score-desc';
+        let currentSearch = '';
+
+        function getFilteredSorted() {
+            let filtered = [...stablecoins];
+
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(c => c.category === currentFilter);
+            }
+
+            if (currentSearch) {
+                const q = currentSearch.toLowerCase();
+                filtered = filtered.filter(c =>
+                    c.name.toLowerCase().includes(q) ||
+                    c.symbol.toLowerCase().includes(q)
+                );
+            }
+
+            switch (currentSort) {
+                case 'score-desc': filtered.sort((a, b) => aggregateScore(b.scores) - aggregateScore(a.scores)); break;
+                case 'score-asc':  filtered.sort((a, b) => aggregateScore(a.scores) - aggregateScore(b.scores)); break;
+                case 'mcap-desc':  filtered.sort((a, b) => b.marketCap - a.marketCap); break;
+                case 'mcap-asc':   filtered.sort((a, b) => a.marketCap - b.marketCap); break;
+                case 'name-asc':   filtered.sort((a, b) => a.name.localeCompare(b.name)); break;
+            }
+
+            return filtered;
+        }
+
+        function applyFilters() {
+            renderCards(getFilteredSorted());
+        }
+
+        // Update sort option text when language changes
+        function updateSortOptions() {
+            const sortSelect = document.getElementById('sortSelect');
+            if (!sortSelect) return;
+            sortSelect.querySelectorAll('option[data-i18n]').forEach(opt => {
+                const key = opt.getAttribute('data-i18n');
+                const text = t(key);
+                if (text && text !== key) opt.textContent = text;
+            });
+        }
+
         // Refresh card content when language changes
         async function refreshCards() {
-            await renderCards();  // re-render with new translations
+            updateSortOptions();
+            await renderCards(getFilteredSorted());
         }
 
         // ==================== INIT ====================
         (async function init() {
             initParticles();
             await fetchCoinIdMap();
-            await renderCards();
+            updateStats();
+            await renderCards(getFilteredSorted());
+
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function() {
+                currentSearch = this.value.trim();
+                applyFilters();
+            });
+
+            // Filter buttons
+            document.getElementById('filterButtons').addEventListener('click', function(e) {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                applyFilters();
+            });
+
+            // Sort
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                currentSort = this.value;
+                applyFilters();
+            });
 
             // translations.js sudah menangani inisialisasi bahasa dan event listener tombol.
-            // Kita hanya perlu mendengarkan event languageChanged untuk refresh kartu.
-            window.addEventListener('languageChanged', function() {
+            // refreshPageContent dipanggil oleh translations.js saat bahasa berubah.
+            window.refreshPageContent = function() {
                 refreshCards();
-            });
+            };
         })();
     </script>
 </body>
