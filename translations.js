@@ -21,7 +21,13 @@ const translations = {
             security: "SECURITY LEVEL"
         },
         popular: {
-            title: "Top Exchanges 2026"
+            title: "Top Exchanges 2026",
+            indodaxDesc: "9.7M users",
+            pluangDesc: "12M+ users",
+            tokocryptoDesc: "Binance backed",
+            binanceDesc: "Largest exchange",
+            bybitDesc: "Best derivatives",
+            visitBtn: "Visit →"
         },
         market: {
             title: "Popular Coin Movements",
@@ -333,7 +339,13 @@ const translations = {
             security: "TINGKAT KEAMANAN"
         },
         popular: {
-            title: "Exchange Terpopuler 2026"
+            title: "Exchange Terpopuler 2026",
+            indodaxDesc: "9,7 jt pengguna",
+            pluangDesc: "12 jt+ pengguna",
+            tokocryptoDesc: "Didukung Binance",
+            binanceDesc: "Exchange terbesar",
+            bybitDesc: "Derivatif terbaik",
+            visitBtn: "Kunjungi →"
         },
         market: {
             title: "Pergerakan Koin Populer",

@@ -1,11 +1,15 @@
+// ==================== KONSTANTA ====================
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
 // ==================== FUNGSI FORMAT ANGKA ====================
 function formatNumberID(num) {
     if (num === null || num === undefined) return "0";
     if (typeof num === 'string') num = parseFloat(num.replace(/\./g, ''));
     if (isNaN(num)) return "0";
+    const isEN = (typeof currentLang !== 'undefined' && currentLang === 'en');
     if (num >= 1e12) return (num / 1e12).toFixed(2) + " T";
-    if (num >= 1e9) return (num / 1e9).toFixed(2) + " M";
-    if (num >= 1e6) return (num / 1e6).toFixed(2) + " Jt";
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + (isEN ? " B" : " M");
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + (isEN ? " M" : " Jt");
     return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
@@ -25,9 +29,10 @@ async function fetchTickerData() {
     const tickerWrap = document.getElementById('ticker-wrap');
     if (!tickerWrap) return;
 
-    // Fetch harga USDT/IDR real dari Indodax
+    // Fetch harga USDT/IDR real dari Indodax (via CORS proxy)
     async function getIndodaxPrice() {
-        const res = await fetch('https://indodax.com/api/ticker/usdtidr');
+        const url = encodeURIComponent('https://indodax.com/api/ticker/usdtidr');
+        const res = await fetch(CORS_PROXY + url);
         const data = await res.json();
         return parseFloat(data.ticker.last);
     }
@@ -109,7 +114,8 @@ async function fetchNews() {
             throw new Error('Data CryptoCompare kosong');
         },
         async () => {
-            const res = await fetch('https://www.reddit.com/r/CryptoCurrency/.rss');
+            const url = encodeURIComponent('https://www.reddit.com/r/CryptoCurrency/.rss');
+            const res = await fetch(CORS_PROXY + url);
             const text = await res.text();
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, 'text/xml');
@@ -123,7 +129,8 @@ async function fetchNews() {
             }));
         },
         async () => {
-            const res = await fetch('https://cointelegraph.com/rss');
+            const url = encodeURIComponent('https://cointelegraph.com/rss');
+            const res = await fetch(CORS_PROXY + url);
             const text = await res.text();
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, 'text/xml');
@@ -454,6 +461,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// ==================== SECURITY & ANTI-SCRAPING ====================
+(function () {
+    // Console warning for potential scrapers
+    console.log('%c⚠ STOP!', 'color: #FF5E00; font-size: 2rem; font-weight: bold;');
+    console.log('%cThis is a browser feature intended for developers. If someone told you to paste something here, it is a scam.', 'font-size: 1rem;');
+
+    // Rate limiter: track rapid calls per key
+    const _rateLimitMap = {};
+    window.Cryptara = window.Cryptara || {};
+    window.Cryptara.checkRateLimit = function (key, maxCalls, windowMs) {
+        const now = Date.now();
+        if (!_rateLimitMap[key]) _rateLimitMap[key] = [];
+        _rateLimitMap[key] = _rateLimitMap[key].filter(t => now - t < windowMs);
+        if (_rateLimitMap[key].length >= maxCalls) return false;
+        _rateLimitMap[key].push(now);
+        return true;
+    };
+})();
+
 // ==================== INITIAL CALLS ====================
 document.addEventListener('DOMContentLoaded', function () {
     setLanguage(currentLang);
@@ -469,6 +495,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     animateCounters();
     initParticles();
+
+    // Honeypot: invisible element to detect bots
+    const honeypot = document.createElement('a');
+    honeypot.href = '/honeypot-bot-trap';
+    honeypot.style.cssText = 'position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;';
+    honeypot.setAttribute('aria-hidden', 'true');
+    honeypot.setAttribute('tabindex', '-1');
+    document.body.appendChild(honeypot);
 
     if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(document.querySelectorAll('.card'), {
