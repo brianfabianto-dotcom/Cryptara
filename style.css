@@ -847,6 +847,10 @@ footer {
     .nav-links {
         display: none;
     }
+    .nav-links a:hover {
+        background: rgba(255, 94, 0, 0.1);
+        color: var(--accent-orange);
+    }
     .hamburger {
         display: block;
         color: var(--text-primary);
