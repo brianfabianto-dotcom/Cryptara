@@ -122,6 +122,172 @@
                 padding: 2rem;
             }
         }
+        /* ===== STATS BANNER ===== */
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 94, 0, 0.05);
+            border: 1px solid rgba(255, 94, 0, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .stat-item { text-align: center; display: flex; flex-direction: column; gap: 0.3rem; }
+        .stat-value { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--accent-orange); text-shadow: 0 0 20px rgba(255, 94, 0, 0.3); }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        @media (max-width: 700px) { .stats-banner { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 400px) { .stats-banner { grid-template-columns: 1fr; } }
+        /* ===== CONTROLS BAR ===== */
+        .controls-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .search-box input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 220px;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus { outline: none; border-color: var(--accent-orange); box-shadow: 0 0 10px rgba(255,94,0,0.2); }
+        .search-box input::placeholder { color: var(--text-secondary); }
+        .filter-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .filter-btn.active { background: var(--accent-orange); color: #000; border-color: var(--accent-orange); font-weight: 600; }
+        .sort-select select {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .sort-select select:focus { outline: none; border-color: var(--accent-orange); }
+        .sort-select select option { background: #111; color: var(--text-primary); }
+        .view-toggle { display: flex; gap: 0.3rem; }
+        .view-btn {
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .view-btn.active { background: var(--accent-orange); color: #000; border-color: var(--accent-orange); }
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-table-wrapper { overflow-x: auto; margin: 2rem 0; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .comparison-table th {
+            background: rgba(255,94,0,0.1);
+            color: var(--accent-orange);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .comparison-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .comparison-table tr:hover td { background: rgba(255,94,0,0.03); }
+        .comparison-table .exchange-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .comparison-table .exchange-name-cell img { width: 24px; height: 24px; border-radius: 50%; }
+        .comparison-table .type-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .type-badge.local { background: rgba(0,200,83,0.15); color: #00c853; }
+        .type-badge.global { background: rgba(255,94,0,0.15); color: var(--accent-orange); }
+        .comparison-table .table-link { color: var(--accent-orange); text-decoration: none; }
+        .comparison-table .table-link:hover { text-decoration: underline; }
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        /* ===== MODAL ===== */
+        .exchange-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .exchange-modal-overlay.show { opacity: 1; }
+        .exchange-modal {
+            background: #111; border: 1px solid rgba(255,94,0,0.2);
+            border-radius: 24px; padding: 2rem; max-width: 500px; width: 90%;
+            position: relative; max-height: 80vh; overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem;
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.5rem; cursor: pointer; transition: color 0.3s;
+        }
+        .modal-close:hover { color: var(--accent-orange); }
+        .modal-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .modal-logo { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.1); padding: 6px; }
+        .modal-header h2 { font-size: 1.5rem; margin: 0; }
+        .modal-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 10px; font-size: 0.75rem; font-weight: 600; margin-top: 0.3rem; }
+        .modal-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+        .info-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .info-value { font-size: 1rem; color: var(--text-primary); font-weight: 600; }
+        .modal-features h4 { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
+        .feature-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .feature-tag {
+            padding: 0.2rem 0.6rem; border-radius: 8px;
+            background: rgba(255,94,0,0.1); color: var(--accent-orange);
+            font-size: 0.75rem; border: 1px solid rgba(255,94,0,0.2);
+        }
+        .modal-footer { margin-top: 1.5rem; text-align: center; }
+        .modal-visit-btn {
+            display: inline-block; padding: 0.7rem 2rem;
+            background: var(--accent-orange); color: #000;
+            border-radius: 12px; text-decoration: none;
+            font-weight: 600; transition: all 0.3s;
+        }
+        .modal-visit-btn:hover { background: #ff7a33; transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -145,197 +311,124 @@
 
     <div class="exchange-container">
         <h1 class="gradient-title" data-i18n="exchange.title">TradeHub</h1>
-        <p style="text-align: center; max-width: 800px; margin: 1rem auto 3rem; color: var(--text-secondary);" data-i18n="exchange.subtitle">
+        <p style="text-align: center; max-width: 800px; margin: 1rem auto 2rem; color: var(--text-secondary);" data-i18n="exchange.subtitle">
             Platform lokal (resmi OJK) dan global dengan fitur P2P. Klik logo atau nama untuk mengunjungi situs resmi.
         </p>
 
-        <!-- Exchange Lokal Indonesia -->
-        <h2 class="gradient-title" style="font-size: 2rem;" data-i18n="exchange.localTitle">🇮🇩 Exchange Lokal (Resmi OJK)</h2>
-        <div class="grid-container">
-            <!-- Indodax -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=indodax.com&sz=64" alt="Indodax" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">ID</div>
-                <h3>Indodax</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.indodaxDesc">9,7 jt pengguna • Volume Rp201 T</p>
-                <a href="https://indodax.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+        <!-- Stats Banner -->
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-value">20</span>
+                <span class="stat-label" data-i18n="exchange.stats.totalExchanges">Total Exchange</span>
             </div>
-            <!-- Tokocrypto -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=64" alt="Tokocrypto" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">TK</div>
-                <h3>Tokocrypto</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.tokocryptoDesc">Didukung Binance • Likuiditas tinggi</p>
-                <a href="https://tokocrypto.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="stat-item">
+                <span class="stat-value">10</span>
+                <span class="stat-label" data-i18n="exchange.stats.localOJK">Resmi OJK</span>
             </div>
-            <!-- Pintu -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=pintu.co.id&sz=64" alt="Pintu" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">PT</div>
-                <h3>Pintu</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.pintuDesc">10 jt+ unduhan • Ramah pemula</p>
-                <a href="https://pintu.co.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="stat-item">
+                <span class="stat-value">10</span>
+                <span class="stat-label" data-i18n="exchange.stats.globalP2P">Global P2P</span>
             </div>
-            <!-- Reku -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=reku.id&sz=64" alt="Reku" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">RK</div>
-                <h3>Reku</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.rekuDesc">Biaya termurah • UI modern</p>
-                <a href="https://reku.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Pluang -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=pluang.com&sz=64" alt="Pluang" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">PL</div>
-                <h3>Pluang</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.pluangDesc">12 jt+ pengguna • 600+ aset</p>
-                <a href="https://pluang.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Triv -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=triv.id&sz=64" alt="Triv" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">TV</div>
-                <h3>Triv</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.trivDesc">Regulated sejak 2015 • ISO27001</p>
-                <a href="https://triv.id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Ajaib Kripto -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=ajaib.co.id&sz=64" alt="Ajaib Kripto" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">AJ</div>
-                <h3>Ajaib Kripto</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.ajaibDesc">Integrasi Ajaib • Proses instan</p>
-                <a href="https://ajaib.co.id/kripto" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Upbit Indonesia -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=upbit.com&sz=64" alt="Upbit Indonesia" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">UP</div>
-                <h3>Upbit Indonesia</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.upbitDesc">Standar global • Likuiditas tinggi</p>
-                <a href="https://upbit.com/id" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Luno -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=luno.com&sz=64" alt="Luno" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">LN</div>
-                <h3>Luno</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.lunoDesc">Platform global • Simpel & aman</p>
-                <a href="https://luno.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Nanovest -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=nanovest.com&sz=64" alt="Nanovest" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">NV</div>
-                <h3>Nanovest</h3>
-                <div class="card-badge" data-i18n="exchange.badgeOJK" data-i18n-html="true">Resmi OJK</div>
-                <p data-i18n="exchange.nanovestDesc">Investasi mikro • Multi-aset</p>
-                <a href="https://nanovest.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="stat-item">
+                <span class="stat-value">8,000+</span>
+                <span class="stat-label" data-i18n="exchange.stats.totalCoins">Total Koin Tercakup</span>
             </div>
         </div>
 
-        <!-- Exchange Global -->
-        <h2 class="gradient-title" style="font-size: 2rem;" data-i18n="exchange.globalTitle">Exchange Global (Fitur P2P)</h2>
-        <div class="grid-container">
-            <!-- Binance -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=binance.com&sz=64" alt="Binance" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">BN</div>
-                <h3>Binance</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.binanceDesc">Exchange terbesar • 800+ koin</p>
-                <a href="https://binance.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari exchange..." data-i18n-placeholder="exchange.searchPlaceholder">
             </div>
-            <!-- Bybit -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=bybit.com&sz=64" alt="Bybit" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">BB</div>
-                <h3>Bybit</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.bybitDesc">Derivatif terbaik • Likuiditas tinggi</p>
-                <a href="https://bybit.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="filter-buttons" id="filterButtons">
+                <button class="filter-btn active" data-filter="all" data-i18n="exchange.filter.all">Semua</button>
+                <button class="filter-btn" data-filter="local" data-i18n="exchange.filter.local">🇮🇩 Lokal (OJK)</button>
+                <button class="filter-btn" data-filter="global" data-i18n="exchange.filter.global">🌐 Global (P2P)</button>
             </div>
-            <!-- OKX -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=okx.com&sz=64" alt="OKX" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">OK</div>
-                <h3>OKX</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.okxDesc">Fitur derivatif • 300+ koin</p>
-                <a href="https://okx.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="sort-select">
+                <select id="sortSelect">
+                    <option value="default" data-i18n="exchange.sort.default">Urutan Default</option>
+                    <option value="name-asc" data-i18n="exchange.sort.nameAsc">Nama A-Z</option>
+                    <option value="name-desc" data-i18n="exchange.sort.nameDesc">Nama Z-A</option>
+                    <option value="local-first" data-i18n="exchange.sort.localFirst">Lokal Dulu</option>
+                    <option value="global-first" data-i18n="exchange.sort.globalFirst">Global Dulu</option>
+                </select>
             </div>
-            <!-- Bitget -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=bitget.com&sz=64" alt="Bitget" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">BG</div>
-                <h3>Bitget</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.bitgetDesc">1.300+ koin • Biaya 0,01%</p>
-                <a href="https://bitget.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid" title="Grid View"><i class="fas fa-th-large"></i></button>
+                <button class="view-btn" data-view="table" title="Table View"><i class="fas fa-table"></i></button>
             </div>
-            <!-- KuCoin -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=kucoin.com&sz=64" alt="KuCoin" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">KC</div>
-                <h3>KuCoin</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.kucoinDesc">Fokus altcoin • Banyak pilihan</p>
-                <a href="https://kucoin.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+        </div>
+
+        <!-- Dynamic Section Headers + Grid -->
+        <h2 class="gradient-title" id="localHeader" style="font-size: 2rem;" data-i18n="exchange.localTitle">🇮🇩 Exchange Lokal (Resmi OJK)</h2>
+        <div id="localGrid" class="grid-container"></div>
+
+        <h2 class="gradient-title" id="globalHeader" style="font-size: 2rem;" data-i18n="exchange.globalTitle">Exchange Global (Fitur P2P)</h2>
+        <div id="globalGrid" class="grid-container"></div>
+
+        <!-- Table View -->
+        <div class="comparison-table-wrapper" id="tableView" style="display:none;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="exchange.table.name">Exchange</th>
+                        <th data-i18n="exchange.table.type">Tipe</th>
+                        <th data-i18n="exchange.table.coins">Koin</th>
+                        <th data-i18n="exchange.table.fee">Biaya</th>
+                        <th data-i18n="exchange.table.year">Tahun</th>
+                        <th data-i18n="exchange.table.features">Fitur Utama</th>
+                        <th data-i18n="exchange.table.link">Link</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <i class="fas fa-search" style="font-size: 2rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+            <p data-i18n="exchange.noResults">Tidak ada exchange ditemukan.</p>
+        </div>
+    </div>
+
+    <!-- Quick Info Modal -->
+    <div class="exchange-modal-overlay" id="exchangeModal" style="display:none;">
+        <div class="exchange-modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-header">
+                <img id="modalLogo" src="" alt="" class="modal-logo">
+                <div>
+                    <h2 id="modalName"></h2>
+                    <span class="modal-badge" id="modalBadge"></span>
+                </div>
             </div>
-            <!-- Coinbase -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=coinbase.com&sz=64" alt="Coinbase" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">CB</div>
-                <h3>Coinbase</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.coinbaseDesc">Perusahaan publik AS • Keamanan tinggi</p>
-                <a href="https://coinbase.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="modal-body">
+                <div class="modal-info-grid">
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="exchange.modal.year">Tahun Berdiri</span>
+                        <span class="info-value" id="modalYear"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="exchange.modal.coins">Jumlah Koin</span>
+                        <span class="info-value" id="modalCoins"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="exchange.modal.fee">Biaya Trading</span>
+                        <span class="info-value" id="modalFee"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-i18n="exchange.modal.deposit">Metode Deposit</span>
+                        <span class="info-value" id="modalDeposit"></span>
+                    </div>
+                </div>
+                <div class="modal-features">
+                    <h4 data-i18n="exchange.modal.features">Fitur Unggulan</h4>
+                    <div class="feature-tags" id="modalFeatures"></div>
+                </div>
             </div>
-            <!-- Kraken -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=kraken.com&sz=64" alt="Kraken" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">KR</div>
-                <h3>Kraken</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.krakenDesc">Exchange tertua • Reputasi kuat</p>
-                <a href="https://kraken.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- Gate.io -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=gate.io&sz=64" alt="Gate.io" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">GI</div>
-                <h3>Gate.io</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.gateioDesc">1.700+ koin • Likuiditas besar</p>
-                <a href="https://gate.io" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- MEXC -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=mexc.com&sz=64" alt="MEXC" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">MX</div>
-                <h3>MEXC</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.mexcDesc">1.500+ koin • Biaya rendah</p>
-                <a href="https://mexc.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
-            </div>
-            <!-- BingX -->
-            <div class="card">
-                <img src="https://www.google.com/s2/favicons?domain=bingx.com&sz=64" alt="BingX" class="card-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-logo-fallback" style="display: none;">BX</div>
-                <h3>BingX</h3>
-                <div class="card-badge" data-i18n="exchange.badgeGlobal" data-i18n-html="true">Global</div>
-                <p data-i18n="exchange.bingxDesc">Social trading • 500+ koin</p>
-                <a href="https://bingx.com" target="_blank" class="card-link" data-i18n="exchange.visitBtn">Kunjungi →</a>
+            <div class="modal-footer">
+                <a id="modalVisitBtn" href="" target="_blank" class="modal-visit-btn" data-i18n="exchange.modal.visit">Kunjungi Exchange →</a>
             </div>
         </div>
     </div>
@@ -374,6 +467,189 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
     <script>
+        // ==================== EXCHANGE DATA ====================
+        const exchanges = [
+            { name: 'Indodax', type: 'local', domain: 'indodax.com', url: 'https://indodax.com', fallback: 'ID', descKey: 'exchange.indodaxDesc', coins: '200+', fee: '0.3%', year: 2014, features: ['IDR pair', 'OTC desk'], deposit: ['Bank Transfer', 'QRIS'] },
+            { name: 'Tokocrypto', type: 'local', domain: 'tokocrypto.com', url: 'https://tokocrypto.com', fallback: 'TK', descKey: 'exchange.tokocryptoDesc', coins: '300+', fee: '0.1%', year: 2018, features: ['Binance-backed', 'Staking'], deposit: ['Bank Transfer', 'E-wallet'] },
+            { name: 'Pintu', type: 'local', domain: 'pintu.co.id', url: 'https://pintu.co.id', fallback: 'PT', descKey: 'exchange.pintuDesc', coins: '100+', fee: '0%', year: 2019, features: ['Beginner friendly', 'Earn'], deposit: ['Bank Transfer', 'E-wallet'] },
+            { name: 'Reku', type: 'local', domain: 'reku.id', url: 'https://reku.id', fallback: 'RK', descKey: 'exchange.rekuDesc', coins: '100+', fee: '0.1%', year: 2019, features: ['Low fees', 'Modern UI'], deposit: ['Bank Transfer'] },
+            { name: 'Pluang', type: 'local', domain: 'pluang.com', url: 'https://pluang.com', fallback: 'PL', descKey: 'exchange.pluangDesc', coins: '600+', fee: '0.5%', year: 2019, features: ['Multi-asset', 'Gold'], deposit: ['Bank Transfer', 'GoPay'] },
+            { name: 'Triv', type: 'local', domain: 'triv.id', url: 'https://triv.id', fallback: 'TV', descKey: 'exchange.trivDesc', coins: '50+', fee: '0.5%', year: 2015, features: ['ISO27001', 'Veteran'], deposit: ['Bank Transfer'] },
+            { name: 'Ajaib Kripto', type: 'local', domain: 'ajaib.co.id', url: 'https://ajaib.co.id/kripto', fallback: 'AJ', descKey: 'exchange.ajaibDesc', coins: '100+', fee: '0.2%', year: 2020, features: ['Ajaib ecosystem', 'Instant'], deposit: ['Bank Transfer'] },
+            { name: 'Upbit Indonesia', type: 'local', domain: 'upbit.com', url: 'https://upbit.com/id', fallback: 'UP', descKey: 'exchange.upbitDesc', coins: '200+', fee: '0.25%', year: 2020, features: ['Korean standard', 'High liquidity'], deposit: ['Bank Transfer'] },
+            { name: 'Luno', type: 'local', domain: 'luno.com', url: 'https://luno.com', fallback: 'LN', descKey: 'exchange.lunoDesc', coins: '10+', fee: '0.1%', year: 2013, features: ['Simple', 'Secure'], deposit: ['Bank Transfer'] },
+            { name: 'Nanovest', type: 'local', domain: 'nanovest.com', url: 'https://nanovest.com', fallback: 'NV', descKey: 'exchange.nanovestDesc', coins: '50+', fee: '0.2%', year: 2021, features: ['Micro investing', 'Multi-asset'], deposit: ['Bank Transfer', 'E-wallet'] },
+            { name: 'Binance', type: 'global', domain: 'binance.com', url: 'https://binance.com', fallback: 'BN', descKey: 'exchange.binanceDesc', coins: '800+', fee: '0.1%', year: 2017, features: ['P2P', 'Futures', 'Launchpad'], deposit: ['P2P IDR'] },
+            { name: 'Bybit', type: 'global', domain: 'bybit.com', url: 'https://bybit.com', fallback: 'BB', descKey: 'exchange.bybitDesc', coins: '500+', fee: '0.1%', year: 2018, features: ['Derivatives', 'Copy trading'], deposit: ['P2P IDR'] },
+            { name: 'OKX', type: 'global', domain: 'okx.com', url: 'https://okx.com', fallback: 'OK', descKey: 'exchange.okxDesc', coins: '300+', fee: '0.1%', year: 2017, features: ['Derivatives', 'DeFi'], deposit: ['P2P IDR'] },
+            { name: 'Bitget', type: 'global', domain: 'bitget.com', url: 'https://bitget.com', fallback: 'BG', descKey: 'exchange.bitgetDesc', coins: '1300+', fee: '0.01%', year: 2018, features: ['Copy trading', 'Low fees'], deposit: ['P2P'] },
+            { name: 'KuCoin', type: 'global', domain: 'kucoin.com', url: 'https://kucoin.com', fallback: 'KC', descKey: 'exchange.kucoinDesc', coins: '700+', fee: '0.1%', year: 2017, features: ['Altcoin focus', 'Lending'], deposit: ['P2P'] },
+            { name: 'Coinbase', type: 'global', domain: 'coinbase.com', url: 'https://coinbase.com', fallback: 'CB', descKey: 'exchange.coinbaseDesc', coins: '250+', fee: '0.5%', year: 2012, features: ['US publicly traded', 'Insurance'], deposit: ['Card'] },
+            { name: 'Kraken', type: 'global', domain: 'kraken.com', url: 'https://kraken.com', fallback: 'KR', descKey: 'exchange.krakenDesc', coins: '200+', fee: '0.16%', year: 2011, features: ['Veteran', 'Staking'], deposit: ['Wire'] },
+            { name: 'Gate.io', type: 'global', domain: 'gate.io', url: 'https://gate.io', fallback: 'GI', descKey: 'exchange.gateioDesc', coins: '1700+', fee: '0.2%', year: 2013, features: ['Most coins', 'Startup'], deposit: ['P2P'] },
+            { name: 'MEXC', type: 'global', domain: 'mexc.com', url: 'https://mexc.com', fallback: 'MX', descKey: 'exchange.mexcDesc', coins: '1500+', fee: '0%', year: 2018, features: ['Zero fee spot', 'New listings'], deposit: ['P2P'] },
+            { name: 'BingX', type: 'global', domain: 'bingx.com', url: 'https://bingx.com', fallback: 'BX', descKey: 'exchange.bingxDesc', coins: '500+', fee: '0.1%', year: 2018, features: ['Social trading', 'Copy trade'], deposit: ['P2P'] }
+        ];
+
+        // ==================== STATE ====================
+        let currentFilter = 'all';
+        let currentSort = 'default';
+        let currentView = 'grid';
+        let currentSearch = '';
+
+        // ==================== RENDER ====================
+        function getFilteredSorted() {
+            let result = exchanges.slice();
+            if (currentFilter !== 'all') {
+                result = result.filter(ex => ex.type === currentFilter);
+            }
+            if (currentSearch.trim()) {
+                const q = currentSearch.trim().toLowerCase();
+                result = result.filter(ex => ex.name.toLowerCase().includes(q));
+            }
+            if (currentSort === 'name-asc') {
+                result.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (currentSort === 'name-desc') {
+                result.sort((a, b) => b.name.localeCompare(a.name));
+            } else if (currentSort === 'local-first') {
+                result.sort((a, b) => (a.type === 'local' ? -1 : 1) - (b.type === 'local' ? -1 : 1));
+            } else if (currentSort === 'global-first') {
+                result.sort((a, b) => (a.type === 'global' ? -1 : 1) - (b.type === 'global' ? -1 : 1));
+            }
+            return result;
+        }
+
+        function buildCard(ex) {
+            const desc = (typeof t === 'function') ? t(ex.descKey) : ex.descKey;
+            const visitLabel = (typeof t === 'function') ? t('exchange.visitBtn') : 'Kunjungi →';
+            const badgeText = ex.type === 'local'
+                ? ((typeof t === 'function') ? t('exchange.typeBadge.local') : 'Resmi OJK')
+                : ((typeof t === 'function') ? t('exchange.typeBadge.global') : 'Global');
+            return `<div class="card" data-exchange-name="${ex.name}" style="cursor:pointer;">
+                <img src="https://www.google.com/s2/favicons?domain=${ex.domain}&sz=64" alt="${ex.name}" class="card-logo-img"
+                    onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="card-logo-fallback" style="display:none;">${ex.fallback}</div>
+                <h3>${ex.name}</h3>
+                <div class="card-badge">${badgeText}</div>
+                <p>${desc}</p>
+                <a href="${ex.url}" target="_blank" class="card-link" onclick="event.stopPropagation()">${visitLabel}</a>
+            </div>`;
+        }
+
+        function buildTableRow(ex) {
+            const badgeText = ex.type === 'local'
+                ? ((typeof t === 'function') ? t('exchange.typeBadge.local') : 'Resmi OJK')
+                : ((typeof t === 'function') ? t('exchange.typeBadge.global') : 'Global');
+            const visitLabel = (typeof t === 'function') ? t('exchange.visitBtn') : 'Kunjungi →';
+            return `<tr>
+                <td><div class="exchange-name-cell">
+                    <img src="https://www.google.com/s2/favicons?domain=${ex.domain}&sz=64" alt="${ex.name}"
+                        onerror="this.style.display='none'">
+                    ${ex.name}
+                </div></td>
+                <td><span class="type-badge ${ex.type}">${badgeText}</span></td>
+                <td>${ex.coins}</td>
+                <td>${ex.fee}</td>
+                <td>${ex.year}</td>
+                <td>${ex.features.join(', ')}</td>
+                <td><a href="${ex.url}" target="_blank" class="table-link">${visitLabel}</a></td>
+            </tr>`;
+        }
+
+        function renderExchanges() {
+            const result = getFilteredSorted();
+            const localHeader = document.getElementById('localHeader');
+            const globalHeader = document.getElementById('globalHeader');
+            const localGrid = document.getElementById('localGrid');
+            const globalGrid = document.getElementById('globalGrid');
+            const tableView = document.getElementById('tableView');
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            if (currentView === 'grid') {
+                tableView.style.display = 'none';
+                const localItems = result.filter(ex => ex.type === 'local');
+                const globalItems = result.filter(ex => ex.type === 'global');
+                const showSections = (currentFilter === 'all' || currentSort === 'local-first' || currentSort === 'global-first');
+
+                if (showSections) {
+                    localHeader.style.display = localItems.length ? '' : 'none';
+                    globalHeader.style.display = globalItems.length ? '' : 'none';
+                    localGrid.style.display = localItems.length ? '' : 'none';
+                    globalGrid.style.display = globalItems.length ? '' : 'none';
+                    localGrid.innerHTML = localItems.map(buildCard).join('');
+                    globalGrid.innerHTML = globalItems.map(buildCard).join('');
+                } else {
+                    localHeader.style.display = 'none';
+                    globalHeader.style.display = 'none';
+                    localGrid.style.display = '';
+                    globalGrid.style.display = 'none';
+                    localGrid.innerHTML = result.map(buildCard).join('');
+                    globalGrid.innerHTML = '';
+                }
+
+                emptyState.style.display = result.length === 0 ? '' : 'none';
+
+                if (typeof VanillaTilt !== 'undefined') {
+                    VanillaTilt.init(document.querySelectorAll('.card'), { max: 5, speed: 300, glare: false, gyroscope: true });
+                }
+
+                document.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const name = this.getAttribute('data-exchange-name');
+                        const ex = exchanges.find(e => e.name === name);
+                        if (ex) openModal(ex);
+                    });
+                });
+            } else {
+                localHeader.style.display = 'none';
+                globalHeader.style.display = 'none';
+                localGrid.style.display = 'none';
+                globalGrid.style.display = 'none';
+                tableView.style.display = result.length ? '' : 'none';
+                emptyState.style.display = result.length === 0 ? '' : 'none';
+                tableBody.innerHTML = result.map(buildTableRow).join('');
+            }
+        }
+
+        // ==================== MODAL ====================
+        function openModal(ex) {
+            const modal = document.getElementById('exchangeModal');
+            const badgeText = ex.type === 'local'
+                ? ((typeof t === 'function') ? t('exchange.typeBadge.local') : 'Resmi OJK')
+                : ((typeof t === 'function') ? t('exchange.typeBadge.global') : 'Global');
+            const visitLabel = (typeof t === 'function') ? t('exchange.modal.visit') : 'Kunjungi Exchange →';
+
+            document.getElementById('modalLogo').src = `https://www.google.com/s2/favicons?domain=${ex.domain}&sz=64`;
+            document.getElementById('modalLogo').alt = ex.name;
+            document.getElementById('modalName').textContent = ex.name;
+
+            const badge = document.getElementById('modalBadge');
+            badge.textContent = badgeText;
+            badge.className = 'modal-badge type-badge ' + ex.type;
+
+            document.getElementById('modalYear').textContent = ex.year;
+            document.getElementById('modalCoins').textContent = ex.coins;
+            document.getElementById('modalFee').textContent = ex.fee;
+            document.getElementById('modalDeposit').textContent = ex.deposit.join(', ');
+
+            const featuresEl = document.getElementById('modalFeatures');
+            featuresEl.innerHTML = ex.features.map(f => `<span class="feature-tag">${f}</span>`).join('');
+
+            const visitBtn = document.getElementById('modalVisitBtn');
+            visitBtn.href = ex.url;
+            visitBtn.textContent = visitLabel;
+
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('exchangeModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
         // ==================== PARTICLE CANVAS ====================
         function initParticles() {
             const canvas = document.getElementById('particleCanvas');
@@ -431,19 +707,68 @@
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', function() {
             initParticles();
+            renderExchanges();
 
-            // Inisialisasi VanillaTilt untuk efek card
-            if (typeof VanillaTilt !== 'undefined') {
-                VanillaTilt.init(document.querySelectorAll('.card'), {
-                    max: 5,
-                    speed: 300,
-                    glare: false,
-                    gyroscope: true,
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function() {
+                currentSearch = this.value;
+                renderExchanges();
+            });
+
+            // Filter buttons
+            document.getElementById('filterButtons').addEventListener('click', function(e) {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                renderExchanges();
+            });
+
+            // Sort select
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                currentSort = this.value;
+                renderExchanges();
+            });
+
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentView = this.getAttribute('data-view');
+                    renderExchanges();
                 });
-            }
+            });
 
-            // translations.js sudah auto-initialize, tidak perlu tambahan apa pun
+            // Modal close button
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+
+            // Click outside modal to close
+            document.getElementById('exchangeModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // ESC key to close modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
         });
+
+        // ==================== LANGUAGE REFRESH ====================
+        window.refreshPageContent = function() {
+            renderExchanges();
+            // Update filter button texts via data-i18n (already handled by setLanguage)
+            // Update sort option texts via data-i18n (already handled by setLanguage)
+            // Update search placeholder via data-i18n-placeholder (already handled by setLanguage)
+            // Re-populate modal if open
+            const modal = document.getElementById('exchangeModal');
+            if (modal && modal.style.display !== 'none') {
+                const name = document.getElementById('modalName').textContent;
+                const ex = exchanges.find(e => e.name === name);
+                if (ex) openModal(ex);
+            }
+        };
     </script>
 </body>
 </html>

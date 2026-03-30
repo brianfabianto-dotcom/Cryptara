@@ -264,7 +264,48 @@ const translations = {
             krakenDesc: "Oldest exchange • Strong reputation",
             gateioDesc: "1,700+ coins • High liquidity",
             mexcDesc: "1,500+ coins • Low fees",
-            bingxDesc: "Social trading • 500+ coins"
+            bingxDesc: "Social trading • 500+ coins",
+            stats: {
+                totalExchanges: 'Total Exchanges',
+                localOJK: 'OJK Licensed',
+                globalP2P: 'Global P2P',
+                totalCoins: 'Total Coins Listed'
+            },
+            searchPlaceholder: 'Search exchange...',
+            filter: {
+                all: 'All',
+                local: '🇮🇩 Local (OJK)',
+                global: '🌐 Global (P2P)'
+            },
+            sort: {
+                default: 'Default Order',
+                nameAsc: 'Name A-Z',
+                nameDesc: 'Name Z-A',
+                localFirst: 'Local First',
+                globalFirst: 'Global First'
+            },
+            table: {
+                name: 'Exchange',
+                type: 'Type',
+                coins: 'Coins',
+                fee: 'Fee',
+                year: 'Year',
+                features: 'Key Features',
+                link: 'Link'
+            },
+            modal: {
+                year: 'Founded',
+                coins: 'Total Coins',
+                fee: 'Trading Fee',
+                deposit: 'Deposit Methods',
+                features: 'Key Features',
+                visit: 'Visit Exchange →'
+            },
+            noResults: 'No exchanges found.',
+            typeBadge: {
+                local: 'OJK Licensed',
+                global: 'Global'
+            }
         },
         disclaimer: {
             title: "Compliance Notice & Limitation of Liability",
@@ -601,7 +642,48 @@ const translations = {
             krakenDesc: "Exchange tertua • Reputasi kuat",
             gateioDesc: "1.700+ koin • Likuiditas besar",
             mexcDesc: "1.500+ koin • Biaya rendah",
-            bingxDesc: "Social trading • 500+ koin"
+            bingxDesc: "Social trading • 500+ koin",
+            stats: {
+                totalExchanges: 'Total Exchange',
+                localOJK: 'Resmi OJK',
+                globalP2P: 'Global P2P',
+                totalCoins: 'Total Koin Tercakup'
+            },
+            searchPlaceholder: 'Cari exchange...',
+            filter: {
+                all: 'Semua',
+                local: '🇮🇩 Lokal (OJK)',
+                global: '🌐 Global (P2P)'
+            },
+            sort: {
+                default: 'Urutan Default',
+                nameAsc: 'Nama A-Z',
+                nameDesc: 'Nama Z-A',
+                localFirst: 'Lokal Dulu',
+                globalFirst: 'Global Dulu'
+            },
+            table: {
+                name: 'Exchange',
+                type: 'Tipe',
+                coins: 'Koin',
+                fee: 'Biaya',
+                year: 'Tahun',
+                features: 'Fitur Utama',
+                link: 'Link'
+            },
+            modal: {
+                year: 'Tahun Berdiri',
+                coins: 'Jumlah Koin',
+                fee: 'Biaya Trading',
+                deposit: 'Metode Deposit',
+                features: 'Fitur Unggulan',
+                visit: 'Kunjungi Exchange →'
+            },
+            noResults: 'Tidak ada exchange ditemukan.',
+            typeBadge: {
+                local: 'Resmi OJK',
+                global: 'Global'
+            }
         },
         disclaimer: {
             title: "Catatan Kepatuhan & Batasan Tanggung Jawab",
