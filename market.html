@@ -466,12 +466,12 @@
         // ==================== FETCH GLOBAL DATA ====================
         // Helper: generate coin logo HTML
         function coinLogoHTML(symbol, size) {
-            const sym = symbol ? symbol.toLowerCase() : '';
-            const fallbackText = symbol ? symbol.substring(0, 2).toUpperCase() : '??';
+            const safeSym = symbol ? symbol.replace(/[^a-zA-Z0-9]/g, '').toLowerCase() : '';
+            const safeFallback = symbol ? symbol.replace(/[^a-zA-Z0-9]/g, '').substring(0, 2).toUpperCase() : '??';
             if (size === 'lg') {
-                return `<img class="coin-logo-lg" src="https://assets.coincap.io/assets/icons/${sym}@2x.png" alt="${symbol}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="coin-logo-fallback-lg" style="display:none">${fallbackText}</div>`;
+                return `<img class="coin-logo-lg" src="https://assets.coincap.io/assets/icons/${safeSym}@2x.png" alt="${safeSym}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="coin-logo-fallback-lg" style="display:none">${safeFallback}</div>`;
             } else {
-                return `<img class="coin-logo" src="https://assets.coincap.io/assets/icons/${sym}@2x.png" alt="${symbol}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" /><span class="coin-logo-fallback" style="display:none">${fallbackText}</span>`;
+                return `<img class="coin-logo" src="https://assets.coincap.io/assets/icons/${safeSym}@2x.png" alt="${safeSym}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" /><span class="coin-logo-fallback" style="display:none">${safeFallback}</span>`;
             }
         }
 
