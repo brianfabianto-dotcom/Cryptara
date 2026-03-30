@@ -43,28 +43,28 @@ async function fetchTickerData() {
         const usdtIdr = usdtUsd * kurs;
 
         const exchanges = [
-            { name: 'Google Finance (est)', price: usdtIdr },
-            { name: 'Indodax', price: usdtIdr * 1.001 },
-            { name: 'Tokocrypto', price: usdtIdr * 0.999 },
-            { name: 'Pintu', price: usdtIdr * 1.002 },
-            { name: 'Binance', price: usdtIdr * 0.998 },
+            { name: 'Google Finance (est)', price: usdtIdr, logo: 'https://www.google.com/s2/favicons?domain=google.com&sz=32' },
+            { name: 'Indodax', price: usdtIdr * 1.001, logo: 'https://www.google.com/s2/favicons?domain=indodax.com&sz=32' },
+            { name: 'Tokocrypto', price: usdtIdr * 0.999, logo: 'https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=32' },
+            { name: 'Pintu', price: usdtIdr * 1.002, logo: 'https://www.google.com/s2/favicons?domain=pintu.co.id&sz=32' },
+            { name: 'Binance', price: usdtIdr * 0.998, logo: 'https://www.google.com/s2/favicons?domain=binance.com&sz=32' },
         ];
 
         let html = '';
         for (let i = 0; i < 2; i++) {
             exchanges.forEach((ex) => {
-                html += `<div class="ticker-item">${ex.name}: <span>Rp ${formatNumberID(Math.round(ex.price))}</span></div>`;
+                html += `<div class="ticker-item"><img src="${ex.logo}" alt="${ex.name}" class="ticker-logo">${ex.name}: <span>Rp ${formatNumberID(Math.round(ex.price))}</span></div>`;
             });
         }
         tickerWrap.innerHTML = html;
     } catch (error) {
         console.warn('Ticker error, fallback statis:', error);
         tickerWrap.innerHTML = `
-            <div class="ticker-item">Google Finance (est): <span>Rp 15.850</span></div>
-            <div class="ticker-item">Indodax: <span>Rp 15.850</span></div>
-            <div class="ticker-item">Tokocrypto: <span>Rp 15.825</span></div>
-            <div class="ticker-item">Pintu: <span>Rp 15.860</span></div>
-            <div class="ticker-item">Binance: <span>Rp 15.805</span></div>
+            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" alt="Google Finance" class="ticker-logo">Google Finance (est): <span>Rp 15.850</span></div>
+            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=indodax.com&sz=32" alt="Indodax" class="ticker-logo">Indodax: <span>Rp 15.850</span></div>
+            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=32" alt="Tokocrypto" class="ticker-logo">Tokocrypto: <span>Rp 15.825</span></div>
+            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=pintu.co.id&sz=32" alt="Pintu" class="ticker-logo">Pintu: <span>Rp 15.860</span></div>
+            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=binance.com&sz=32" alt="Binance" class="ticker-logo">Binance: <span>Rp 15.805</span></div>
         `;
     }
 }
@@ -214,9 +214,16 @@ function displayMarketData(coins) {
         const change = parseFloat(coin.percent_change_24h) || 0;
         const changeClass = change >= 0 ? 'market-change' : 'market-change negative';
         const changeSign = change >= 0 ? '▲' : '▼';
+        const symbolLower = coin.symbol.toLowerCase();
+        const logoUrl = `https://assets.coincap.io/assets/icons/${symbolLower}@2x.png`;
+        const fallbackLetter = coin.name.charAt(0).toUpperCase();
         html += `
             <div class="market-item" onclick="window.location.href='coin.html?id=${coin.id}'">
-                <span class="market-left">${coin.name} (${coin.symbol})</span>
+                <span class="market-left">
+                    <img src="${logoUrl}" alt="${coin.symbol}" class="market-coin-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                    <span class="market-coin-fallback" style="display:none;">${fallbackLetter}</span>
+                    ${coin.name} (${coin.symbol})
+                </span>
                 <div class="market-right">
                     <span class="market-price">${formatCurrencyUSD(price)}</span>
                     <span class="${changeClass}">${changeSign} ${Math.abs(change).toFixed(2)}%</span>
