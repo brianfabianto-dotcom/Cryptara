@@ -25,48 +25,72 @@ async function fetchTickerData() {
     const tickerWrap = document.getElementById('ticker-wrap');
     if (!tickerWrap) return;
 
+    // Fetch harga USDT/IDR real dari Indodax
+    async function getIndodaxPrice() {
+        const res = await fetch('https://indodax.com/api/ticker/usdtidr');
+        const data = await res.json();
+        return parseFloat(data.ticker.last);
+    }
+
+    // Fetch harga USDT/IDR real dari Binance (digunakan Tokocrypto)
+    async function getBinancePrice() {
+        const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=USDTIDR');
+        const data = await res.json();
+        return parseFloat(data.price);
+    }
+
+    // Fallback: estimasi kurs via exchangerate-api
     async function getKursIdr() {
         try {
             const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await response.json();
-            return data.rates.IDR || 15800;
+            return data.rates.IDR || 16000;
         } catch {
-            return 15800;
+            return 16000;
         }
     }
 
-    try {
-        const usdResponse = await fetch('https://api.coinlore.net/api/ticker/?id=518');
-        const usdData = await usdResponse.json();
-        const usdtUsd = usdData[0] ? parseFloat(usdData[0].price_usd) : 1;
-        const kurs = await getKursIdr();
-        const usdtIdr = usdtUsd * kurs;
+    const exchanges = [
+        { name: 'Indodax', logo: 'https://www.google.com/s2/favicons?domain=indodax.com&sz=32', fetch: getIndodaxPrice, est: false },
+        { name: 'Tokocrypto', logo: 'https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=32', fetch: getBinancePrice, est: true },
+        { name: 'Binance', logo: 'https://www.google.com/s2/favicons?domain=binance.com&sz=32', fetch: getBinancePrice, est: false },
+        { name: 'Pintu', logo: 'https://www.google.com/s2/favicons?domain=pintu.co.id&sz=32', fetch: null, est: true },
+        { name: 'Bybit', logo: 'https://www.google.com/s2/favicons?domain=bybit.com&sz=32', fetch: null, est: true },
+    ];
 
-        const exchanges = [
-            { name: 'Google Finance (est)', price: usdtIdr, logo: 'https://www.google.com/s2/favicons?domain=google.com&sz=32' },
-            { name: 'Indodax', price: usdtIdr * 1.001, logo: 'https://www.google.com/s2/favicons?domain=indodax.com&sz=32' },
-            { name: 'Tokocrypto', price: usdtIdr * 0.999, logo: 'https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=32' },
-            { name: 'Pintu', price: usdtIdr * 1.002, logo: 'https://www.google.com/s2/favicons?domain=pintu.co.id&sz=32' },
-            { name: 'Binance', price: usdtIdr * 0.998, logo: 'https://www.google.com/s2/favicons?domain=binance.com&sz=32' },
-        ];
+    // Ambil harga Indodax dan Binance secara paralel untuk referensi estimasi
+    let indodaxPrice = 0;
+    let binancePrice = 0;
+    try { indodaxPrice = await getIndodaxPrice(); } catch (e) { console.warn('Gagal fetch harga Indodax:', e); }
+    try { binancePrice = await getBinancePrice(); } catch (e) { console.warn('Gagal fetch harga Binance:', e); }
 
-        let html = '';
-        for (let i = 0; i < 2; i++) {
-            exchanges.forEach((ex) => {
-                html += `<div class="ticker-item"><img src="${ex.logo}" alt="${ex.name}" class="ticker-logo">${ex.name}: <span>Rp ${formatNumberID(Math.round(ex.price))}</span></div>`;
-            });
-        }
-        tickerWrap.innerHTML = html;
-    } catch (error) {
-        console.warn('Ticker error, fallback statis:', error);
-        tickerWrap.innerHTML = `
-            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" alt="Google Finance" class="ticker-logo">Google Finance (est): <span>Rp 15.850</span></div>
-            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=indodax.com&sz=32" alt="Indodax" class="ticker-logo">Indodax: <span>Rp 15.850</span></div>
-            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=tokocrypto.com&sz=32" alt="Tokocrypto" class="ticker-logo">Tokocrypto: <span>Rp 15.825</span></div>
-            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=pintu.co.id&sz=32" alt="Pintu" class="ticker-logo">Pintu: <span>Rp 15.860</span></div>
-            <div class="ticker-item"><img src="https://www.google.com/s2/favicons?domain=binance.com&sz=32" alt="Binance" class="ticker-logo">Binance: <span>Rp 15.805</span></div>
-        `;
+    // Jika keduanya gagal, gunakan estimasi kurs
+    const fallbackKurs = await getKursIdr();
+    const refPrice = indodaxPrice || binancePrice || fallbackKurs;
+
+    const results = await Promise.all(
+        exchanges.map(async (ex) => {
+            if (ex.fetch === getIndodaxPrice) {
+                return { ...ex, price: indodaxPrice || refPrice };
+            }
+            if (ex.fetch === getBinancePrice) {
+                // Tokocrypto (est: true): menggunakan Binance engine, harga sama tapi ditampilkan sebagai estimasi
+                // Binance (est: false): harga real dari API Binance
+                return { ...ex, price: binancePrice || refPrice };
+            }
+            // Exchange tanpa public API → estimasi berdasarkan harga referensi
+            return { ...ex, price: refPrice };
+        })
+    );
+
+    let html = '';
+    for (let i = 0; i < 2; i++) {
+        results.forEach((ex) => {
+            const label = ex.est ? `${ex.name} (est.)` : ex.name;
+            html += `<div class="ticker-item"><img src="${ex.logo}" alt="${ex.name}" class="ticker-logo">${label}: <span>Rp ${formatNumberID(Math.round(ex.price))}</span></div>`;
+        });
     }
+    tickerWrap.innerHTML = html;
 }
 
 // ==================== NEWS API ====================
@@ -401,17 +425,6 @@ async function loadCoinLogo(coin, containerId) {
         iconElement.style.color = '#ff8a00';
     }
 }
-
-// ==================== TOMBOL BAHASA ====================
-document.addEventListener('DOMContentLoaded', function () {
-    const langBtn = document.getElementById('langToggle');
-    if (langBtn) {
-        langBtn.addEventListener('click', function () {
-            const newLang = currentLang === 'id' ? 'en' : 'id';
-            setLanguage(newLang);
-        });
-    }
-});
 
 // ==================== HAMBURGER MENU ====================
 document.addEventListener('DOMContentLoaded', function () {
