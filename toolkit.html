@@ -181,6 +181,33 @@
         .tip-list li {
             margin-bottom: 0.5rem;
         }
+        .toolkit-hero { text-align: center; margin-bottom: 3rem; padding: 2rem 0; }
+        .toolkit-badge { display: inline-block; background: rgba(255,94,0,0.15); border: 1px solid var(--accent-orange); color: var(--accent-orange); padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .toolkit-category { margin-bottom: 3rem; }
+        .category-title { font-size: 1.1rem; font-weight: 600; color: var(--accent-orange); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .popular-badge { background: var(--accent-orange); color: #000; font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 30px; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem; }
+        .toolkit-card .card-icon { font-size: 1.8rem; color: var(--accent-orange); margin-bottom: 0.8rem; text-shadow: 0 0 10px rgba(255,94,0,0.3); }
+        .card-header { display: flex; align-items: center; margin-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.75rem; }
+        .card-header h3 { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin: 0; }
+        .result-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { color: var(--text-secondary); }
+        .result-value { color: var(--text-primary); font-weight: 600; }
+        .result-value.positive { color: #22c55e; }
+        .result-value.negative { color: #ef4444; }
+        .result-value.orange { color: var(--accent-orange); }
+        .alloc-bar { height: 12px; border-radius: 6px; margin-top: 0.3rem; transition: width 0.5s ease; }
+        .alloc-btc { background: #f7931a; }
+        .alloc-eth { background: #627eea; }
+        .alloc-alt { background: var(--accent-orange); }
+        .fg-gauge { position: relative; height: 20px; border-radius: 10px; background: linear-gradient(to right, #ef4444, #f97316, #eab308, #84cc16, #22c55e); margin: 1rem 0; }
+        .fg-needle { position: absolute; top: 0; width: 4px; height: 100%; background: white; border-radius: 2px; transform: translateX(-50%); }
+        .dca-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 0.5rem; }
+        .dca-table th { color: var(--accent-orange); text-align: left; padding: 0.4rem 0.3rem; border-bottom: 1px solid var(--glass-border); }
+        .dca-table td { padding: 0.35rem 0.3rem; color: var(--text-secondary); border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .rr-bar { height: 16px; border-radius: 8px; display: flex; overflow: hidden; margin: 0.5rem 0; }
+        .rr-risk { background: #ef4444; }
+        .rr-reward { background: #22c55e; }
     </style>
 </head>
 <body>
@@ -203,87 +230,220 @@
     </nav>
 
     <div class="toolkit-container">
-        <div style="text-align: center; margin-bottom: 3rem;">
+        <!-- Hero -->
+        <div class="toolkit-hero">
+            <div class="toolkit-badge" data-i18n="toolkit.badge">10 Tools</div>
             <h1 class="gradient-title" data-i18n="toolkit.title">Toolkit Kripto</h1>
-            <p style="color: var(--text-secondary);" data-i18n="toolkit.subtitle">Kalkulator cerdas, konverter, dan panduan jaringan untuk membantu transaksi Anda.</p>
+            <p style="color: var(--text-secondary); max-width:640px; margin:0.5rem auto 0;" data-i18n="toolkit.subtitle">Kalkulator cerdas, konverter, dan simulator untuk membantu keputusan investasi Anda.</p>
         </div>
 
-        <div class="toolkit-grid">
-            <!-- 1. Kalkulator Harga -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.priceCalculator">Kalkulator Harga</h3></div>
-                <div class="card-description" data-i18n="toolkit.priceDesc">Hitung nilai USDT ke mata uang pilihan berdasarkan harga exchange.</div>
-                <div class="input-group"><label data-i18n="toolkit.amountUSDT">Jumlah (USDT)</label><input type="number" id="calc-amount" value="1" min="0" step="0.01"></div>
-                <div class="currency-toggle" id="calc-currency-toggle">
-                    <div class="currency-option active" data-currency="IDR">IDR</div>
-                    <div class="currency-option" data-currency="USD">USD</div>
+        <!-- TRADING TOOLS -->
+        <div class="toolkit-category">
+            <div class="category-title">
+                <i class="fas fa-chart-line" style="color:var(--accent-orange)"></i>
+                <span data-i18n="toolkit.cat_trading">Trading Tools</span>
+            </div>
+            <div class="toolkit-grid">
+                <!-- Profit/Loss -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <div class="card-header">
+                        <h3 data-i18n="toolkit.profitLoss">Kalkulator Profit / Loss</h3>
+                        <span class="popular-badge" data-i18n="toolkit.popular">Populer</span>
+                    </div>
+                    <p class="card-description" data-i18n="toolkit.profitLossDesc">Hitung untung atau rugi transaksi berdasarkan harga beli, jual, dan jumlah.</p>
+                    <div class="input-group"><label data-i18n="toolkit.buyPrice">Harga Beli (USD)</label><input type="number" id="pl-buy" value="45000" min="0" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.sellPrice">Harga Jual (USD)</label><input type="number" id="pl-sell" value="50000" min="0" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.quantity">Jumlah</label><input type="number" id="pl-qty" value="0.5" min="0" step="0.001"></div>
+                    <button class="btn-calc" onclick="calcPL()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div class="result-box" id="pl-result" style="display:none;"></div>
                 </div>
-                <div class="input-group"><label data-i18n="toolkit.chooseExchange">Pilih Exchange</label><select id="calc-exchange"><option value="indodax">Indodax</option><option value="tokocrypto">Tokocrypto</option><option value="pintu">Pintu</option><option value="binance">Binance</option><option value="kraken">Kraken</option><option value="coinbase">Coinbase</option></select></div>
-                <div class="result-box" id="calc-result">Memuat...</div>
-                <div class="note" data-i18n="toolkit.note">*Harga estimasi berdasarkan multiplier sederhana.</div>
-            </div>
 
-            <!-- 2. Konverter -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.converter">Konverter Kripto</h3></div>
-                <div class="card-description" data-i18n="toolkit.converterDesc">Konversi kripto populer ke Rupiah (IDR) atau Dolar AS (USD).</div>
-                <div class="input-group"><label data-i18n="toolkit.from">Dari (Kripto)</label><select id="convert-from"></select></div>
-                <div class="input-group"><label data-i18n="toolkit.to">Ke (Fiat)</label><select id="convert-to"><option value="IDR">IDR</option><option value="USD">USD</option></select></div>
-                <div class="input-group"><label data-i18n="toolkit.amount">Jumlah</label><input type="number" id="convert-amount" value="1" min="0" step="0.01"></div>
-                <button class="btn-calc" id="convert-btn" data-i18n="toolkit.convert">Konversi</button>
-                <div class="result-box" id="convert-result">0</div>
-            </div>
+                <!-- Position Size -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-ruler-combined"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.positionSize">Kalkulator Ukuran Posisi</h3></div>
+                    <p class="card-description" data-i18n="toolkit.positionSizeDesc">Tentukan ukuran posisi ideal berdasarkan modal dan toleransi risiko Anda.</p>
+                    <div class="input-group"><label data-i18n="toolkit.capital">Total Modal (USD)</label><input type="number" id="ps-capital" value="10000" min="0" step="10"></div>
+                    <div class="input-group"><label data-i18n="toolkit.riskPct">Risiko per Trade (%)</label><input type="number" id="ps-risk" value="2" min="0.1" max="100" step="0.1"></div>
+                    <div class="input-group"><label data-i18n="toolkit.entryPrice">Harga Masuk</label><input type="number" id="ps-entry" value="45000" min="0" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.stopLoss">Stop Loss</label><input type="number" id="ps-sl" value="43000" min="0" step="0.01"></div>
+                    <button class="btn-calc" onclick="calcPS()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div class="result-box" id="ps-result" style="display:none;"></div>
+                </div>
 
-            <!-- 3. Cek Jaringan -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.networkChecker">Cek Jaringan</h3></div>
-                <div class="card-description" data-i18n="toolkit.networkDesc">Pilih jaringan untuk melihat status transaksi melalui blockchain explorer.</div>
-                <ul class="network-list">
-                    <li><div class="network-icon">Ξ</div><div>Ethereum (ERC-20)</div><a href="https://etherscan.io/" target="_blank" class="network-link">Cek</a></li>
-                    <li><div class="network-icon">⚡</div><div>BSC (BEP-20)</div><a href="https://bscscan.com/" target="_blank" class="network-link">Cek</a></li>
-                    <li><div class="network-icon">T</div><div>Tron (TRC-20)</div><a href="https://tronscan.org/" target="_blank" class="network-link">Cek</a></li>
-                    <li><div class="network-icon">◎</div><div>Solana (SPL)</div><a href="https://solscan.io/" target="_blank" class="network-link">Cek</a></li>
-                </ul>
+                <!-- Risk/Reward -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.riskReward">Kalkulator Risk / Reward</h3></div>
+                    <p class="card-description" data-i18n="toolkit.riskRewardDesc">Evaluasi setup trading berdasarkan rasio risk-to-reward.</p>
+                    <div class="input-group"><label data-i18n="toolkit.entryPrice">Harga Masuk</label><input type="number" id="rr-entry" value="45000" min="0" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.stopLoss">Stop Loss</label><input type="number" id="rr-sl" value="43000" min="0" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.takeProfit">Take Profit</label><input type="number" id="rr-tp" value="51000" min="0" step="0.01"></div>
+                    <button class="btn-calc" onclick="calcRR()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div class="result-box" id="rr-result" style="display:none;"></div>
+                </div>
             </div>
+        </div>
 
-            <!-- 4. Staking -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.staking">Kalkulator Staking</h3></div>
-                <div class="card-description" data-i18n="toolkit.stakingDesc">Estimasi keuntungan staking dengan APY dan durasi tertentu.</div>
-                <div class="input-group"><label data-i18n="toolkit.selectCoin">Pilih Koin</label><select id="stake-coin"></select></div>
-                <div class="input-group"><label data-i18n="toolkit.stakingAmount">Jumlah Staking</label><input type="number" id="stake-amount" value="1000" min="0" step="10"></div>
-                <div class="input-group"><label data-i18n="toolkit.apy">APY (%)</label><input type="number" id="stake-apy" value="5" min="0" step="0.1"></div>
-                <div class="input-group"><label data-i18n="toolkit.duration">Durasi (hari)</label><input type="number" id="stake-duration" value="30" min="1" step="1"></div>
-                <button class="btn-calc" id="stake-calc-btn" data-i18n="toolkit.calculate">Hitung</button>
-                <div class="result-box" id="stake-result">0</div>
-                <div class="note" data-i18n="toolkit.note">*Estimasi tanpa compounding.</div>
+        <!-- INVESTMENT PLANNING -->
+        <div class="toolkit-category">
+            <div class="category-title">
+                <i class="fas fa-seedling" style="color:var(--accent-orange)"></i>
+                <span data-i18n="toolkit.cat_investment">Perencanaan Investasi</span>
             </div>
+            <div class="toolkit-grid">
+                <!-- DCA Simulator -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="card-header">
+                        <h3 data-i18n="toolkit.dca">Simulator DCA</h3>
+                        <span class="popular-badge" data-i18n="toolkit.popular">Populer</span>
+                    </div>
+                    <p class="card-description" data-i18n="toolkit.dcaDesc">Simulasikan strategi Dollar Cost Averaging dari waktu ke waktu.</p>
+                    <div class="input-group"><label data-i18n="toolkit.dcaMonthly">Investasi per Bulan (USD)</label><input type="number" id="dca-monthly" value="100" min="1" step="1"></div>
+                    <div class="input-group"><label data-i18n="toolkit.dcaDuration">Durasi (bulan)</label><input type="number" id="dca-duration" value="12" min="1" max="60" step="1"></div>
+                    <div class="input-group"><label data-i18n="toolkit.dcaStartPrice">Harga Awal (USD)</label><input type="number" id="dca-start" value="45000" min="0.01" step="0.01"></div>
+                    <div class="input-group"><label data-i18n="toolkit.dcaGrowth">Est. Kenaikan per Bulan (%)</label><input type="number" id="dca-growth" value="5" step="0.1"></div>
+                    <button class="btn-calc" onclick="calcDCA()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div id="dca-result" style="display:none; margin-top:1rem; overflow-x:auto;"></div>
+                </div>
 
-            <!-- 5. Grid Bot -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.gridBot">Kalkulator Grid Bot</h3></div>
-                <div class="card-description" data-i18n="toolkit.gridDesc">Estimasi profit grid trading pada range harga tertentu.</div>
-                <div class="input-group"><label data-i18n="toolkit.selectCoin">Pilih Koin</label><select id="grid-coin"></select></div>
-                <div class="input-group"><label data-i18n="toolkit.lowPrice">Harga Bawah (USDT)</label><input type="number" id="grid-price-low" step="0.01"></div>
-                <div class="input-group"><label data-i18n="toolkit.highPrice">Harga Atas (USDT)</label><input type="number" id="grid-price-high" step="0.01"></div>
-                <div class="input-group"><label data-i18n="toolkit.investment">Investasi (USDT)</label><input type="number" id="grid-invest" value="1000" min="0" step="10"></div>
-                <div class="input-group"><label data-i18n="toolkit.gridCount">Jumlah Grid</label><input type="number" id="grid-count" value="10" min="2" max="100" step="1"></div>
-                <button class="btn-calc" id="grid-calc-btn" data-i18n="toolkit.calculate">Hitung</button>
-                <div class="result-box" id="grid-result">0 USDT</div>
-                <div class="note" data-i18n="toolkit.note">*Estimasi profit per siklus ideal.</div>
+                <!-- Portfolio Allocation -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.portfolio">Perencana Alokasi Portofolio</h3></div>
+                    <p class="card-description" data-i18n="toolkit.portfolioDesc">Rencanakan alokasi portofolio kripto dengan template risiko yang siap pakai.</p>
+                    <div style="display:flex; gap:0.5rem; margin-bottom:1.2rem; flex-wrap:wrap;">
+                        <button class="btn-calc" style="flex:1; min-width:80px;" onclick="setAlloc(60,25,15)" data-i18n="toolkit.conservative">Konservatif</button>
+                        <button class="btn-calc" style="flex:1; min-width:80px;" onclick="setAlloc(40,30,30)" data-i18n="toolkit.balanced">Seimbang</button>
+                        <button class="btn-calc" style="flex:1; min-width:80px;" onclick="setAlloc(20,20,60)" data-i18n="toolkit.aggressive">Agresif</button>
+                    </div>
+                    <div id="alloc-display" style="display:none;">
+                        <div style="margin-bottom:0.8rem;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.85rem;"><span style="color:#f7931a">₿ BTC</span><span id="alloc-btc-pct">60%</span></div>
+                            <div class="alloc-bar alloc-btc" id="alloc-btc-bar" style="width:60%;"></div>
+                        </div>
+                        <div style="margin-bottom:0.8rem;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.85rem;"><span style="color:#627eea">Ξ ETH</span><span id="alloc-eth-pct">25%</span></div>
+                            <div class="alloc-bar alloc-eth" id="alloc-eth-bar" style="width:25%;"></div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; font-size:0.85rem;"><span style="color:var(--accent-orange)">⬡ Altcoins</span><span id="alloc-alt-pct">15%</span></div>
+                            <div class="alloc-bar alloc-alt" id="alloc-alt-bar" style="width:15%;"></div>
+                        </div>
+                        <div id="alloc-risk" style="margin-top:1rem; text-align:center; font-size:0.85rem; color:var(--text-secondary);"></div>
+                    </div>
+                </div>
+
+                <!-- Compound Interest -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-snowflake"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.compound">Kalkulator Bunga Majemuk</h3></div>
+                    <p class="card-description" data-i18n="toolkit.compoundDesc">Lihat bagaimana investasi Anda tumbuh dengan kekuatan compounding.</p>
+                    <div class="input-group"><label data-i18n="toolkit.initialInvestment">Investasi Awal (USD)</label><input type="number" id="ci-initial" value="1000" min="0" step="10"></div>
+                    <div class="input-group"><label data-i18n="toolkit.monthlyAddition">Tambahan per Bulan (USD)</label><input type="number" id="ci-monthly" value="100" min="0" step="10"></div>
+                    <div class="input-group"><label data-i18n="toolkit.annualReturn">Return per Tahun (%)</label><input type="number" id="ci-rate" value="12" min="0" step="0.1"></div>
+                    <div class="input-group"><label data-i18n="toolkit.years">Durasi (Tahun)</label><input type="number" id="ci-years" value="5" min="1" max="30" step="1"></div>
+                    <button class="btn-calc" onclick="calcCI()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div id="ci-result" style="display:none; margin-top:1rem;"></div>
+                </div>
             </div>
+        </div>
 
-            <!-- 6. Tips Keamanan -->
-            <div class="toolkit-card">
-                <div class="card-header"><h3 data-i18n="toolkit.securityTips">Tips Keamanan</h3></div>
-                <div class="card-description" data-i18n="toolkit.securityDesc">Panduan singkat menjaga aset kripto Anda.</div>
-                <ul class="tip-list">
-                    <li data-i18n="toolkit.tip1">✔ Gunakan hardware wallet untuk penyimpanan jangka panjang.</li>
-                    <li data-i18n="toolkit.tip2">✔ Jangan pernah bagikan seed phrase / private key.</li>
-                    <li data-i18n="toolkit.tip3">✔ Aktifkan 2FA (Google Authenticator) di semua exchange.</li>
-                    <li data-i18n="toolkit.tip4">✔ Hati-hati dengan tautan phishing – selalu periksa URL.</li>
-                    <li data-i18n="toolkit.tip5">✔ Mulai dengan investasi kecil saat pertama kali.</li>
-                </ul>
+        <!-- TAX & COMPLIANCE -->
+        <div class="toolkit-category">
+            <div class="category-title">
+                <i class="fas fa-file-invoice-dollar" style="color:var(--accent-orange)"></i>
+                <span data-i18n="toolkit.cat_tax">Pajak &amp; Kepatuhan</span>
+            </div>
+            <div class="toolkit-grid">
+                <!-- Tax Estimator -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-receipt"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.taxEstimator">Estimator Pajak Kripto</h3></div>
+                    <p class="card-description" data-i18n="toolkit.taxEstimatorDesc">Estimasi pajak transaksi kripto berdasarkan regulasi Indonesia (PMK 68/2022).</p>
+                    <div class="input-group"><label data-i18n="toolkit.transactionAmount">Jumlah Transaksi (IDR)</label><input type="number" id="tax-amount" value="10000000" min="0" step="100000"></div>
+                    <button class="btn-calc" onclick="calcTax()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div id="tax-result" style="display:none; margin-top:1rem;"></div>
+                    <p class="note" data-i18n="toolkit.taxNote">*Berdasarkan PMK 68/2022: PPh Final 0,1% + PPN 0,11% per transaksi.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MARKET ANALYSIS -->
+        <div class="toolkit-category">
+            <div class="category-title">
+                <i class="fas fa-signal" style="color:var(--accent-orange)"></i>
+                <span data-i18n="toolkit.cat_market">Analisis Pasar</span>
+            </div>
+            <div class="toolkit-grid">
+                <!-- Fear & Greed -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.fearGreed">Fear &amp; Greed Index</h3></div>
+                    <p class="card-description" data-i18n="toolkit.fearGreedDesc">Pahami sentimen pasar saat ini dan artinya bagi strategi Anda.</p>
+                    <div style="text-align:center; margin: 0.5rem 0 1rem;">
+                        <div style="font-size:3rem; font-weight:700; color:var(--accent-orange);" id="fg-value">65</div>
+                        <div style="font-size:1rem; color:#84cc16; font-weight:600;" id="fg-label">Greed</div>
+                    </div>
+                    <div class="fg-gauge"><div class="fg-needle" id="fg-needle" style="left:65%"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-secondary); margin-top:0.2rem;">
+                        <span>Extreme Fear</span><span>Fear</span><span>Neutral</span><span>Greed</span><span>Extreme Greed</span>
+                    </div>
+                    <div style="margin-top:1rem; font-size:0.8rem; color:var(--text-secondary); background:rgba(255,255,255,0.03); border-radius:12px; padding:0.8rem; line-height:1.6;">
+                        <strong style="color:var(--text-primary);">Greed (55-75):</strong> Pasar sedang dalam kondisi optimis. Banyak investor berlomba membeli, mendorong harga naik. Waspada terhadap koreksi.
+                    </div>
+                </div>
+
+                <!-- Crypto Converter -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div class="card-header">
+                        <h3 data-i18n="toolkit.converter">Konverter Kripto</h3>
+                        <span class="popular-badge" data-i18n="toolkit.popular">Populer</span>
+                    </div>
+                    <p class="card-description" data-i18n="toolkit.converterDesc">Konversi kripto ke IDR atau USD berdasarkan harga live.</p>
+                    <div class="input-group"><label data-i18n="toolkit.from">Dari (Kripto)</label><select id="convert-from"></select></div>
+                    <div class="input-group"><label data-i18n="toolkit.to">Ke (Fiat)</label><select id="convert-to"><option value="IDR">IDR</option><option value="USD">USD</option></select></div>
+                    <div class="input-group"><label data-i18n="toolkit.amount">Jumlah</label><input type="number" id="convert-amount" value="1" min="0" step="0.01"></div>
+                    <button class="btn-calc" id="convert-btn" data-i18n="toolkit.convert">Konversi</button>
+                    <div class="result-box" id="convert-result">0</div>
+                </div>
+
+                <!-- Fee Calculator -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.feeCalc">Kalkulator Biaya Transaksi</h3></div>
+                    <p class="card-description" data-i18n="toolkit.feeCalcDesc">Estimasi biaya jaringan untuk mengirim kripto di berbagai blockchain.</p>
+                    <div class="input-group"><label data-i18n="toolkit.amountUSDT">Jumlah (USDT)</label><input type="number" id="fee-amount" value="1000" min="0" step="1"></div>
+                    <div class="input-group"><label data-i18n="toolkit.network">Jaringan</label>
+                        <select id="fee-network">
+                            <option value="15">Ethereum (ERC-20) ~$15</option>
+                            <option value="0.5">BSC (BEP-20) ~$0.50</option>
+                            <option value="1">Tron (TRC-20) ~$1.00</option>
+                            <option value="0.05">Solana (SOL) ~$0.05</option>
+                            <option value="0.01">Polygon (MATIC) ~$0.01</option>
+                        </select>
+                    </div>
+                    <button class="btn-calc" onclick="calcFee()" data-i18n="toolkit.calculate">Hitung</button>
+                    <div id="fee-result" style="display:none; margin-top:1rem;"></div>
+                    <p class="note" data-i18n="toolkit.note">*Estimasi untuk tujuan edukasi.</p>
+                </div>
+
+                <!-- Security Tips -->
+                <div class="toolkit-card">
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="card-header"><h3 data-i18n="toolkit.securityTips">Tips Keamanan</h3></div>
+                    <p class="card-description" data-i18n="toolkit.securityDesc">Panduan singkat menjaga aset kripto Anda.</p>
+                    <ul class="tip-list">
+                        <li><i class="fas fa-check-circle" style="color:var(--accent-orange); margin-right:0.5rem;"></i><span data-i18n="toolkit.tip1">Gunakan hardware wallet untuk penyimpanan jangka panjang.</span></li>
+                        <li><i class="fas fa-check-circle" style="color:var(--accent-orange); margin-right:0.5rem;"></i><span data-i18n="toolkit.tip2">Jangan pernah bagikan seed phrase / private key.</span></li>
+                        <li><i class="fas fa-check-circle" style="color:var(--accent-orange); margin-right:0.5rem;"></i><span data-i18n="toolkit.tip3">Aktifkan 2FA (Google Authenticator) di semua exchange.</span></li>
+                        <li><i class="fas fa-check-circle" style="color:var(--accent-orange); margin-right:0.5rem;"></i><span data-i18n="toolkit.tip4">Hati-hati dengan tautan phishing – selalu periksa URL.</span></li>
+                        <li><i class="fas fa-check-circle" style="color:var(--accent-orange); margin-right:0.5rem;"></i><span data-i18n="toolkit.tip5">Mulai dengan investasi kecil saat pertama kali.</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -377,7 +537,6 @@
         // ==================== GLOBAL ====================
         let kursIdr = 15800;
         let allCoins = [];
-        let prices = { USDT: 1, BTC: 65000, ETH: 3500, BNB: 580, SOL: 180 };
 
         async function getKurs() {
             try {
@@ -400,23 +559,13 @@
 
         function populateCoinDropdowns() {
             const convertSelect = document.getElementById('convert-from');
-            const stakeSelect = document.getElementById('stake-coin');
-            const gridSelect = document.getElementById('grid-coin');
             let options = '';
             allCoins.forEach(coin => {
                 options += `<option value="${coin.symbol}" data-price="${coin.price_usd}">${coin.name} (${coin.symbol})</option>`;
             });
             convertSelect.innerHTML = options;
-            stakeSelect.innerHTML = options;
-            gridSelect.innerHTML = options;
             const btc = allCoins.find(c => c.symbol === 'BTC');
-            if (btc) {
-                convertSelect.value = 'BTC';
-                stakeSelect.value = 'BTC';
-                gridSelect.value = 'BTC';
-                document.getElementById('grid-price-low').value = (btc.price_usd * 0.85).toFixed(2);
-                document.getElementById('grid-price-high').value = (btc.price_usd * 1.15).toFixed(2);
-            }
+            if (btc) convertSelect.value = 'BTC';
         }
 
         function getCoinPrice(symbol) {
@@ -424,32 +573,7 @@
             return coin ? coin.price_usd : 0;
         }
 
-        // Kalkulator Harga
-        let calcCurrency = 'IDR';
-        document.querySelectorAll('#calc-currency-toggle .currency-option').forEach(opt => {
-            opt.addEventListener('click', function() {
-                document.querySelectorAll('#calc-currency-toggle .currency-option').forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-                calcCurrency = this.getAttribute('data-currency');
-                updateCalculator();
-            });
-        });
-        async function updateCalculator() {
-            const amount = parseFloat(document.getElementById('calc-amount').value) || 0;
-            const exchange = document.getElementById('calc-exchange').value;
-            let rate = 1;
-            if (calcCurrency === 'IDR') rate = await getKurs();
-            let multiplier = 1;
-            if (exchange === 'tokocrypto') multiplier = 0.998;
-            else if (exchange === 'pintu') multiplier = 1.001;
-            else if (exchange === 'binance') multiplier = 0.997;
-            else if (exchange === 'kraken') multiplier = 0.995;
-            else if (exchange === 'coinbase') multiplier = 1.005;
-            const result = amount * rate * multiplier;
-            document.getElementById('calc-result').textContent = `${calcCurrency === 'IDR' ? 'Rp' : '$'} ${Math.round(result).toLocaleString('id-ID')}`;
-        }
-
-        // Konverter
+        // ==================== CONVERTER ====================
         async function convertCurrency() {
             const fromSymbol = document.getElementById('convert-from').value;
             const to = document.getElementById('convert-to').value;
@@ -461,70 +585,191 @@
             document.getElementById('convert-result').textContent = `${amount} ${fromSymbol} = ${result.toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${to}`;
         }
 
-        // Staking
-        function calculateStaking() {
-            const coinSymbol = document.getElementById('stake-coin').value;
-            if (!coinSymbol) { document.getElementById('stake-result').textContent = 'Pilih koin'; return; }
-            const amount = parseFloat(document.getElementById('stake-amount').value) || 0;
-            const apy = parseFloat(document.getElementById('stake-apy').value) || 0;
-            const days = parseFloat(document.getElementById('stake-duration').value) || 0;
-            const profit = amount * (apy / 100) * (days / 365);
-            const total = amount + profit;
-            document.getElementById('stake-result').textContent = `${total.toFixed(4)} ${coinSymbol} (profit: ${profit.toFixed(4)})`;
+        // ==================== PROFIT/LOSS ====================
+        function calcPL() {
+            const buy = parseFloat(document.getElementById('pl-buy').value) || 0;
+            const sell = parseFloat(document.getElementById('pl-sell').value) || 0;
+            const qty = parseFloat(document.getElementById('pl-qty').value) || 0;
+            if (!buy || !sell || !qty) return;
+            const pl = (sell - buy) * qty;
+            const pct = ((sell - buy) / buy) * 100;
+            const isPos = pl >= 0;
+            const box = document.getElementById('pl-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-row"><span class="result-label">P&amp;L</span><span class="result-value ${isPos ? 'positive' : 'negative'}">${isPos ? '+' : ''}$${pl.toFixed(2)}</span></div>
+                <div class="result-row"><span class="result-label">Change</span><span class="result-value ${isPos ? 'positive' : 'negative'}">${isPos ? '+' : ''}${pct.toFixed(2)}%</span></div>
+                <div class="result-row"><span class="result-label">Cost Basis</span><span class="result-value">$${(buy * qty).toFixed(2)}</span></div>
+            `;
         }
 
-        // Grid
-        function calculateGrid() {
-            const coinSymbol = document.getElementById('grid-coin').value;
-            if (!coinSymbol) { document.getElementById('grid-result').textContent = 'Pilih koin'; return; }
-            const low = parseFloat(document.getElementById('grid-price-low').value) || 0;
-            const high = parseFloat(document.getElementById('grid-price-high').value) || 0;
-            const invest = parseFloat(document.getElementById('grid-invest').value) || 0;
-            const grids = parseInt(document.getElementById('grid-count').value) || 1;
-            if (low >= high) { document.getElementById('grid-result').textContent = 'Harga atas harus > bawah'; return; }
-            const avgPrice = (low + high) / 2;
-            const gridStep = (high - low) / (grids - 1);
-            const profitPerGrid = (gridStep / avgPrice) * (invest / grids);
-            const totalProfit = profitPerGrid * (grids - 1) * 2;
-            document.getElementById('grid-result').textContent = `${totalProfit.toFixed(2)} USDT (per siklus)`;
+        // ==================== POSITION SIZE ====================
+        function calcPS() {
+            const capital = parseFloat(document.getElementById('ps-capital').value) || 0;
+            const riskPct = parseFloat(document.getElementById('ps-risk').value) || 2;
+            const entry = parseFloat(document.getElementById('ps-entry').value) || 0;
+            const sl = parseFloat(document.getElementById('ps-sl').value) || 0;
+            if (!capital || !entry || !sl || entry === sl) return;
+            const riskAmt = capital * riskPct / 100;
+            const slPct = Math.abs(entry - sl) / entry;
+            const posSize = riskAmt / slPct;
+            const units = posSize / entry;
+            const box = document.getElementById('ps-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-row"><span class="result-label">Risk Amount</span><span class="result-value orange">$${riskAmt.toFixed(2)}</span></div>
+                <div class="result-row"><span class="result-label">Position Size</span><span class="result-value">$${posSize.toFixed(2)}</span></div>
+                <div class="result-row"><span class="result-label">Units</span><span class="result-value">${units.toFixed(6)}</span></div>
+                <div class="result-row"><span class="result-label">SL Distance</span><span class="result-value negative">${(slPct * 100).toFixed(2)}%</span></div>
+            `;
         }
 
-        function updateGridPriceRange() {
-            const coinSymbol = document.getElementById('grid-coin').value;
-            const price = getCoinPrice(coinSymbol);
-            if (price > 0) {
-                document.getElementById('grid-price-low').value = (price * 0.85).toFixed(2);
-                document.getElementById('grid-price-high').value = (price * 1.15).toFixed(2);
+        // ==================== RISK/REWARD ====================
+        function calcRR() {
+            const entry = parseFloat(document.getElementById('rr-entry').value) || 0;
+            const sl = parseFloat(document.getElementById('rr-sl').value) || 0;
+            const tp = parseFloat(document.getElementById('rr-tp').value) || 0;
+            if (!entry || !sl || !tp) return;
+            const risk = Math.abs(entry - sl);
+            const reward = Math.abs(tp - entry);
+            const ratio = risk > 0 ? reward / risk : 0;
+            const lossPct = (risk / entry) * 100;
+            const profitPct = (reward / entry) * 100;
+            const ratioClass = ratio >= 2 ? 'positive' : ratio >= 1 ? 'orange' : 'negative';
+            const totalW = risk + reward;
+            const riskW = totalW > 0 ? (risk / totalW * 100) : 50;
+            const rewardW = 100 - riskW;
+            const box = document.getElementById('rr-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-row"><span class="result-label">R:R Ratio</span><span class="result-value ${ratioClass}">1 : ${ratio.toFixed(2)}</span></div>
+                <div class="rr-bar"><div class="rr-risk" style="width:${riskW}%"></div><div class="rr-reward" style="width:${rewardW}%"></div></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary);">
+                    <span style="color:#ef4444">Risk: ${lossPct.toFixed(2)}%</span>
+                    <span style="color:#22c55e">Reward: ${profitPct.toFixed(2)}%</span>
+                </div>
+            `;
+        }
+
+        // ==================== DCA SIMULATOR ====================
+        function calcDCA() {
+            const monthly = parseFloat(document.getElementById('dca-monthly').value) || 100;
+            const duration = Math.min(parseInt(document.getElementById('dca-duration').value) || 12, 60);
+            const startPrice = parseFloat(document.getElementById('dca-start').value) || 1;
+            const growth = parseFloat(document.getElementById('dca-growth').value) || 0;
+            let totalInvested = 0, totalCoins = 0;
+            let rows = '';
+            for (let m = 1; m <= duration; m++) {
+                const price = startPrice * Math.pow(1 + growth / 100, m - 1);
+                totalInvested += monthly;
+                totalCoins += monthly / price;
+                const avgCost = totalInvested / totalCoins;
+                const portfolioValue = totalCoins * price;
+                rows += `<tr><td>${m}</td><td>$${price.toFixed(2)}</td><td>$${totalInvested.toFixed(0)}</td><td>$${avgCost.toFixed(2)}</td><td style="color:${portfolioValue >= totalInvested ? '#22c55e' : '#ef4444'}">$${portfolioValue.toFixed(0)}</td></tr>`;
             }
+            const finalPrice = startPrice * Math.pow(1 + growth / 100, duration - 1);
+            const finalValue = totalCoins * finalPrice;
+            const box = document.getElementById('dca-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-box" style="margin-bottom:1rem;">
+                    Total Invested: $${totalInvested.toFixed(0)} → Final Value: <strong>$${finalValue.toFixed(0)}</strong>
+                </div>
+                <div style="overflow-x:auto;"><table class="dca-table">
+                    <thead><tr><th>Mo.</th><th>Price</th><th>Invested</th><th>Avg Cost</th><th>Portfolio</th></tr></thead>
+                    <tbody>${rows}</tbody>
+                </table></div>`;
         }
 
-        // INIT
+        // ==================== PORTFOLIO ALLOCATION ====================
+        function setAlloc(btc, eth, alt) {
+            document.getElementById('alloc-btc-pct').textContent = btc + '%';
+            document.getElementById('alloc-eth-pct').textContent = eth + '%';
+            document.getElementById('alloc-alt-pct').textContent = alt + '%';
+            document.getElementById('alloc-btc-bar').style.width = btc + '%';
+            document.getElementById('alloc-eth-bar').style.width = eth + '%';
+            document.getElementById('alloc-alt-bar').style.width = alt + '%';
+            const riskMap = {60: 'Conservative — Low risk, stable long-term', 40: 'Balanced — Moderate risk & reward', 20: 'Aggressive — High risk, high upside'};
+            document.getElementById('alloc-risk').textContent = riskMap[btc] || '';
+            document.getElementById('alloc-display').style.display = 'block';
+        }
+
+        // ==================== COMPOUND INTEREST ====================
+        function calcCI() {
+            const initial = parseFloat(document.getElementById('ci-initial').value) || 0;
+            const monthly = parseFloat(document.getElementById('ci-monthly').value) || 0;
+            const rate = parseFloat(document.getElementById('ci-rate').value) || 0;
+            const years = Math.min(parseInt(document.getElementById('ci-years').value) || 1, 30);
+            const monthlyRate = rate / 100 / 12;
+            let balance = initial;
+            let totalContrib = initial;
+            let yearRows = '';
+            for (let y = 1; y <= years; y++) {
+                for (let m = 0; m < 12; m++) {
+                    balance = balance * (1 + monthlyRate) + monthly;
+                    totalContrib += monthly;
+                }
+                const profit = balance - totalContrib;
+                yearRows += `<tr><td>${y}</td><td>$${balance.toFixed(0)}</td><td>$${totalContrib.toFixed(0)}</td><td style="color:#22c55e">$${profit.toFixed(0)}</td></tr>`;
+            }
+            const totalProfit = balance - totalContrib;
+            const box = document.getElementById('ci-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div style="margin-bottom:1rem;">
+                    <div class="result-row"><span class="result-label">Final Amount</span><span class="result-value positive">$${balance.toFixed(2)}</span></div>
+                    <div class="result-row"><span class="result-label">Total Invested</span><span class="result-value">$${totalContrib.toFixed(2)}</span></div>
+                    <div class="result-row"><span class="result-label">Total Profit</span><span class="result-value positive">$${totalProfit.toFixed(2)} (${((totalProfit/totalContrib)*100).toFixed(1)}%)</span></div>
+                </div>
+                <div style="overflow-x:auto;"><table class="dca-table">
+                    <thead><tr><th>Year</th><th>Balance</th><th>Invested</th><th>Profit</th></tr></thead>
+                    <tbody>${yearRows}</tbody>
+                </table></div>`;
+        }
+
+        // ==================== CRYPTO TAX ====================
+        function calcTax() {
+            const amount = parseFloat(document.getElementById('tax-amount').value) || 0;
+            const pph = amount * 0.001;
+            const ppn = amount * 0.0011;
+            const total = pph + ppn;
+            const fmt = n => new Intl.NumberFormat('id-ID', {style:'currency', currency:'IDR', maximumFractionDigits:0}).format(n);
+            const box = document.getElementById('tax-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-row"><span class="result-label">PPh Final (0.1%)</span><span class="result-value orange">${fmt(pph)}</span></div>
+                <div class="result-row"><span class="result-label">PPN (0.11%)</span><span class="result-value orange">${fmt(ppn)}</span></div>
+                <div class="result-row"><span class="result-label">Total Pajak</span><span class="result-value negative">${fmt(total)}</span></div>
+                <div class="result-row"><span class="result-label">Net Diterima</span><span class="result-value positive">${fmt(amount - total)}</span></div>
+            `;
+        }
+
+        // ==================== FEE CALCULATOR ====================
+        function calcFee() {
+            const amount = parseFloat(document.getElementById('fee-amount').value) || 0;
+            const fee = parseFloat(document.getElementById('fee-network').value) || 0;
+            const received = amount - fee;
+            const box = document.getElementById('fee-result');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="result-row"><span class="result-label">Network Fee</span><span class="result-value negative">~$${fee.toFixed(2)}</span></div>
+                <div class="result-row"><span class="result-label">Amount Received</span><span class="result-value positive">$${received.toFixed(2)} USDT</span></div>
+                <div class="result-row"><span class="result-label">Fee %</span><span class="result-value">${amount > 0 ? ((fee/amount)*100).toFixed(4) : '0'}%</span></div>
+            `;
+        }
+
+        // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', async function() {
             initParticles();
             await getKurs();
             await fetchCoinList();
             populateCoinDropdowns();
 
-            document.getElementById('calc-amount').addEventListener('input', updateCalculator);
-            document.getElementById('calc-exchange').addEventListener('change', updateCalculator);
-            await updateCalculator();
-
             document.getElementById('convert-btn').addEventListener('click', convertCurrency);
             await convertCurrency();
 
-            document.getElementById('stake-calc-btn').addEventListener('click', calculateStaking);
-            calculateStaking();
-
-            document.getElementById('grid-calc-btn').addEventListener('click', calculateGrid);
-            document.getElementById('grid-coin').addEventListener('change', updateGridPriceRange);
-            calculateGrid();
-
-            // Refresh saat bahasa berubah
             window.addEventListener('languageChanged', function() {
-                updateCalculator();
                 convertCurrency();
-                calculateStaking();
-                calculateGrid();
             });
         });
     </script>

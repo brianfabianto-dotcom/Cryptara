@@ -199,6 +199,24 @@
                 justify-content: space-between;
             }
         }
+        .coin-logo-wrap {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .coin-logo-wrap.lg { width: 52px; height: 52px; }
+        .coin-logo { width: 22px; height: 22px; border-radius: 50%; }
+        .coin-logo.lg { width: 42px; height: 42px; }
+        .coin-logo-fallback {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), #ff8c00);
+            color: #fff; font-size: 0.7rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .coin-logo-fallback.lg { width: 42px; height: 42px; font-size: 1.1rem; }
+        .coin-logo-fallback.sm { width: 18px; height: 18px; font-size: 0.6rem; }
     </style>
 </head>
 <body>
@@ -490,21 +508,33 @@
             container.innerHTML = `
                 <div class="snapshot-card">
                     <h3>${typeof t !== 'undefined' ? t('market.topGainers') : 'Top Gainers'}</h3>
-                    ${gainers.map(coin => `
+                    ${gainers.map(coin => {
+                        const symG = coin.symbol.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                        return `
                         <div class="snapshot-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
-                            <span class="name">${coin.name} (${coin.symbol})</span>
+                            <span class="name" style="display:flex;align-items:center;gap:0.4rem;">
+                                <img src="https://assets.coincap.io/assets/icons/${symG}@2x.png" alt="${coin.symbol}" width="20" height="20" style="border-radius:50%;flex-shrink:0;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <span class="coin-logo-fallback sm" style="display:none;flex-shrink:0;">${coin.name.charAt(0).toUpperCase()}</span>
+                                ${coin.name} (${coin.symbol})
+                            </span>
                             <span class="change positive">▲ ${Math.abs(parseFloat(coin.percent_change_24h)).toFixed(2)}%</span>
-                        </div>
-                    `).join('')}
+                        </div>`;
+                    }).join('')}
                 </div>
                 <div class="snapshot-card">
                     <h3>${typeof t !== 'undefined' ? t('market.topLosers') : 'Top Losers'}</h3>
-                    ${losers.map(coin => `
+                    ${losers.map(coin => {
+                        const symL = coin.symbol.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                        return `
                         <div class="snapshot-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
-                            <span class="name">${coin.name} (${coin.symbol})</span>
+                            <span class="name" style="display:flex;align-items:center;gap:0.4rem;">
+                                <img src="https://assets.coincap.io/assets/icons/${symL}@2x.png" alt="${coin.symbol}" width="20" height="20" style="border-radius:50%;flex-shrink:0;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <span class="coin-logo-fallback sm" style="display:none;flex-shrink:0;">${coin.name.charAt(0).toUpperCase()}</span>
+                                ${coin.name} (${coin.symbol})
+                            </span>
                             <span class="change negative">▼ ${Math.abs(parseFloat(coin.percent_change_24h)).toFixed(2)}%</span>
-                        </div>
-                    `).join('')}
+                        </div>`;
+                    }).join('')}
                 </div>
             `;
         }
@@ -606,10 +636,16 @@
                     const changeSign = change >= 0 ? '▲' : '▼';
                     const marketCap = parseFloat(coin.market_cap_usd) || 0;
                     const star = isInWatchlist(coin.id) ? '<i class="fas fa-star" style="color:gold"></i>' : '<i class="far fa-star"></i>';
+                    const sanitizedSymbol = coin.symbol.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                     html += `
                         <div class="market-item" onclick="window.location.href='coin.html?id=${coin.id}&from=market'">
                             <div style="display:flex; align-items:center; gap:0.8rem;">
                                 <span style="color:var(--text-secondary); min-width:30px;">#${coin.rank}</span>
+                                <div class="coin-logo-wrap">
+                                    <img class="coin-logo" src="https://assets.coincap.io/assets/icons/${sanitizedSymbol}@2x.png" alt="${coin.symbol}"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="coin-logo-fallback" style="display:none">${coin.name.charAt(0).toUpperCase()}</div>
+                                </div>
                                 <span><strong>${coin.name}</strong> <span style="color:var(--text-secondary); font-size:0.8rem;">${coin.symbol}</span></span>
                             </div>
                             <div style="display:flex; align-items:center; gap:1rem;">
@@ -630,8 +666,16 @@
                     const changeClass = change >= 0 ? 'positive' : 'negative';
                     const changeSign = change >= 0 ? '▲' : '▼';
                     const star = isInWatchlist(coin.id) ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                    const sanitizedSymbol = coin.symbol.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                     html += `
                         <div class="coin-card" data-id="${coin.id}">
+                            <div style="display:flex; justify-content:center; margin-bottom:0.8rem;">
+                                <div class="coin-logo-wrap lg">
+                                    <img class="coin-logo lg" src="https://assets.coincap.io/assets/icons/${sanitizedSymbol}@2x.png" alt="${coin.symbol}"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="coin-logo-fallback lg" style="display:none">${coin.name.charAt(0).toUpperCase()}</div>
+                                </div>
+                            </div>
                             <div class="coin-card-header">
                                 <span class="coin-card-rank">#${coin.rank}</span>
                                 <button class="coin-card-watch" data-id="${coin.id}" style="background:none; border:none; color:gold; cursor:pointer;">${star}</button>
